@@ -1,0 +1,44 @@
+﻿{
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "enabledPlugins": {
+    "caveman@caveman": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Program Files\\nodejs\\node.exe\" \"C:\\Users\\minho\\Documents\\02_work\\03_AI\\04_agent_hq\\anthropic\\hooks\\caveman-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading caveman mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Program Files\\nodejs\\node.exe\" \"C:\\Users\\minho\\Documents\\02_work\\03_AI\\04_agent_hq\\anthropic\\hooks\\caveman-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking caveman mode..."
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\Users\\minho\\Documents\\02_work\\03_AI\\04_agent_hq\\anthropic\\hooks\\caveman-statusline.ps1\""
+  }
+}

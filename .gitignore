@@ -1,0 +1,14 @@
+# Exclude local secrets/runtime state
+.credentials.json
+settings.local.json
+.env
+.env.*
+anthropic/backups/
+anthropic/history.jsonl
+anthropic/projects/
+anthropic/sessions/
+anthropic/session-env/
+anthropic/shell-snapshots/
+anthropic/paste-cache/
+anthropic/downloads/
+anthropic/telemetry/
