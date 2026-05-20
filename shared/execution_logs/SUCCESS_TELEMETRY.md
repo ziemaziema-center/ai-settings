@@ -61,3 +61,58 @@ Use this file when a task completes with validation evidence and a reusable oper
 - rollback_plan: Restore files from $BackupRoot if the append is rejected.
 - evidence: Generated on 2026-05-08 12:48 +09:00ST.
 
+## 2026-05-19 14:05 KST - Portfolio Shadow Liquidation Brain
+- memory-key: telemetry-success-portfolio-shadow-liquidation-brain-v1
+- task_category: investment_shadow_decision_engine
+- goal: Convert a long-held losing portfolio into a bounded cleanup plan without executing live sells.
+- exact_scope: `strategy/kbia_portfolio_liquidation_brain.py`, portfolio tests, validation runner, shadow report.
+- procedure: Encode screenshot positions, collect public Upbit market/orderbook context, classify each asset into keep/reduce/exit shadow decisions, run local and remote 3-loop validations, and verify open-order count after the run.
+- validation_outcome: local_pass_remote_pass_open_order_count_0
+- reusable_pattern: For high-risk trading changes, implement dependency-free shadow logic first, prove it with repeated offline regression, then run one bounded read-only/public-data shadow report.
+- rollback_plan: Remove the new strategy/test/tmp/report files and delete VP-012 if rejected.
+- evidence: `reports/portfolio_shadow_liquidation_plan_2026-05-19.md`, `reports/portfolio_liquidation_validation_2026-05-19.md`.
+
+## 2026-05-19 14:15 KST - Portfolio Brain v3 HQ Upgrade
+- memory-key: telemetry-success-portfolio-brain-v3-hq-upgrade-v1
+- task_category: investment_shadow_decision_engine
+- goal: Upgrade the portfolio cleanup brain three stages deeper without enabling live trading.
+- exact_scope: `strategy/kbia_portfolio_liquidation_brain.py`, portfolio tests, shadow runner, validation evidence.
+- procedure: Add market-regime overlay, HQ committee scoring, classification guardrails, orderbook-aware slice caps, execution profiles, and plan-validity errors; then run local and remote 3-loop validation plus one bounded public-data shadow run.
+- validation_outcome: local_pass_remote_pass_plan_valid_true_open_order_count_0
+- reusable_pattern: For strategy upgrades, increase decision intelligence by adding explainable gates and validation outputs while preserving all execution capability flags as false.
+- rollback_plan: Restore the previous v2.67 portfolio brain files and rerun portfolio validation.
+- evidence: `reports/portfolio_shadow_liquidation_plan_2026-05-19.md`, `reports/portfolio_liquidation_validation_2026-05-19.md`.
+
+## 2026-05-19 14:20 KST - Daily Crypto News Brain
+- memory-key: telemetry-success-daily-crypto-news-brain-v1
+- task_category: investment_shadow_context_layer
+- goal: Add daily credible-news context that the Brain can reference without triggering trades.
+- exact_scope: `strategy/kbia_news_brain.py`, news tests, daily digest runner, report artifacts, Codex app automation.
+- procedure: Implement dependency-free RSS parsing, source credibility scoring, watch-symbol extraction, risk tagging, digest generation, local and remote 3-loop validation, one bounded public RSS dry run, and daily Codex automation.
+- validation_outcome: local_pass_remote_pass_public_digest_success_100_items_0_source_failures
+- reusable_pattern: Keep news as a context layer that changes Brain bias only; never make headlines directly executable.
+- rollback_plan: Delete the news brain/test/runner/report files and pause `daily-crypto-news-digest` automation if rejected.
+- evidence: `reports/daily_crypto_news_digest_2026-05-19.md`.
+
+## 2026-05-19 14:42 KST - 24h Shadow Observation Start
+- memory-key: telemetry-success-24h-shadow-observation-v1
+- task_category: investment_shadow_observation
+- goal: Observe Brain/news/portfolio/open-order state for 24 hours without trading.
+- exact_scope: shadow observation runner, latest report, JSONL log, Codex app automation.
+- procedure: Create a dependency-free observer, validate locally and remotely, run one bounded EC2 observation, verify open_order_count, and create hourly COUNT=24 Codex automation.
+- validation_outcome: local_pass_remote_pass_immediate_observation_open_order_count_0
+- reusable_pattern: Before live readiness, run an observation phase that logs state changes while all execution flags remain false.
+- rollback_plan: Delete the observation runner/report/log and delete or pause `24h-upbit-shadow-observation`.
+- evidence: `reports/shadow_observation_2026-05-19_latest.md`.
+
+## 2026-05-20 17:40 KST - Mobile Remote Ops Additive Layer
+- memory-key: telemetry-success-mobile-remote-ops-additive-layer-v1
+- task_category: remote_operations_stack
+- goal: Add iPhone-friendly remote operations tooling without changing existing production-like Docker/n8n runtime.
+- exact_scope: EC2 packages, ubuntu user shell/tmux helpers, Codex/Claude launch wrappers, Docker monitoring wrappers, setup report.
+- procedure: Inspect runtime first, create EC2 backups, install missing read-only/operator tools, add marked shell/tmux blocks, create wrapper commands, validate containers/proxy/helper/tmux.
+- validation_outcome: containers_preserved_caddy_valid_helper_ok_tmux_ops_present_codex_claude_present
+- reusable_pattern: For production-like remote ops enablement, keep runtime service changes separate from operator convenience tooling and validate existing containers before and after installation.
+- rollback_plan: Restore backed-up `~/.bashrc`, `~/.tmux.conf`, and `~/.npmrc`; remove added `~/.kbia-mobile-ops` and `~/.local/bin/kbia-*` wrappers if rejected.
+- evidence: `reports/mobile_ops_remote_setup_2026-05-20.md`.
+
