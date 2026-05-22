@@ -2839,3 +2839,8 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
 - Reports:
   - `reports/system_audit_95_loop_2026-05-22.md`
   - `reports/portfolio_10m_recovery_proposal_2026-05-22.md`
+- GitHub:
+  - initialized root Git repository,
+  - committed sanitized project snapshot,
+  - pushed branch `upbit-automation` to `https://github.com/ziemaziema-center/ai-settings.git`.
+  - status report: `reports/github_push_status_2026-05-22.md`

@@ -3013,3 +3013,8 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - Result:
   - post-improvement system score: `95/100`.
   - live_order_count remained `0` before runtime restart and no order was accepted during restart smoke.
+- GitHub:
+  - initialized local root Git repository,
+  - committed sanitized project snapshot,
+  - pushed to `https://github.com/ziemaziema-center/ai-settings.git` branch `upbit-automation`,
+  - did not overwrite `ai-settings/main`.
