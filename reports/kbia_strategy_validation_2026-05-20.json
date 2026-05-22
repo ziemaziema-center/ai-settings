@@ -1,0 +1,142 @@
+{
+  "timestamp_kst": "2026-05-22T01:43:42+09:00",
+  "task": "kbia_strategy_brain_v4_validation",
+  "schema_version": "kbia.strategy_brain.v4",
+  "loops_requested": 3,
+  "loops": [
+    {
+      "loop": 1,
+      "checks": [
+        {
+          "command": "C:\\Python314\\python.exe -m py_compile strategy/kbia_strategy_kernel.py strategy/kbia_news_brain.py strategy/kbia_portfolio_liquidation_brain.py tests/test_kbia_strategy_kernel.py tests/test_kbia_news_brain.py tests/test_kbia_portfolio_liquidation_brain.py tmp/run_daily_news_digest.py tmp/run_brain_v4_live_readiness_20260520.py",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_strategy_kernel.py",
+          "returncode": 0,
+          "stdout": "KBIA_STRATEGY_KERNEL_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_news_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_NEWS_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_portfolio_liquidation_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_PORTFOLIO_LIQUIDATION_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/wf05_offline_regression_runner_2026-05-11.py",
+          "returncode": 0,
+          "stdout": "{\"fixture_count\": 12, \"passed_count\": 12, \"failed_count\": 0, \"failed_case_ids\": [], \"report_json_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.json\", \"report_md_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.md\", \"network_used\": false}",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "loop": 2,
+      "checks": [
+        {
+          "command": "C:\\Python314\\python.exe -m py_compile strategy/kbia_strategy_kernel.py strategy/kbia_news_brain.py strategy/kbia_portfolio_liquidation_brain.py tests/test_kbia_strategy_kernel.py tests/test_kbia_news_brain.py tests/test_kbia_portfolio_liquidation_brain.py tmp/run_daily_news_digest.py tmp/run_brain_v4_live_readiness_20260520.py",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_strategy_kernel.py",
+          "returncode": 0,
+          "stdout": "KBIA_STRATEGY_KERNEL_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_news_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_NEWS_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_portfolio_liquidation_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_PORTFOLIO_LIQUIDATION_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/wf05_offline_regression_runner_2026-05-11.py",
+          "returncode": 0,
+          "stdout": "{\"fixture_count\": 12, \"passed_count\": 12, \"failed_count\": 0, \"failed_case_ids\": [], \"report_json_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.json\", \"report_md_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.md\", \"network_used\": false}",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "loop": 3,
+      "checks": [
+        {
+          "command": "C:\\Python314\\python.exe -m py_compile strategy/kbia_strategy_kernel.py strategy/kbia_news_brain.py strategy/kbia_portfolio_liquidation_brain.py tests/test_kbia_strategy_kernel.py tests/test_kbia_news_brain.py tests/test_kbia_portfolio_liquidation_brain.py tmp/run_daily_news_digest.py tmp/run_brain_v4_live_readiness_20260520.py",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_strategy_kernel.py",
+          "returncode": 0,
+          "stdout": "KBIA_STRATEGY_KERNEL_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_news_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_NEWS_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/test_kbia_portfolio_liquidation_brain.py",
+          "returncode": 0,
+          "stdout": "KBIA_PORTFOLIO_LIQUIDATION_BRAIN_TESTS_PASS",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "command": "C:\\Python314\\python.exe tests/wf05_offline_regression_runner_2026-05-11.py",
+          "returncode": 0,
+          "stdout": "{\"fixture_count\": 12, \"passed_count\": 12, \"failed_count\": 0, \"failed_case_ids\": [], \"report_json_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.json\", \"report_md_path\": \"C:\\\\Users\\\\minho\\\\Documents\\\\02_work\\\\03_AI\\\\03_investment_automation\\\\01_planning\\\\tests\\\\wf05_offline_regression_report_2026-05-11.md\", \"network_used\": false}",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "runtime_modified": false,
+  "workflow_changed": false,
+  "helper_runtime_changed": false,
+  "live_order_submitted": false,
+  "live_sell_submitted": false,
+  "cancel_attempted": false,
+  "workflow_activation_changed": false,
+  "scheduler_changed": false,
+  "secrets_exposed": false,
+  "next_safe_action": "live_start_only_after_open_order_final_or_manual_resolution"
+}

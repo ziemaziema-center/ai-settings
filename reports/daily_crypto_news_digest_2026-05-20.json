@@ -1,0 +1,251 @@
+{
+  "schema_version": "kbia.news_brain.v1",
+  "mode": "daily_crypto_news_digest",
+  "generated_utc": "2026-05-20T03:16:44+00:00",
+  "watch_symbols": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "ETC",
+    "DOGE",
+    "DOT",
+    "ALGO",
+    "FCT2"
+  ],
+  "items_scanned": 100,
+  "top_items": [
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "XRP and Solana funds attract inflows as bitcoin outflows hit nearly $1 billion",
+      "summary": "CoinShares data shows investors are rotating into listed products based on XRP and SOL while bitcoin and ethereum products posted heavy weekly outflows.",
+      "link": "https://www.coindesk.com/markets/2026/05/19/xrp-and-solana-attract-fresh-inflows-as-bitcoin-fund-outflows-hit-nearly-usd1-billion",
+      "published_utc": "2026-05-19T08:25:17+00:00",
+      "affected_symbols": [
+        "BTC",
+        "ETH",
+        "SOL"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 81.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "JPMorgan says ether and altcoins won't catch up to bitcoin without a major network boom",
+      "summary": "The bank said ether and the broader altcoin market continue to trail bitcoin as weak network activity, sluggish DeFi growth and limited real-world adoption weigh on investor demand.",
+      "link": "https://www.coindesk.com/markets/2026/05/19/jpmorgan-says-ether-and-altcoins-won-t-catch-up-to-bitcoin-without-a-major-network-boom",
+      "published_utc": "2026-05-19T13:59:46+00:00",
+      "affected_symbols": [
+        "BTC",
+        "ETH"
+      ],
+      "risk_tags": [
+        "REGULATION"
+      ],
+      "relevance_score": 73.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Canaan Shares Plunge as CEO Says Middle East Conflict Is Clouding Outlook for Bitcoin Miners",
+      "summary": "Canaan shares fell after the Bitcoin mining company disclosed an $88.7 million first-quarter net loss, its second straight negative period.",
+      "link": "https://decrypt.co/368365/canaan-shares-plunge-ceo-middle-east-conflict-clouding-outlook-bitcoin-miners",
+      "published_utc": "2026-05-19T16:20:26+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION",
+        "MARKET_STRESS"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "RISK_REDUCTION_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Morning Minute: SEC Reverses Course on Tokenized Stocks, HYPE Soars",
+      "summary": "HYPE soared as the SEC opened the door to third-party tokenized stocks. Strategy bought another $2B in BTC, and price still went lower.",
+      "link": "https://decrypt.co/368317/morning-minute-sec-reverses-course-on-tokenized-stocks-hype-soars",
+      "published_utc": "2026-05-19T11:26:32+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION",
+        "MACRO"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Ethereum Founder Vitalik Buterin Says AI Verification Could Help Secure Crypto Networks",
+      "summary": "Vitalik Buterin said mathematically verified software may help protect cryptographic infrastructures as AI improves both code generation and vulnerability discovery.",
+      "link": "https://decrypt.co/368226/ethereum-founder-vitalik-buterin-ai-verification-secure-crypto-networks",
+      "published_utc": "2026-05-18T17:34:57+00:00",
+      "affected_symbols": [
+        "ETH"
+      ],
+      "risk_tags": [
+        "REGULATION",
+        "SECURITY"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "RISK_REDUCTION_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "The SEC wants to let newly public companies raise cash instantly in its biggest rule change in decades",
+      "summary": "The agency is proposing its largest overhaul of public listing rules in over 20 years, cutting compliance costs and giving crypto firms a much easier path to raise cash on Wall Street.",
+      "link": "https://www.coindesk.com/markets/2026/05/19/the-sec-wants-to-let-newly-public-companies-raise-cash-instantly-in-its-biggest-rule-change-in-decades",
+      "published_utc": "2026-05-19T17:04:07+00:00",
+      "affected_symbols": [],
+      "risk_tags": [
+        "REGULATION",
+        "EXCHANGE"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "Live markets: Bitcoin gives up $77,000 as interest rates continue surge, stocks continue slump",
+      "summary": "Crypto markets have turned lower in morning U.S. trade on Tuesday as the idea of coming rate hikes takes a toll on risk assets.",
+      "link": "https://www.coindesk.com/tech/2026/05/19/live-markets-bitcoin-hangs-near-usd77-000-as-interest-rates-continue-to-surge",
+      "published_utc": "2026-05-19T14:14:59+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "Echo Protocol suffers $76 million exploit in eBTC minting attack on Monad",
+      "summary": "The Bitcoin-focused DeFi protocol suffered an attack whereby about 1,000 unauthorized eBTC $77 million were minted on the Monad blockchain",
+      "link": "https://www.coindesk.com/business/2026/05/19/echo-protocol-suffers-usd76-million-exploit-in-ebtc-minting-attack-on-monad",
+      "published_utc": "2026-05-19T08:42:15+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "SECURITY"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "RISK_REDUCTION_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "World Liberty Financial treasury company AI Financial warns that it may not survive the year in SEC filing",
+      "summary": "The former Alt5 Sigma marked its 7.28 billion WLFI tokens at $706 million, down from a roughly $1.46 billion cost basis, while disclosing that the holdings remain locked amid liquidity concerns.",
+      "link": "https://www.coindesk.com/markets/2026/05/19/world-liberty-financial-wlfi-treasury-company-ai-financial-warns-in-sec-filing-that-it-may-not-survive-the-year",
+      "published_utc": "2026-05-19T05:35:32+00:00",
+      "affected_symbols": [],
+      "risk_tags": [
+        "REGULATION",
+        "MACRO"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "Cointelegraph",
+      "source_tier": "crypto_media_crosscheck",
+      "source_credibility": 0.58,
+      "title": "Swan Bitcoin sued for nearly $1B over pre-bankruptcy transfers from Prime Trust",
+      "summary": "Swan Bitcoin has been sued for allegedly using insider access to pull nearly $1 billion in Bitcoin and cash from Prime Trust days before its 2023 bankruptcy filing.",
+      "link": "https://cointelegraph.com/news/swan-bitcoin-sued-for-nearly-1b-over-pre-bankruptcy-transfers-from-prime-trust?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "published_utc": "2026-05-19T09:37:49+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION",
+        "MARKET_STRESS"
+      ],
+      "relevance_score": 63.0,
+      "brain_signal": "RISK_REDUCTION_WATCH"
+    },
+    {
+      "source": "Blockworks",
+      "source_tier": "institutional_crypto_media",
+      "source_credibility": 0.7,
+      "title": "The Strategy playbook looks different in 2026",
+      "summary": "The treasury company now holds 673,783 BTC, but flow is more likely to be episodic in this year\u2019s financial climate",
+      "link": "https://blockworks.com/news/strategy-playbook-2026",
+      "published_utc": null,
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 61.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "Blockworks",
+      "source_tier": "institutional_crypto_media",
+      "source_credibility": 0.7,
+      "title": "DePIN and crypto gaming led a surprising end-of-year rebound",
+      "summary": "BTC finished the week up 1.6%, while L2s, RWAs and the treasury trade continued to grind lower",
+      "link": "https://blockworks.com/news/depin-gaming-surprising-rebound",
+      "published_utc": null,
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 61.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    }
+  ],
+  "risk_tag_counts": {
+    "EXCHANGE": 1,
+    "MACRO": 6,
+    "MARKET_STRESS": 2,
+    "REGULATION": 7,
+    "SECURITY": 2
+  },
+  "symbol_counts": {
+    "BTC": 9,
+    "ETH": 3,
+    "SOL": 1
+  },
+  "daily_brain_bias": "DEFENSIVE_REFERENCE",
+  "source_failures": [],
+  "execution_allowed": false,
+  "live_order_allowed": false,
+  "live_sell_allowed": false,
+  "automation_allowed": false,
+  "order_endpoint_allowed": false,
+  "cancel_endpoint_allowed": false,
+  "market_sell_allowed": false,
+  "scheduler_allowed": false,
+  "no_profit_guarantee": true,
+  "next_safe_action": "daily_digest_shadow_reference_only_no_trade_execution"
+}

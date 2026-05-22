@@ -1,0 +1,394 @@
+{
+  "timestamp_kst": "2026-05-19T13:49:32+09:00",
+  "mode": "brain_v2_shadow_run",
+  "market": "KRW-BTC",
+  "open_orders_summary": {
+    "http_status": 200,
+    "success": true,
+    "market": "KRW-BTC",
+    "open_order_count": 0,
+    "open_order_exists": false,
+    "remaining_req": "group=default; min=1800; sec=29",
+    "error_name": null,
+    "error_message": null
+  },
+  "accounts_summary": {
+    "success": true,
+    "account_count": 17,
+    "currencies_present": [
+      "ALGO",
+      "APENFT",
+      "BTC",
+      "DOGE",
+      "DOT",
+      "ETC",
+      "ETH",
+      "EVR",
+      "FCT2",
+      "KRW",
+      "NKN",
+      "RVN",
+      "SALT",
+      "SOL",
+      "SXP",
+      "USDT",
+      "VTHO"
+    ],
+    "error_name": null
+  },
+  "public_data": {
+    "d1_count": 60,
+    "h4_count": 60,
+    "h1_count": 60,
+    "m15_count": 60,
+    "data_age_seconds": 2.586876953125,
+    "spread_bps": 1.6623
+  },
+  "decision": {
+    "schema_version": "kbia.strategy_brain.v2",
+    "market": "KRW-BTC",
+    "action": "STOP",
+    "decision_reason": "ORDERBOOK_ADVERSE_ASK_IMBALANCE",
+    "execution_allowed": false,
+    "live_order_allowed": false,
+    "automation_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "committee_yes_votes": 16,
+    "committee_total_votes": 21,
+    "committee_score": 73.04,
+    "committee": [
+      {
+        "name": "regime_trend",
+        "vote": false,
+        "score": 0,
+        "weight": 8
+      },
+      {
+        "name": "pullback_quality",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "momentum_confirmation",
+        "vote": true,
+        "score": 7,
+        "weight": 7
+      },
+      {
+        "name": "liquidity_depth",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "spread_slippage",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "volatility_window",
+        "vote": false,
+        "score": 0,
+        "weight": 6
+      },
+      {
+        "name": "volume_quality",
+        "vote": false,
+        "score": 0,
+        "weight": 6
+      },
+      {
+        "name": "reward_risk",
+        "vote": false,
+        "score": 0,
+        "weight": 7
+      },
+      {
+        "name": "portfolio_heat",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "exit_discipline",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "btc_market_regime",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "relative_strength",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "trend_maturity",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "wick_rejection",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "range_position",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "breakout_validation",
+        "vote": false,
+        "score": 0,
+        "weight": 4
+      },
+      {
+        "name": "data_freshness",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "spread_liquidity_consistency",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "drawdown_state",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "cooldown_clear",
+        "vote": true,
+        "score": 4,
+        "weight": 4
+      },
+      {
+        "name": "correlation_heat",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      }
+    ],
+    "stage_pass": {
+      "regime": true,
+      "setup": true,
+      "trigger": false,
+      "risk": true,
+      "guards": false
+    },
+    "confidence_bucket": "C",
+    "regime": {
+      "name": "VOL_COMPRESSION",
+      "reasons": [
+        "ATR_TOO_LOW_COMPRESSION"
+      ],
+      "buy_allowed": true
+    },
+    "timeframes": {
+      "mode": "multi",
+      "primary": "m15",
+      "indicators": {
+        "d1": {
+          "last_price": 114306000.0,
+          "sma_5": 115721000.0,
+          "sma_20": 117584150.0,
+          "sma_50": 112781040.0,
+          "sma20_slope_pct": 0.0017349559765037633,
+          "sma50_slope_pct": 0.012750408266294687,
+          "rsi_14": 31.291436464088406,
+          "atr_pct_14": 0.020108930664806998,
+          "atr_pct_14_prev": 0.01888105886503857,
+          "volume_z_20": -1.9052054434797545,
+          "high_20": 121000000.0,
+          "low_20": 112500000.0,
+          "distance_from_20d_high_pct": 0.058562105226322325,
+          "range_20_pct": 0.07436180078036149,
+          "close_vs_sma20_pct": -0.027879182695967102,
+          "latest_range_pct": 0.01042814900355187,
+          "upper_wick_ratio": 0.4983221476510067,
+          "latest_candle_gap_pct": 0.00019242880134350291,
+          "latest_volume_krw": 27488486348.79052,
+          "latest_timestamp": 1779166170333.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "h4": {
+          "last_price": 114306000.0,
+          "sma_5": 114180200.0,
+          "sma_20": 115710900.0,
+          "sma_50": 117757800.0,
+          "sma20_slope_pct": -0.009325334481734176,
+          "sma50_slope_pct": -0.004431444998036894,
+          "rsi_14": 31.235284884633487,
+          "atr_pct_14": 0.00865658845554914,
+          "atr_pct_14_prev": 0.007434923402665338,
+          "volume_z_20": -1.1128547264123518,
+          "high_20": 118050000.0,
+          "low_20": 113305000.0,
+          "distance_from_20d_high_pct": 0.03275418613196158,
+          "range_20_pct": 0.04151138172974297,
+          "close_vs_sma20_pct": -0.012141466361423167,
+          "latest_range_pct": 0.0028957360068587825,
+          "upper_wick_ratio": 0.0755287009063444,
+          "latest_candle_gap_pct": 0.0009019027521168446,
+          "latest_volume_krw": 3294667744.6973,
+          "latest_timestamp": 1779166170333.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "h1": {
+          "last_price": 114306000.0,
+          "sma_5": 114233200.0,
+          "sma_20": 114211150.0,
+          "sma_50": 115228180.0,
+          "sma20_slope_pct": -0.0004358444420425351,
+          "sma50_slope_pct": -0.0018795071183581884,
+          "rsi_14": 58.08695652173913,
+          "atr_pct_14": 0.004594184532245527,
+          "atr_pct_14_prev": 0.005662904725251657,
+          "volume_z_20": -0.7108363546814083,
+          "high_20": 115600000.0,
+          "low_20": 113305000.0,
+          "distance_from_20d_high_pct": 0.011320490612916208,
+          "range_20_pct": 0.020077686210697603,
+          "close_vs_sma20_pct": 0.0008304793358616913,
+          "latest_range_pct": 0.0028957360068587825,
+          "upper_wick_ratio": 0.0755287009063444,
+          "latest_candle_gap_pct": 0.0009019027521168446,
+          "latest_volume_krw": 3294667744.6973,
+          "latest_timestamp": 1779166170333.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "m15": {
+          "last_price": 114306000.0,
+          "sma_5": 114216000.0,
+          "sma_20": 114261050.0,
+          "sma_50": 114209680.0,
+          "sma20_slope_pct": -0.00047325310774643604,
+          "sma50_slope_pct": 0.0005089723681441816,
+          "rsi_14": 55.314232902033275,
+          "atr_pct_14": 0.0019265330403853316,
+          "atr_pct_14_prev": 0.00235526240062857,
+          "volume_z_20": -1.5431680557716925,
+          "high_20": 114900000.0,
+          "low_20": 113708000.0,
+          "distance_from_20d_high_pct": 0.005196577607474673,
+          "range_20_pct": 0.01042814900355187,
+          "close_vs_sma20_pct": 0.000393397400076404,
+          "latest_range_pct": 0.0006911273248998303,
+          "upper_wick_ratio": 0.31645569620253167,
+          "latest_candle_gap_pct": 0.00018375114844467778,
+          "latest_volume_krw": 195327984.93106,
+          "latest_timestamp": 1779166170333.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        }
+      }
+    },
+    "indicators": {
+      "last_price": 114306000.0,
+      "sma_5": 114216000.0,
+      "sma_20": 114261050.0,
+      "sma_50": 114209680.0,
+      "sma20_slope_pct": -0.00047325310774643604,
+      "sma50_slope_pct": 0.0005089723681441816,
+      "rsi_14": 55.314232902033275,
+      "atr_pct_14": 0.0019265330403853316,
+      "atr_pct_14_prev": 0.00235526240062857,
+      "volume_z_20": -1.5431680557716925,
+      "high_20": 114900000.0,
+      "low_20": 113708000.0,
+      "distance_from_20d_high_pct": 0.005196577607474673,
+      "range_20_pct": 0.01042814900355187,
+      "close_vs_sma20_pct": 0.000393397400076404,
+      "latest_range_pct": 0.0006911273248998303,
+      "upper_wick_ratio": 0.31645569620253167,
+      "latest_candle_gap_pct": 0.00018375114844467778,
+      "latest_volume_krw": 195327984.93106,
+      "latest_timestamp": 1779166170333.0,
+      "candles_count": 60,
+      "timestamps_sorted": true,
+      "timestamps_unique": true
+    },
+    "orderbook": {
+      "best_bid": 114287000.0,
+      "best_ask": 114306000.0,
+      "bid_depth_top5_krw": 15565291.59,
+      "ask_depth_top5_krw": 90001672.11,
+      "computed_spread_bps": 1.6623431163683926,
+      "ask_depth_ratio": 0.8525552782380535,
+      "crossed": false
+    },
+    "planned_order": {
+      "ord_type": "limit",
+      "side": null,
+      "max_krw": null,
+      "price_reference": "maker_limit_only"
+    },
+    "sizing_explain": {
+      "base_risk_krw": 10000.0,
+      "confidence_multiplier": 0.7304,
+      "volatility_multiplier": 1.0,
+      "drawdown_multiplier": 1.0,
+      "spread_multiplier": 1.0,
+      "loss_multiplier": 1.0,
+      "final_shadow_krw": 10000
+    },
+    "risk_policy": {
+      "max_risk_per_trade_pct": 0.005,
+      "max_position_pct": 0.1,
+      "max_daily_loss_pct": 0.015,
+      "hard_stop_loss_pct": 0.018,
+      "trailing_stop_pct": 0.014,
+      "take_profit_pct": 0.032
+    },
+    "entry_thesis": [],
+    "invalidation": [
+      "OPEN_ORDER_EXISTS",
+      "DAILY_LOSS_LIMIT_HIT",
+      "REGIME_FLIP_EXIT",
+      "HARD_STOP_LOSS"
+    ],
+    "hard_guards": [
+      "ORDERBOOK_ADVERSE_ASK_IMBALANCE"
+    ],
+    "no_trade_reasons": [
+      "ATR_TOO_LOW_COMPRESSION",
+      "ORDERBOOK_ADVERSE_ASK_IMBALANCE"
+    ],
+    "sell_reasons": [
+      "TREND_BREAK"
+    ],
+    "shadow_review_required": true,
+    "forbidden_endpoint_check": "PASS_NO_ORDER_OR_CANCEL_ENDPOINT",
+    "secrets_leak_check": "PASS_NO_SECRET_FIELDS",
+    "next_safe_action": "shadow_only_until_ip_allowlist_reconciliation_recovery_logging_alerts_validated"
+  },
+  "runtime_modified": false,
+  "live_order_submitted": false,
+  "cancel_attempted": false,
+  "workflow_activation_changed": false,
+  "cron_enabled": false,
+  "secrets_exposed": false
+}

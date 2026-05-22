@@ -1,0 +1,48 @@
+{
+  "date": "2026-05-22",
+  "mode": "live_buy_helper_shadow_freeze",
+  "files": [
+    "upbit-helper/app/main.py",
+    "tests/test_helper_live_buy_endpoints.py",
+    "tmp/run_aggressive_scalping_buy_shadow_20260522.py",
+    "tmp/remote_smoke_buy_helper_20260522.py",
+    "reports/aggressive_scalping_buy_shadow_2026-05-22.json",
+    "reports/aggressive_scalping_buy_shadow_2026-05-22.md"
+  ],
+  "new_endpoints": [
+    "/upbit/buy-test/telemetry",
+    "/upbit/live-buy/telemetry"
+  ],
+  "allowed_buy_markets": [
+    "KRW-BTC",
+    "KRW-ETH",
+    "KRW-SOL"
+  ],
+  "max_live_buy_krw": 10000,
+  "market_orders_allowed": false,
+  "cancel_allowed": false,
+  "live_buy_submitted": false,
+  "live_sell_submitted_by_this_task": false,
+  "remote_helper_deployed": true,
+  "remote_helper_health_ok": true,
+  "shadow_loop_count": 3,
+  "ready_for_buy_test_count": 0,
+  "live_order_count_verified": 0,
+  "tracked_open_orders": {
+    "KRW-BTC": 0,
+    "KRW-ETC": 0,
+    "KRW-DOT": 0,
+    "KRW-FCT2": 0,
+    "KRW-ALGO": 0,
+    "KRW-DOGE": 0
+  },
+  "blocked_cleanup_markets": {
+    "KRW-FCT2": "LIVE_SELL_ORDERBOOK_STALE|LIVE_SELL_SPREAD_TOO_WIDE",
+    "KRW-ALGO": "LIVE_SELL_SPREAD_TOO_WIDE",
+    "KRW-DOGE": "LIVE_SELL_SPREAD_TOO_WIDE"
+  },
+  "secret_exposure_in_artifacts": false,
+  "scheduler_started": false,
+  "workflow_activation": false,
+  "freeze_status": "BUY_GATE_DEPLOYED_LIVE_BUY_STILL_GATED"
+}

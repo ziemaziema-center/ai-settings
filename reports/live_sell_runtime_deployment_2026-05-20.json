@@ -1,0 +1,66 @@
+{
+  "timestamp_kst": "2026-05-20T12:40:30+09:00",
+  "mode": "live_sell_helper_runtime_deployment",
+  "runtime_scope": "upbit-helper_only",
+  "deployment_result": "PASS",
+  "remote_backup": "/home/ubuntu/kbia_backups/upbit-helper-live-sell-20260520_123919",
+  "rollback_image": "upbit-helper:rollback-live-sell-20260520_123919",
+  "helper_health": "PASS",
+  "endpoints_added": [
+    "/upbit/sell-test/telemetry",
+    "/upbit/live-sell/telemetry"
+  ],
+  "remote_smoke": {
+    "health_ok": true,
+    "market_order_blocked": true,
+    "bid_sell_test_blocked": true,
+    "sell_test_success": true,
+    "live_sell_blocked_without_flags": true,
+    "live_sell_attempted": false,
+    "open_order_count_btc": 0,
+    "open_order_count_etc": 0,
+    "open_order_exists_btc": false,
+    "open_order_exists_etc": false,
+    "sell_test_error_name": null,
+    "no_live_order_submitted": true,
+    "no_cancel_submitted": true,
+    "no_market_order_submitted": true
+  },
+  "cleanup_decision": {
+    "portfolio_plan_valid": true,
+    "news_bias": "DEFENSIVE_REFERENCE",
+    "first_candidate": "KRW-ETC",
+    "first_action": "EXIT_STAGED",
+    "first_shadow_slice_krw": 99816,
+    "single_live_cap_krw": 30000,
+    "sequence": [
+      "KRW-ETC",
+      "KRW-DOT",
+      "KRW-FCT2",
+      "KRW-ALGO",
+      "KRW-DOGE"
+    ]
+  },
+  "scheduler_contract": {
+    "coordinator_read_loop_allowed": true,
+    "order_loop_allowed": false,
+    "live_sell_scheduler_allowed": false,
+    "orders_per_cycle": 1,
+    "stop_immediately_after_order": true,
+    "activation_performed": false
+  },
+  "safety": {
+    "live_order_submitted": false,
+    "live_sell_submitted": false,
+    "cancel_submitted": false,
+    "retry_loop_started": false,
+    "workflow_activated": false,
+    "project_scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_order_payload_exposed": false,
+    "raw_account_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

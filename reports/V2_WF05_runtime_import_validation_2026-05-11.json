@@ -1,0 +1,46 @@
+{
+  "wf05_import_validation": "PASS",
+  "workflow_id": "WF05LockROV2A11",
+  "wf05_imported": true,
+  "wf05_runtime_inactive": true,
+  "trigger_count": 0,
+  "runtime_trigger_executed": false,
+  "execution_count": 0,
+  "manual_trigger_only": true,
+  "cron_disabled": true,
+  "lock_checks_present": true,
+  "helper_endpoint_references_present": true,
+  "lock_acquire_present": false,
+  "lock_release_present": false,
+  "live_order_path_present": false,
+  "cancel_reorder_withdraw_path_present": false,
+  "telegram_send_present": false,
+  "upbit_target_workflows": [
+    {
+      "name": "KBIA_03_WF_Upbit_PreCheck_Engine",
+      "active": 0,
+      "triggerCount": 0,
+      "isArchived": 0
+    },
+    {
+      "name": "KBIA_03_WF_Upbit_PreCheck_Engine",
+      "active": 0,
+      "triggerCount": 0,
+      "isArchived": 0
+    },
+    {
+      "name": "KBIA_04_WF_Upbit_Execution_Engine",
+      "active": 0,
+      "triggerCount": 0,
+      "isArchived": 0
+    },
+    {
+      "name": "WF05_Reconciliation_ReadOnly",
+      "active": 0,
+      "triggerCount": 0,
+      "isArchived": 0
+    }
+  ],
+  "wf03_untouched_inactive": true,
+  "wf04_untouched_inactive": true
+}

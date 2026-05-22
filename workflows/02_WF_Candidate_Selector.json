@@ -1,0 +1,114 @@
+{
+  "name": "KBIA_02_WF_Upbit_Candidate_Selector",
+  "nodes": [
+    {
+      "id": "5109283e-eb32-4ccf-830b-e3f0ad9ca45e",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "parameters": {}
+    },
+    {
+      "id": "27876daf-00a7-47c8-82a9-0da784aa4264",
+      "name": "Seed Upbit Candidate Universe",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "candidate_universe",
+              "value": "KRW-BTC,KRW-ETH,KRW-XRP,KRW-SOL"
+            },
+            {
+              "name": "strategy_profile",
+              "value": "conservative_momentum"
+            }
+          ],
+          "number": [
+            {
+              "name": "max_candidates",
+              "value": 3
+            },
+            {
+              "name": "min_24h_krw_volume",
+              "value": 10000000000
+            }
+          ],
+          "boolean": [
+            {
+              "name": "execution_allowed",
+              "value": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "6b5082a0-ef14-4e75-aeae-1afde1c7d97e",
+      "name": "Score Upbit Candidates",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [700, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const first = $input.first().json;\nconst fallbackMarkets = String(first.candidate_universe || '').split(',').map(v => v.trim()).filter(Boolean);\nconst sourceTickers = Array.isArray(first.tickers) && first.tickers.length\n  ? first.tickers\n  : fallbackMarkets.map((market, index) => ({\n      market,\n      trade_price: 0,\n      signed_change_rate: 0,\n      acc_trade_price_24h: 0,\n      acc_trade_volume_24h: 0,\n      high_price: 0,\n      low_price: 0,\n      simulated_input: true,\n      fallback_rank: index + 1\n    }));\nconst allowed = new Set(fallbackMarkets);\nconst minVolume = Number(first.min_24h_krw_volume || 0);\nconst maxCandidates = Number(first.max_candidates || 3);\nconst candidates = sourceTickers\n  .filter(row => row.market && row.market.startsWith('KRW-') && (!allowed.size || allowed.has(row.market)))\n  .map(row => {\n    const price = Number(row.trade_price || 0);\n    const changeRate = Number(row.signed_change_rate || 0);\n    const volumeKrw = Number(row.acc_trade_price_24h || 0);\n    const high = Number(row.high_price || 0);\n    const low = Number(row.low_price || 0);\n    const range = high > 0 && low > 0 ? (high - low) / price : 0;\n    const liquidityScore = Math.min(volumeKrw / Math.max(minVolume, 1), 2) / 2;\n    const momentumScore = Math.max(Math.min((changeRate + 0.08) / 0.16, 1), 0);\n    const volatilityPenalty = Math.min(range, 0.15);\n    const finalScore = Number((liquidityScore * 0.45 + momentumScore * 0.45 - volatilityPenalty * 0.10).toFixed(4));\n    return {\n      market: row.market,\n      strategy_profile: first.strategy_profile || 'conservative_momentum',\n      trade_price: price,\n      signed_change_rate: changeRate,\n      acc_trade_price_24h: volumeKrw,\n      volatility_range: Number(range.toFixed(6)),\n      liquidity_ok: volumeKrw >= minVolume,\n      final_score: finalScore,\n      selected: false,\n      execution_allowed: false,\n      reason: 'reference_only_until_precheck_passes'\n    };\n  })\n  .sort((a, b) => b.final_score - a.final_score)\n  .map((row, index) => ({ ...row, rank: index + 1, selected: index < maxCandidates && row.liquidity_ok }));\nreturn candidates.map(candidate => ({ json: candidate }));"
+      }
+    },
+    {
+      "id": "ada693c1-e903-4305-991f-adc82c47ac30",
+      "name": "Selected Upbit Candidate Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [950, 300],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    candidate_status: $json.selected ? 'selected_reference_only' : 'not_selected',\n    execution_allowed: false,\n    handoff_note: 'WF03 must validate balances, open orders, order chance, order test, and explicit live gate.'\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Seed Upbit Candidate Universe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed Upbit Candidate Universe": {
+      "main": [
+        [
+          {
+            "node": "Score Upbit Candidates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score Upbit Candidates": {
+      "main": [
+        [
+          {
+            "node": "Selected Upbit Candidate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

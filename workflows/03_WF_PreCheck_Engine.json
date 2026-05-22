@@ -1,0 +1,593 @@
+{
+  "name": "KBIA_03_WF_Upbit_PreCheck_Engine",
+  "nodes": [
+    {
+      "id": "eceb7bde-a684-4af3-b8f5-2a78a74c4a13",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        350
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "5b781142-66af-4c0a-9028-59e8198e8677",
+      "name": "Set Upbit Trade Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        450,
+        350
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  market: String($json.market || \"KRW-BTC\"),\n  side: 'bid',\n  ord_type: 'limit',\n  execution_mode: 'dry_run',\n  live_order_enabled: false,\n  execution_allowed: false,\n  helper_base_url: String($json.helper_base_url || 'http://upbit-helper:8010'),\n  identifier_prefix: 'kbia-dryrun',\n  volume: 0.0001,\n  price: 100000000,\n  min_krw_per_order: 5000,\n  max_krw_per_order: 30000,\n  private_api_checks_enabled: true\n};"
+      }
+    },
+    {
+      "id": "a0d846a8-6fa1-4527-8e68-2d0f16b02701",
+      "name": "Get Accounts Telemetry From Helper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        130
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.helper_base_url + \"/upbit/accounts/telemetry\" }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ estimated_krw_value: $json.estimated_krw_value }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    },
+    {
+      "id": "d5381dd5-eaa4-4630-9f6d-d05515e22f60",
+      "name": "Attach Accounts Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2450,
+        130
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const request = $items('Validate Order Size')[0].json;\nconst accounts = $json || {};\nconst krwBalanceSufficient = accounts.krw_balance_sufficient === true;\nlet stopCode = accounts.error_message === 'RATE_LIMITED' ? 'RATE_LIMITED' : (accounts.success === true ? null : (accounts.error_message || accounts.error_name || 'ACCOUNT_VALIDATION_NOT_PASSED'));\nif (accounts.success === true && krwBalanceSufficient !== true) {\n  stopCode = accounts.krw_balance_sufficient === false ? 'INSUFFICIENT_KRW' : 'KRW_BALANCE_CHECK_UNAVAILABLE';\n}\nreturn {\n  ...request,\n  accounts_telemetry: {\n    http_status: accounts.http_status ?? null,\n    success: accounts.success === true,\n    account_count: Number(accounts.account_count || 0),\n    currencies_present: Array.isArray(accounts.currencies_present) ? accounts.currencies_present : [],\n    krw_balance_sufficient: accounts.krw_balance_sufficient === true ? true : (accounts.krw_balance_sufficient === false ? false : null),\n    krw_available_band: accounts.krw_available_band ?? null,\n    remaining_req: accounts.remaining_req ?? null,\n    error_name: accounts.error_name ?? null,\n    error_message: accounts.error_message ?? null\n  },\n  account_and_krw_check_passed: accounts.success === true && krwBalanceSufficient === true,\n  account_and_krw_check_status: accounts.success === true && krwBalanceSufficient === true ? 'clear' : 'blocked',\n  stop_code: stopCode,\n  account_balance_checked: accounts.success === true,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "id": "e66bbb26-6f9c-4856-b384-802c9ff9e785",
+      "name": "Accounts OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2700,
+        130
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "account-krw-clear-condition",
+              "leftValue": "={{ $json.account_and_krw_check_status }}",
+              "rightValue": "clear",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "fd9e0901-3db1-45f7-a775-39f7ddc4f6fd",
+      "name": "Get Open Orders Telemetry From Helper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2950,
+        50
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.helper_base_url + \"/upbit/open-orders/telemetry\" }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ market: $json.market }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    },
+    {
+      "id": "e57d813f-5492-42fb-a132-ce541682cd48",
+      "name": "Attach Open Orders Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        50
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const request = $items('Attach Accounts Telemetry')[0].json;\nconst openOrders = $json || {};\nlet stopCode = request.stop_code || null;\nif (openOrders.error_message === 'RATE_LIMITED') stopCode = 'RATE_LIMITED';\nif (openOrders.success !== true && !stopCode) stopCode = openOrders.error_message || openOrders.error_name || 'OPEN_ORDER_CHECK_FAILED';\nif (openOrders.success === true && openOrders.open_order_exists === true) stopCode = 'OPEN_ORDER_EXISTS';\nreturn {\n  ...request,\n  open_order_telemetry: {\n    http_status: openOrders.http_status ?? null,\n    success: openOrders.success === true,\n    market: String(openOrders.market || request.market),\n    open_order_count: Number(openOrders.open_order_count || 0),\n    open_order_exists: openOrders.open_order_exists === true,\n    remaining_req: openOrders.remaining_req ?? null,\n    error_name: openOrders.error_name ?? null,\n    error_message: openOrders.error_message ?? null\n  },\n  open_orders_absent: openOrders.success === true && openOrders.open_order_exists === false,\n  stop_code: stopCode,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "id": "b15521ce-2e70-4c3c-8c01-cbb938bde3cb",
+      "name": "Build Open Orders Skipped Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2950,
+        250
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const stopCode = $json.stop_code || 'ACCOUNT_VALIDATION_NOT_PASSED';\nreturn {\n  ...$json,\n  open_order_telemetry: {\n    http_status: null,\n    success: false,\n    market: String($json.market || \"KRW-BTC\"),\n    open_order_count: 0,\n    open_order_exists: false,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  open_orders_absent: false,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "id": "f90b452b-242b-4cd5-b5e3-3f1871d69656",
+      "name": "Validate Upbit Safety Conditions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3450,
+        350
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const request = $input.first().json;\nconst market = String(request.market || '');\nconst side = String(request.side || '');\nconst ordType = String(request.ord_type || '');\nconst price = Number(request.price);\nconst volume = Number(request.volume);\nconst estimatedKrwValue = request.estimated_krw_value === null || request.estimated_krw_value === undefined ? null : Number(request.estimated_krw_value);\nconst minKrw = Number(request.min_krw_per_order || 5000);\nconst maxKrw = Number(request.max_krw_per_order || 30000);\nconst accountsTelemetry = request.accounts_telemetry || {};\nconst openOrderTelemetry = request.open_order_telemetry || {};\nconst duplicateLockActive = request.duplicate_lock_active === true;\nconst duplicateLockStatus = String(request.duplicate_lock_status || 'unknown');\nconst orderSizeStatus = String(request.order_size_status || 'unknown');\nconst krwBalanceSufficient = accountsTelemetry.krw_balance_sufficient === true;\nconst systemStopActive = request.system_stop_active === true;\nconst emergencyStopSource = String(request.emergency_stop_source || 'workflow_static_config_default_false');\nconst externalLogSink = false;\nconst alertSink = false;\nconst internalLogAvailable = true;\nconst localChecks = {\n  system_stop_clear: systemStopActive === false,\n  market_is_krw_btc: market === 'KRW-BTC',\n  side_is_bid: side === 'bid',\n  limit_order_only: ordType === 'limit',\n  price_numeric: Number.isFinite(price) && price > 0,\n  volume_numeric: Number.isFinite(volume) && volume > 0,\n  estimated_krw_value_numeric: Number.isFinite(estimatedKrwValue || NaN),\n  estimated_krw_value_min: Number.isFinite(estimatedKrwValue || NaN) && estimatedKrwValue >= minKrw,\n  estimated_krw_value_max: Number.isFinite(estimatedKrwValue || NaN) && estimatedKrwValue <= maxKrw,\n  order_size_clear: orderSizeStatus === 'clear',\n  live_gate_disabled_by_default: request.live_order_enabled === false,\n  dry_run_mode: request.execution_mode === 'dry_run'\n};\nconst externalChecks = {\n  duplicate_lock_clear: duplicateLockActive === false && duplicateLockStatus === 'clear',\n  account_balance_checked: accountsTelemetry.success === true,\n  krw_balance_sufficient: krwBalanceSufficient,\n  open_order_check_success: openOrderTelemetry.success === true,\n  open_orders_absent: openOrderTelemetry.open_order_exists === false,\n  rate_limit_clear: request.stop_code !== 'RATE_LIMITED',\n  auth_clear: request.stop_code !== 'AUTH_FAILED' && request.stop_code !== 'CREDENTIAL_MISSING',\n  internal_log_available: internalLogAvailable,\n  logging_available: internalLogAvailable\n};\nconst checks = { ...localChecks, ...externalChecks };\nconst all_pass = false;\nconst fail_reasons = Object.entries(checks).filter(([, value]) => !value).map(([key]) => key);\nconst stopReasons = [];\nif (systemStopActive === true) stopReasons.push('SYSTEM_STOP_ACTIVE');\nif (duplicateLockActive === true) stopReasons.push('DUPLICATE_LOCK_ACTIVE');\nif (request.stop_code === 'DUPLICATE_LOCK_STORAGE_UNAVAILABLE') stopReasons.push('DUPLICATE_LOCK_STORAGE_UNAVAILABLE');\nif (Array.isArray(request.order_size_reason_codes)) stopReasons.push(...request.order_size_reason_codes);\nif (accountsTelemetry.success === true && accountsTelemetry.krw_balance_sufficient === false) stopReasons.push('INSUFFICIENT_KRW');\nif (accountsTelemetry.success === true && accountsTelemetry.krw_balance_sufficient === null) stopReasons.push('KRW_BALANCE_CHECK_UNAVAILABLE');\nif (accountsTelemetry.success !== true) stopReasons.push('ACCOUNT_VALIDATION_NOT_PASSED');\nif (openOrderTelemetry.success !== true) stopReasons.push('OPEN_ORDER_CHECK_FAILED');\nif (openOrderTelemetry.open_order_exists === true) stopReasons.push('OPEN_ORDER_EXISTS');\nif (request.stop_code) stopReasons.push(request.stop_code);\nconst reason_codes = [...new Set([...stopReasons, ...fail_reasons])];\nif (all_pass !== true && reason_codes.length === 0) reason_codes.push('ALL_PASS_DISABLED_UNTIL_ALL_VALIDATION_LAYERS_EXIST');\nconst safe_log_payload = {\n  timestamp: new Date().toISOString(),\n  workflow: 'KBIA_03_WF_Upbit_PreCheck_Engine',\n  mode: request.execution_mode,\n  market,\n  side,\n  ord_type: ordType,\n  system_stop_active: systemStopActive,\n  emergency_stop_source: emergencyStopSource,\n  internal_log_available: internalLogAvailable,\n  external_log_sink: externalLogSink,\n  alert_sink: alertSink,\n  estimated_krw_value: estimatedKrwValue,\n  min_krw_per_order: minKrw,\n  max_krw_per_order: maxKrw,\n  order_size_status: orderSizeStatus,\n  krw_balance_sufficient: accountsTelemetry.krw_balance_sufficient === true ? true : (accountsTelemetry.krw_balance_sufficient === false ? false : null),\n  krw_available_band: accountsTelemetry.krw_available_band ?? null,\n  duplicate_lock_status: duplicateLockStatus,\n  duplicate_lock_key: request.duplicate_lock_key ?? null,\n  duplicate_lock_window_minutes: Number(request.duplicate_lock_window_minutes || 30),\n  duplicate_lock_active: duplicateLockActive,\n  duplicate_lock_checked_at: request.duplicate_lock_checked_at ?? null,\n  duplicate_lock_expires_at: duplicateLockActive === true ? (request.duplicate_lock_expires_at ?? null) : null,\n  accounts_telemetry: {\n    http_status: accountsTelemetry.http_status ?? null,\n    success: accountsTelemetry.success === true,\n    account_count: Number(accountsTelemetry.account_count || 0),\n    currencies_present: Array.isArray(accountsTelemetry.currencies_present) ? accountsTelemetry.currencies_present : [],\n  },\n  open_order_telemetry: {\n    http_status: openOrderTelemetry.http_status ?? null,\n    success: openOrderTelemetry.success === true,\n    open_order_exists: openOrderTelemetry.open_order_exists === true,\n  },\n  precheck_status: 'stop',\n  all_pass,\n  reason_codes,\n  live_order_enabled: request.live_order_enabled === true,\n  execution_allowed: false\n};\nconst handoff_payload = {\n  market,\n  side,\n  ord_type: ordType,\n  estimated_krw_value: estimatedKrwValue,\n  precheck_status: 'stop',\n  all_pass,\n  execution_allowed: false,\n  live_order_enabled: request.live_order_enabled === true,\n  duplicate_lock_status: duplicateLockStatus,\n  order_size_status: orderSizeStatus,\n  system_stop_active: systemStopActive,\n  safe_log_payload\n};\nreturn [{\n  json: {\n    ...request,\n    system_stop_active: systemStopActive,\n    emergency_stop_source: emergencyStopSource,\n    internal_log_available: internalLogAvailable,\n    external_log_sink: externalLogSink,\n    alert_sink: alertSink,\n    notional_krw: estimatedKrwValue,\n    precheck_stage: 'upbit_helper_http_telemetry_validation',\n    precheck_status: 'stop',\n    precheck_passed: false,\n    all_pass,\n    checks,\n    fail_reasons,\n    stop_reasons: [...new Set(stopReasons)],\n    reason_codes,\n    safe_log_payload,\n    handoff_payload,\n    execution_allowed: false,\n    next_required_actions: [\n      'Review safe_log_payload only',\n      'Keep live_order_enabled=false',\n      'Keep auth signing outside n8n'\n    ]\n  }\n}];"
+      }
+    },
+    {
+      "id": "fd5891a0-7e72-4a0a-92a3-291197fa09dc",
+      "name": "Precheck STOP Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        350
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return { ...$json, precheck_status: 'stop', precheck_passed: false, execution_allowed: false };"
+      }
+    },
+    {
+      "name": "Check Duplicate Lock",
+      "id": "7cc00fe7-d3fb-44b3-9d9d-0abf7b46c701",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        350
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const windowMinutes = 30;\nconst checkedAtMs = Date.now();\nconst checkedAt = new Date(checkedAtMs).toISOString();\nconst market = String($json.market || 'KRW-BTC');\nconst side = String($json.side || '');\nconst ordType = String($json.ord_type || '');\nconst lockKey = [market, side, ordType].join('|');\nlet duplicateLockStorage = 'workflow_static_data';\nlet staticData = null;\ntry {\n  if (typeof $getWorkflowStaticData === 'function') {\n    staticData = $getWorkflowStaticData('global');\n  } else if (typeof getWorkflowStaticData === 'function') {\n    staticData = getWorkflowStaticData('global');\n  }\n} catch (error) {\n  staticData = null;\n}\nif (!staticData) {\n  return {\n    ...$json,\n    duplicate_lock_storage: 'internal_safe_fallback',\n    duplicate_lock_status: 'storage_unavailable',\n    duplicate_lock_key: lockKey,\n    duplicate_lock_window_minutes: windowMinutes,\n    duplicate_lock_active: true,\n    duplicate_lock_checked_at: checkedAt,\n    duplicate_lock_expires_at: null,\n    duplicate_lock_error: 'WORKFLOW_STATIC_DATA_UNAVAILABLE',\n    stop_code: 'DUPLICATE_LOCK_STORAGE_UNAVAILABLE',\n    execution_allowed: false\n  };\n}\nif (!staticData.kbia_duplicate_locks || typeof staticData.kbia_duplicate_locks !== 'object') {\n  staticData.kbia_duplicate_locks = {};\n}\nconst locks = staticData.kbia_duplicate_locks;\nfor (const [key, value] of Object.entries(locks)) {\n  const expiresAtMs = Number(value && value.expires_at_ms);\n  if (!Number.isFinite(expiresAtMs) || expiresAtMs <= checkedAtMs) {\n    delete locks[key];\n  }\n}\nconst existing = locks[lockKey];\nconst existingExpiresAtMs = Number(existing && existing.expires_at_ms);\nif (Number.isFinite(existingExpiresAtMs) && existingExpiresAtMs > checkedAtMs) {\n  return {\n    ...$json,\n    duplicate_lock_storage: duplicateLockStorage,\n    duplicate_lock_status: 'active',\n    duplicate_lock_key: lockKey,\n    duplicate_lock_window_minutes: windowMinutes,\n    duplicate_lock_active: true,\n    duplicate_lock_checked_at: checkedAt,\n    duplicate_lock_expires_at: new Date(existingExpiresAtMs).toISOString(),\n    stop_code: 'DUPLICATE_LOCK_ACTIVE',\n    execution_allowed: false\n  };\n}\nconst expiresAtMs = checkedAtMs + windowMinutes * 60 * 1000;\nlocks[lockKey] = {\n  market,\n  side,\n  ord_type: ordType,\n  created_at: checkedAt,\n  expires_at: new Date(expiresAtMs).toISOString(),\n  expires_at_ms: expiresAtMs\n};\nreturn {\n  ...$json,\n  duplicate_lock_storage: duplicateLockStorage,\n  duplicate_lock_status: 'clear',\n  duplicate_lock_key: lockKey,\n  duplicate_lock_window_minutes: windowMinutes,\n  duplicate_lock_active: false,\n  duplicate_lock_checked_at: checkedAt,\n  duplicate_lock_expires_at: null,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "name": "Duplicate Lock Clear?",
+      "id": "284048ea-082d-43cb-915c-a9cbb8f4df2b",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1450,
+        350
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "duplicate-lock-clear-condition",
+              "leftValue": "={{ $json.duplicate_lock_active }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Build Duplicate Lock Stop Telemetry",
+      "id": "3e9ad889-a241-4b32-a569-d1f3c663aeb8",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        560
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const stopCode = $json.stop_code || ($json.duplicate_lock_active === true ? 'DUPLICATE_LOCK_ACTIVE' : 'DUPLICATE_LOCK_STORAGE_UNAVAILABLE');\nreturn {\n  ...$json,\n  accounts_telemetry: {\n    http_status: null,\n    success: false,\n    account_count: 0,\n    currencies_present: [],\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  open_order_telemetry: {\n    http_status: null,\n    success: false,\n    market: String($json.market || 'KRW-BTC'),\n    open_order_count: 0,\n    open_order_exists: false,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  account_balance_checked: false,\n  open_orders_absent: false,\n  stop_code: stopCode,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "name": "Validate Order Size",
+      "id": "e2e34b24-5700-4e32-8ad4-d6c2cd625567",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        230
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const market = String($json.market || '');\nconst side = String($json.side || '');\nconst ordType = String($json.ord_type || '');\nconst price = Number($json.price);\nconst volume = Number($json.volume);\nconst minKrw = Number($json.min_krw_per_order || 5000);\nconst maxKrw = Number($json.max_krw_per_order || 30000);\nconst priceValid = Number.isFinite(price) && price > 0;\nconst volumeValid = Number.isFinite(volume) && volume > 0;\nconst estimated = priceValid && volumeValid ? Number((price * volume).toFixed(8)) : null;\nconst reasonCodes = [];\nif (market !== 'KRW-BTC') reasonCodes.push('MARKET_NOT_KRW_BTC');\nif (side !== 'bid') reasonCodes.push('SIDE_NOT_BID');\nif (ordType !== 'limit') reasonCodes.push('ORD_TYPE_NOT_LIMIT');\nif (!priceValid || !volumeValid) reasonCodes.push('INVALID_PRICE_VOLUME');\nif (estimated !== null && estimated < minKrw) reasonCodes.push('BELOW_MIN_KRW_ORDER');\nif (estimated !== null && estimated > maxKrw) reasonCodes.push('ABOVE_MAX_KRW_ORDER');\nlet orderSizeStatus = 'clear';\nif (reasonCodes.includes('INVALID_PRICE_VOLUME')) orderSizeStatus = 'invalid_price_volume';\nelse if (reasonCodes.includes('BELOW_MIN_KRW_ORDER')) orderSizeStatus = 'below_min';\nelse if (reasonCodes.includes('ABOVE_MAX_KRW_ORDER')) orderSizeStatus = 'above_max';\nelse if (reasonCodes.length > 0) orderSizeStatus = 'invalid_order_spec';\nreturn {\n  ...$json,\n  price,\n  volume,\n  estimated_krw_value: estimated,\n  min_krw_per_order: minKrw,\n  max_krw_per_order: maxKrw,\n  order_size_status: orderSizeStatus,\n  order_size_reason_codes: reasonCodes,\n  stop_code: reasonCodes.length > 0 ? reasonCodes[0] : ($json.stop_code || null),\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "name": "Order Size Clear?",
+      "id": "adf3c6e9-8e5d-481d-8a9e-6c177850d343",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1950,
+        230
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "order-size-clear-condition",
+              "leftValue": "={{ $json.order_size_status }}",
+              "rightValue": "clear",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Build Order Size Stop Telemetry",
+      "id": "73f69a71-11c0-4417-a11f-b6dc7cc0b50c",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        430
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const stopCode = $json.stop_code || 'ORDER_SIZE_VALIDATION_NOT_PASSED';\nreturn {\n  ...$json,\n  accounts_telemetry: {\n    http_status: null,\n    success: false,\n    account_count: 0,\n    currencies_present: [],\n    krw_balance_sufficient: null,\n    krw_available_band: null,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  open_order_telemetry: {\n    http_status: null,\n    success: false,\n    market: String($json.market || 'KRW-BTC'),\n    open_order_count: 0,\n    open_order_exists: false,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  account_balance_checked: false,\n  open_orders_absent: false,\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "name": "Check Emergency Stop",
+      "id": "90e6ad8e-c5f1-4f41-bb0a-0e2df4f7f1b2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        700,
+        350
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "let emergencyStopSource = 'workflow_static_config_default_false';\nlet staticData = null;\ntry {\n  if (typeof $getWorkflowStaticData === 'function') {\n    staticData = $getWorkflowStaticData('global');\n  } else if (typeof getWorkflowStaticData === 'function') {\n    staticData = getWorkflowStaticData('global');\n  }\n} catch (error) {\n  staticData = null;\n}\nlet configuredValue = false;\nif (staticData && staticData.kbia_config && Object.prototype.hasOwnProperty.call(staticData.kbia_config, 'SYSTEM_STOP')) {\n  configuredValue = staticData.kbia_config.SYSTEM_STOP;\n  emergencyStopSource = 'workflow_static_config';\n} else if (!staticData) {\n  emergencyStopSource = 'workflow_static_config_unavailable_default_false';\n}\nconst systemStopActive = configuredValue === true || configuredValue === 'true' || configuredValue === 'TRUE' || configuredValue === 1 || configuredValue === '1';\nreturn {\n  ...$json,\n  system_stop_active: systemStopActive,\n  emergency_stop_source: emergencyStopSource,\n  internal_log_available: true,\n  external_log_sink: false,\n  alert_sink: false,\n  stop_code: systemStopActive ? 'SYSTEM_STOP_ACTIVE' : ($json.stop_code || null),\n  execution_allowed: false\n};"
+      }
+    },
+    {
+      "name": "Emergency Stop Clear?",
+      "id": "17c43bdb-6205-4a40-a284-4a5d63b329d2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        950,
+        350
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "emergency-stop-clear-condition",
+              "leftValue": "={{ $json.system_stop_active }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Build Emergency Stop Telemetry",
+      "id": "67d4557a-0fa4-40d3-94ac-1ced34c72dc4",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        650
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const stopCode = 'SYSTEM_STOP_ACTIVE';\nreturn {\n  ...$json,\n  accounts_telemetry: {\n    http_status: null,\n    success: false,\n    account_count: 0,\n    currencies_present: [],\n    krw_balance_sufficient: null,\n    krw_available_band: null,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  open_order_telemetry: {\n    http_status: null,\n    success: false,\n    market: String($json.market || 'KRW-BTC'),\n    open_order_count: 0,\n    open_order_exists: false,\n    remaining_req: null,\n    error_name: stopCode,\n    error_message: stopCode\n  },\n  account_balance_checked: false,\n  open_orders_absent: false,\n  stop_code: stopCode,\n  execution_allowed: false\n};"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Upbit Trade Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Upbit Trade Request": {
+      "main": [
+        [
+          {
+            "node": "Check Emergency Stop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Emergency Stop": {
+      "main": [
+        [
+          {
+            "node": "Emergency Stop Clear?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Emergency Stop Clear?": {
+      "main": [
+        [
+          {
+            "node": "Check Duplicate Lock",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Emergency Stop Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Duplicate Lock": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Lock Clear?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicate Lock Clear?": {
+      "main": [
+        [
+          {
+            "node": "Validate Order Size",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Duplicate Lock Stop Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Order Size": {
+      "main": [
+        [
+          {
+            "node": "Order Size Clear?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Size Clear?": {
+      "main": [
+        [
+          {
+            "node": "Get Accounts Telemetry From Helper",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Order Size Stop Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Accounts Telemetry From Helper": {
+      "main": [
+        [
+          {
+            "node": "Attach Accounts Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Accounts Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Accounts OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accounts OK?": {
+      "main": [
+        [
+          {
+            "node": "Get Open Orders Telemetry From Helper",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Open Orders Skipped Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Open Orders Telemetry From Helper": {
+      "main": [
+        [
+          {
+            "node": "Attach Open Orders Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Open Orders Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Upbit Safety Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Open Orders Skipped Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Upbit Safety Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Duplicate Lock Stop Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Upbit Safety Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Order Size Stop Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Upbit Safety Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Emergency Stop Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Upbit Safety Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Upbit Safety Conditions": {
+      "main": [
+        [
+          {
+            "node": "Precheck STOP Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

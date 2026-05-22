@@ -1,0 +1,482 @@
+{
+  "timestamp_kst": "2026-05-20T12:28:42+09:00",
+  "mode": "brain_v4_live_readiness",
+  "market": "KRW-BTC",
+  "accounts_summary": {
+    "success": false,
+    "account_count": null,
+    "krw_balance_sufficient": null,
+    "error_name": "REMOTE_HELPER_CALL_FAILED"
+  },
+  "open_orders_summary": {
+    "success": false,
+    "error_name": "REMOTE_HELPER_CALL_FAILED",
+    "error_message": "Load key \"C:\\\\Users\\\\minho\\\\Downloads\\\\n8n-key.pem\": Permission denied\nubuntu@43.201.227.194: Permission denied (publickey).\n"
+  },
+  "detail_summary": {
+    "success": false,
+    "error_name": "REMOTE_HELPER_CALL_FAILED",
+    "error_message": "Load key \"C:\\\\Users\\\\minho\\\\Downloads\\\\n8n-key.pem\": Permission denied\nubuntu@43.201.227.194: Permission denied (publickey).\n"
+  },
+  "public_data": {
+    "d1_count": 60,
+    "h4_count": 60,
+    "h1_count": 60,
+    "m15_count": 60,
+    "data_age_seconds": 1.9090380859375,
+    "spread_bps": 2.3666
+  },
+  "decision": {
+    "schema_version": "kbia.strategy_brain.v4",
+    "market": "KRW-BTC",
+    "action": "STOP",
+    "decision_reason": "ACCOUNT_STATE_NOT_AUTHORITATIVE|MANUAL_OR_NEWS_BLOCK_ACTIVE",
+    "execution_allowed": false,
+    "live_order_allowed": false,
+    "automation_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "committee_yes_votes": 16,
+    "committee_total_votes": 21,
+    "committee_score": 60.17,
+    "committee_score_raw": 72.17,
+    "committee": [
+      {
+        "name": "regime_trend",
+        "vote": false,
+        "score": 0,
+        "weight": 8
+      },
+      {
+        "name": "pullback_quality",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "momentum_confirmation",
+        "vote": false,
+        "score": 0,
+        "weight": 7
+      },
+      {
+        "name": "liquidity_depth",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "spread_slippage",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "volatility_window",
+        "vote": false,
+        "score": 0,
+        "weight": 6
+      },
+      {
+        "name": "volume_quality",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "reward_risk",
+        "vote": false,
+        "score": 0,
+        "weight": 7
+      },
+      {
+        "name": "portfolio_heat",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "exit_discipline",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "btc_market_regime",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "relative_strength",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "trend_maturity",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "wick_rejection",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "range_position",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "breakout_validation",
+        "vote": false,
+        "score": 0,
+        "weight": 4
+      },
+      {
+        "name": "data_freshness",
+        "vote": true,
+        "score": 6,
+        "weight": 6
+      },
+      {
+        "name": "spread_liquidity_consistency",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "drawdown_state",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      },
+      {
+        "name": "cooldown_clear",
+        "vote": true,
+        "score": 4,
+        "weight": 4
+      },
+      {
+        "name": "correlation_heat",
+        "vote": true,
+        "score": 5,
+        "weight": 5
+      }
+    ],
+    "stage_pass": {
+      "regime": true,
+      "setup": true,
+      "trigger": false,
+      "risk": true,
+      "guards": false,
+      "trader_council": false,
+      "whale_money_operator": true
+    },
+    "confidence_bucket": "C",
+    "brain_upgrade_stages": [
+      "stage_4_news_aware_senior_trader_council",
+      "stage_5_whale_money_operator_liquidity_gate"
+    ],
+    "news_context": {
+      "daily_brain_bias": "DEFENSIVE_REFERENCE",
+      "risk_tag_counts": {
+        "EXCHANGE": 1,
+        "MACRO": 6,
+        "MARKET_STRESS": 2,
+        "REGULATION": 7,
+        "SECURITY": 2
+      },
+      "score_penalty": 12,
+      "reference_only": true
+    },
+    "trader_council": {
+      "schema_version": "kbia.trader_council.v1",
+      "members": [
+        {
+          "name": "10y_spot_trend_trader",
+          "approve": true
+        },
+        {
+          "name": "10y_pullback_trader",
+          "approve": true
+        },
+        {
+          "name": "10y_risk_manager",
+          "approve": false
+        },
+        {
+          "name": "10y_execution_trader",
+          "approve": true
+        },
+        {
+          "name": "10y_volume_reader",
+          "approve": true
+        },
+        {
+          "name": "10y_volatility_trader",
+          "approve": false
+        },
+        {
+          "name": "10y_cycle_trader",
+          "approve": false
+        },
+        {
+          "name": "10y_btc_regime_trader",
+          "approve": true
+        },
+        {
+          "name": "10y_portfolio_operator",
+          "approve": true
+        },
+        {
+          "name": "iq170_scenario_agent",
+          "approve": false
+        }
+      ],
+      "approval_count": 6,
+      "total_members": 10,
+      "approved": false,
+      "vetoes": [
+        "COUNCIL_NEWS_DEFENSIVE_VETO",
+        "COUNCIL_APPROVALS_BELOW_THRESHOLD"
+      ],
+      "news_modifier": {
+        "daily_brain_bias": "DEFENSIVE_REFERENCE",
+        "risk_tag_counts": {
+          "EXCHANGE": 1,
+          "MACRO": 6,
+          "MARKET_STRESS": 2,
+          "REGULATION": 7,
+          "SECURITY": 2
+        },
+        "score_penalty": 12,
+        "reasons": [
+          "NEWS_DEFENSIVE_REFERENCE"
+        ],
+        "reference_only": true
+      }
+    },
+    "whale_money_operator": {
+      "schema_version": "kbia.whale_money_operator.v1",
+      "bid_support_ratio": 0.9578,
+      "ask_pressure_ratio": 0.0422,
+      "liquidity_grade": "A",
+      "approved": true,
+      "vetoes": [],
+      "maker_limit_only": true
+    },
+    "live_start_readiness": {
+      "ready": false,
+      "blockers": [
+        "ACCOUNT_STATE_NOT_AUTHORITATIVE",
+        "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+        "COUNCIL_NEWS_DEFENSIVE_VETO",
+        "MANUAL_OR_NEWS_BLOCK_ACTIVE",
+        "NO_BUY_CANDIDATE"
+      ],
+      "requires_manual_final_confirmation": true
+    },
+    "regime": {
+      "name": "VOL_COMPRESSION",
+      "reasons": [
+        "ATR_TOO_LOW_COMPRESSION"
+      ],
+      "buy_allowed": true
+    },
+    "timeframes": {
+      "mode": "multi",
+      "primary": "m15",
+      "indicators": {
+        "d1": {
+          "last_price": 114101000.0,
+          "sma_5": 115018600.0,
+          "sma_20": 117607050.0,
+          "sma_50": 113000900.0,
+          "sma20_slope_pct": 0.0010414122009078629,
+          "sma50_slope_pct": 0.012192251219458014,
+          "rsi_14": 31.92898600204849,
+          "atr_pct_14": 0.019554730332900554,
+          "atr_pct_14_prev": 0.019746864614414283,
+          "volume_z_20": -1.951374249862626,
+          "high_20": 121000000.0,
+          "low_20": 113305000.0,
+          "distance_from_20d_high_pct": 0.06046397489943121,
+          "range_20_pct": 0.06744025030455474,
+          "close_vs_sma20_pct": -0.029811563167344134,
+          "latest_range_pct": 0.0051358007379427,
+          "upper_wick_ratio": 0.6569965870307167,
+          "latest_candle_gap_pct": 0.0032496745957562045,
+          "latest_volume_krw": 19116003500.57152,
+          "latest_timestamp": 1779247720441.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "h4": {
+          "last_price": 114101000.0,
+          "sma_5": 114287400.0,
+          "sma_20": 115092950.0,
+          "sma_50": 117247120.0,
+          "sma20_slope_pct": -0.005660565633230423,
+          "sma50_slope_pct": -0.004462664097876673,
+          "rsi_14": 30.758848230353934,
+          "atr_pct_14": 0.0092868849277645,
+          "atr_pct_14_prev": 0.009054990519732244,
+          "volume_z_20": -0.03530989216014403,
+          "high_20": 117199000.0,
+          "low_20": 113305000.0,
+          "distance_from_20d_high_pct": 0.027151383423458166,
+          "range_20_pct": 0.034127658828581695,
+          "close_vs_sma20_pct": -0.008618686027250149,
+          "latest_range_pct": 0.0051358007379427,
+          "upper_wick_ratio": 0.6569965870307167,
+          "latest_candle_gap_pct": 0.0032496745957562045,
+          "latest_volume_krw": 19116003500.57152,
+          "latest_timestamp": 1779247720441.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "h1": {
+          "last_price": 114101000.0,
+          "sma_5": 114214600.0,
+          "sma_20": 114421950.0,
+          "sma_50": 114358380.0,
+          "sma20_slope_pct": -0.0007314046374983953,
+          "sma50_slope_pct": -0.0011443854190868324,
+          "rsi_14": 41.48617127624125,
+          "atr_pct_14": 0.0037016077234830794,
+          "atr_pct_14_prev": 0.004151473526473526,
+          "volume_z_20": -0.30501779750726626,
+          "high_20": 115062000.0,
+          "low_20": 113657000.0,
+          "distance_from_20d_high_pct": 0.008422362643622755,
+          "range_20_pct": 0.01231365193994794,
+          "close_vs_sma20_pct": -0.0028049688018776118,
+          "latest_range_pct": 0.0017615971814445098,
+          "upper_wick_ratio": 0.0,
+          "latest_candle_gap_pct": 0.001079155626524417,
+          "latest_volume_krw": 2358819755.83331,
+          "latest_timestamp": 1779247720441.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        },
+        "m15": {
+          "last_price": 114101000.0,
+          "sma_5": 114054200.0,
+          "sma_20": 114244450.0,
+          "sma_50": 114408880.0,
+          "sma20_slope_pct": -0.0014116398666328106,
+          "sma50_slope_pct": -7.306591209506539e-05,
+          "rsi_14": 39.967637540453076,
+          "atr_pct_14": 0.0018411006789723892,
+          "atr_pct_14_prev": 0.001731044778358752,
+          "volume_z_20": 0.5674965299687083,
+          "high_20": 114571000.0,
+          "low_20": 113900000.0,
+          "distance_from_20d_high_pct": 0.004119157588452336,
+          "range_20_pct": 0.005880754769896846,
+          "close_vs_sma20_pct": -0.0012556408648297576,
+          "latest_range_pct": 0.0017615971814445098,
+          "upper_wick_ratio": 0.0,
+          "latest_candle_gap_pct": 0.00169434982617551,
+          "latest_volume_krw": 1529328106.96891,
+          "latest_timestamp": 1779247720441.0,
+          "candles_count": 60,
+          "timestamps_sorted": true,
+          "timestamps_unique": true
+        }
+      }
+    },
+    "indicators": {
+      "last_price": 114101000.0,
+      "sma_5": 114054200.0,
+      "sma_20": 114244450.0,
+      "sma_50": 114408880.0,
+      "sma20_slope_pct": -0.0014116398666328106,
+      "sma50_slope_pct": -7.306591209506539e-05,
+      "rsi_14": 39.967637540453076,
+      "atr_pct_14": 0.0018411006789723892,
+      "atr_pct_14_prev": 0.001731044778358752,
+      "volume_z_20": 0.5674965299687083,
+      "high_20": 114571000.0,
+      "low_20": 113900000.0,
+      "distance_from_20d_high_pct": 0.004119157588452336,
+      "range_20_pct": 0.005880754769896846,
+      "close_vs_sma20_pct": -0.0012556408648297576,
+      "latest_range_pct": 0.0017615971814445098,
+      "upper_wick_ratio": 0.0,
+      "latest_candle_gap_pct": 0.00169434982617551,
+      "latest_volume_krw": 1529328106.96891,
+      "latest_timestamp": 1779247720441.0,
+      "candles_count": 60,
+      "timestamps_sorted": true,
+      "timestamps_unique": true
+    },
+    "orderbook": {
+      "best_bid": 114073000.0,
+      "best_ask": 114100000.0,
+      "bid_depth_top5_krw": 386491011.21,
+      "ask_depth_top5_krw": 17047882.03,
+      "computed_spread_bps": 2.3666253237674924,
+      "ask_depth_ratio": 0.04224594534896782,
+      "crossed": false
+    },
+    "planned_order": {
+      "ord_type": "limit",
+      "side": null,
+      "max_krw": null,
+      "price_reference": "maker_limit_only"
+    },
+    "sizing_explain": {
+      "base_risk_krw": 10000.0,
+      "confidence_multiplier": 0.6017,
+      "volatility_multiplier": 1.0,
+      "drawdown_multiplier": 1.0,
+      "spread_multiplier": 1.0,
+      "loss_multiplier": 1.0,
+      "final_shadow_krw": 10000
+    },
+    "risk_policy": {
+      "max_risk_per_trade_pct": 0.005,
+      "max_position_pct": 0.1,
+      "max_daily_loss_pct": 0.015,
+      "hard_stop_loss_pct": 0.018,
+      "trailing_stop_pct": 0.014,
+      "take_profit_pct": 0.032
+    },
+    "entry_thesis": [],
+    "invalidation": [
+      "OPEN_ORDER_EXISTS",
+      "DAILY_LOSS_LIMIT_HIT",
+      "REGIME_FLIP_EXIT",
+      "HARD_STOP_LOSS"
+    ],
+    "hard_guards": [
+      "ACCOUNT_STATE_NOT_AUTHORITATIVE",
+      "MANUAL_OR_NEWS_BLOCK_ACTIVE"
+    ],
+    "no_trade_reasons": [
+      "ACCOUNT_STATE_NOT_AUTHORITATIVE",
+      "ATR_TOO_LOW_COMPRESSION",
+      "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+      "COUNCIL_NEWS_DEFENSIVE_VETO",
+      "MANUAL_OR_NEWS_BLOCK_ACTIVE"
+    ],
+    "sell_reasons": [],
+    "shadow_review_required": true,
+    "forbidden_endpoint_check": "PASS_NO_ORDER_OR_CANCEL_ENDPOINT",
+    "secrets_leak_check": "PASS_NO_SECRET_FIELDS",
+    "next_safe_action": "shadow_only_until_ip_allowlist_reconciliation_recovery_logging_alerts_validated"
+  },
+  "live_order_submitted_by_this_runner": false,
+  "cancel_attempted": false,
+  "workflow_activation_changed": false,
+  "secrets_exposed": false
+}

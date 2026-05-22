@@ -1,0 +1,72 @@
+{
+  "timestamp_kst": "2026-05-11",
+  "action": "read_only_monitoring_summary",
+  "overall_status": "PASS",
+  "source_logs": [
+    "logs/open_order_monitor_2026-05-11_134133.json",
+    "logs/open_order_monitor_2026-05-11_140339.json",
+    "logs/open_order_monitor_2026-05-11_140614.json",
+    "logs/open_order_monitor_2026-05-11_141159.json"
+  ],
+  "summary": {
+    "checks_count": 4,
+    "first_check_time": "2026-05-11 13:41:33 +09:00",
+    "latest_check_time": "2026-05-11 14:11:59 +09:00",
+    "helper_health_trend": "PASS -> PASS -> PASS -> PASS",
+    "open_order_exists_trend": "true -> true -> true -> true",
+    "state_trend": "wait -> wait -> wait -> wait",
+    "remaining_volume_trend": "0.0001 -> 0.0001 -> 0.0001 -> 0.0001",
+    "executed_volume_trend": "0 -> 0 -> 0 -> 0",
+    "stale_wait": true,
+    "final_monitoring_classification": "still_waiting_safe_stop"
+  },
+  "checks": [
+    {
+      "timestamp_kst": "2026-05-11 13:41:33 +09:00",
+      "helper_health": "PASS",
+      "open_order_exists": true,
+      "state": "wait",
+      "remaining_volume": "0.0001",
+      "executed_volume": "0",
+      "forbidden_endpoint_check": "PASS_NO_FORBIDDEN_ENDPOINT_CALLED"
+    },
+    {
+      "timestamp_kst": "2026-05-11 14:03:39 +09:00",
+      "helper_health": "PASS",
+      "open_order_exists": true,
+      "state": "wait",
+      "remaining_volume": "0.0001",
+      "executed_volume": "0",
+      "forbidden_endpoint_check": "PASS_NO_FORBIDDEN_ENDPOINT_CALLED"
+    },
+    {
+      "timestamp_kst": "2026-05-11 14:06:14 +09:00",
+      "helper_health": "PASS",
+      "open_order_exists": true,
+      "state": "wait",
+      "remaining_volume": "0.0001",
+      "executed_volume": "0",
+      "forbidden_endpoint_check": "PASS_NO_FORBIDDEN_ENDPOINT_CALLED"
+    },
+    {
+      "timestamp_kst": "2026-05-11 14:11:59 +09:00",
+      "helper_health": "PASS",
+      "open_order_exists": true,
+      "state": "wait",
+      "remaining_volume": "0.0001",
+      "executed_volume": "0",
+      "stale_wait": true,
+      "forbidden_endpoint_check": "PASS_NO_FORBIDDEN_ENDPOINT_CALLED"
+    }
+  ],
+  "safety": {
+    "live_order_attempted": false,
+    "cancel_attempted": false,
+    "workflow_activation_changed": false,
+    "restart_attempted": false,
+    "telegram_live_send_attempted": false,
+    "forbidden_endpoint_check": "PASS_NO_FORBIDDEN_ENDPOINT_CALLED",
+    "existing_logs_changed": false
+  },
+  "next_action": "Continue read-only open-order monitoring only."
+}

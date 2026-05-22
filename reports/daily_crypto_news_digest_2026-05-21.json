@@ -1,0 +1,246 @@
+{
+  "schema_version": "kbia.news_brain.v1",
+  "mode": "daily_crypto_news_digest",
+  "generated_utc": "2026-05-21T02:42:08+00:00",
+  "watch_symbols": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "ETC",
+    "DOGE",
+    "DOT",
+    "ALGO",
+    "FCT2"
+  ],
+  "items_scanned": 100,
+  "top_items": [
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Bitcoin Firm Nakamoto Plots 1-for-40 Stock Split Following 99% Price Plunge",
+      "summary": "Bitcoin treasury company Nakamoto aims to massively reduce its share count as it seeks a price of at least $1 to regain Nasdaq compliance.",
+      "link": "https://decrypt.co/368562/bitcoin-firm-nakamoto-stock-split-99-price-plunge",
+      "published_utc": "2026-05-21T01:21:18+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO",
+        "MARKET_STRESS"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "RISK_REDUCTION_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Tether Tightens Grip on Bitcoin Treasury Firm Twenty One With SoftBank Buyout",
+      "summary": "After dropping nearly $1 billion on the Bitcoin treasury firm co-founded by Tether, Japanese investment firm SoftBank has been bought out.",
+      "link": "https://decrypt.co/368458/tether-bitcoin-treasury-xxi-twenty-one-softbank-buyout",
+      "published_utc": "2026-05-20T16:12:53+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION",
+        "MACRO"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "Trump's Truth Social Pulls Bitcoin ETF Application From SEC Review",
+      "summary": "Trump Media & Technology Group has withdrawn its Form S-1 registrations for Bitcoin and Bitcoin-Ethereum ETFs.",
+      "link": "https://decrypt.co/368428/trumps-truth-social-pulls-bitcoin-etf-application-from-sec-review",
+      "published_utc": "2026-05-20T10:04:26+00:00",
+      "affected_symbols": [
+        "BTC",
+        "ETH"
+      ],
+      "risk_tags": [
+        "REGULATION"
+      ],
+      "relevance_score": 68.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "The Protocol: Ethereum Foundation's high-profile departures spark fresh debate",
+      "summary": "Also: Citi on quantum computing and bitcoin, Jump Crypto\u2019s Firedancer, and Vitalik Buterin on AI verification",
+      "link": "https://www.coindesk.com/tech/2026/05/20/the-protocol-ethereum-foundation-s-high-profile-departures-spark-fresh-debate",
+      "published_utc": "2026-05-20T16:37:52+00:00",
+      "affected_symbols": [
+        "BTC",
+        "ETH"
+      ],
+      "risk_tags": [],
+      "relevance_score": 65.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "South Korean funeral company reveals $33 million loss on leveraged ether ETF bet",
+      "summary": "A Seoul-based funeral services firm disclosed tens of millions of dollars in unrealized losses tied to leveraged ether ETF investments.",
+      "link": "https://www.coindesk.com/markets/2026/05/20/south-korean-funeral-company-reveals-usd33m-loss-on-leveraged-ether-etf-bet",
+      "published_utc": "2026-05-20T14:46:57+00:00",
+      "affected_symbols": [
+        "ETH"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "These bitcoin metrics suggest February\u2019s $60,000 selloff may have marked the bottom",
+      "summary": "Realized cap stabilization, historically elevated RHODL readings and deeply negative funding rates all point toward a potential cycle low for bitcoin forming earlier this year.",
+      "link": "https://www.coindesk.com/markets/2026/05/20/these-bitcoin-metrics-suggest-february-s-usd60-000-selloff-may-have-marked-the-bottom",
+      "published_utc": "2026-05-20T11:57:00+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 65.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "Cointelegraph",
+      "source_tier": "crypto_media_crosscheck",
+      "source_credibility": 0.58,
+      "title": "Price predictions 5/20: BTC, ETH, BNB, XRP, SOL, DOGE, HYPE, ADA, ZEC, BCH",
+      "summary": "Bitcoin looks on track for a rally toward $80,000 while HYPE, ZEC and a handful of altcoins are pushing toward their range highs.",
+      "link": "https://cointelegraph.com/markets/price-predictions-520-btc-eth-bnb-xrp-sol-doge-hype-ada-zec-bch?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "published_utc": "2026-05-20T19:36:38+00:00",
+      "affected_symbols": [
+        "BTC",
+        "ETH",
+        "SOL",
+        "DOGE"
+      ],
+      "risk_tags": [],
+      "relevance_score": 64.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "Blockworks",
+      "source_tier": "institutional_crypto_media",
+      "source_credibility": 0.7,
+      "title": "The Strategy playbook looks different in 2026",
+      "summary": "The treasury company now holds 673,783 BTC, but flow is more likely to be episodic in this year\u2019s financial climate",
+      "link": "https://blockworks.com/news/strategy-playbook-2026",
+      "published_utc": null,
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 61.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "Blockworks",
+      "source_tier": "institutional_crypto_media",
+      "source_credibility": 0.7,
+      "title": "DePIN and crypto gaming led a surprising end-of-year rebound",
+      "summary": "BTC finished the week up 1.6%, while L2s, RWAs and the treasury trade continued to grind lower",
+      "link": "https://blockworks.com/news/depin-gaming-surprising-rebound",
+      "published_utc": null,
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "MACRO"
+      ],
+      "relevance_score": 61.0,
+      "brain_signal": "SYMBOL_CONTEXT_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "South Carolina Passes Law Banning CBDCs While Protecting Crypto Users, Bitcoin Miners",
+      "summary": "The crypto-friendly legislation was signed into law on Tuesday, granting protections to crypto users, developers, and Bitcoin miners.",
+      "link": "https://decrypt.co/368455/south-carolina-law-banning-cbdc-protecting-crypto-users-bitcoin-miners",
+      "published_utc": "2026-05-20T15:08:53+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION"
+      ],
+      "relevance_score": 60.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "Decrypt",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.68,
+      "title": "HYPE Surges 101% This Year: What\u2019s Driving Hyperliquid\u2019s Growth?",
+      "summary": "Hyperliquid's HYPE token has decoupled from Bitcoin with 101% YTD gains as the platform's revenue explodes across multiple sectors.",
+      "link": "https://decrypt.co/368443/hype-surges-101-this-year-whats-driving-hyperliquids-growth",
+      "published_utc": "2026-05-20T14:02:37+00:00",
+      "affected_symbols": [
+        "BTC"
+      ],
+      "risk_tags": [
+        "REGULATION"
+      ],
+      "relevance_score": 60.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    },
+    {
+      "source": "CoinDesk",
+      "source_tier": "major_crypto_media",
+      "source_credibility": 0.78,
+      "title": "Polymarket moves to list parlays while SEC seeks public input on prediction market ETFs",
+      "summary": "The \"combinatorial outcome contracts\" would resolve if every part of an underlying contract resolved, according to a filing.",
+      "link": "https://www.coindesk.com/policy/2026/05/20/polymarket-moves-to-list-parlays-while-sec-seeks-public-input-on-prediction-market-etfs",
+      "published_utc": "2026-05-20T22:55:53+00:00",
+      "affected_symbols": [],
+      "risk_tags": [
+        "REGULATION"
+      ],
+      "relevance_score": 57.0,
+      "brain_signal": "EVENT_RISK_WATCH"
+    }
+  ],
+  "risk_tag_counts": {
+    "MACRO": 6,
+    "MARKET_STRESS": 1,
+    "REGULATION": 5
+  },
+  "symbol_counts": {
+    "BTC": 10,
+    "DOGE": 1,
+    "ETH": 4,
+    "SOL": 1
+  },
+  "daily_brain_bias": "DEFENSIVE_REFERENCE",
+  "source_failures": [],
+  "execution_allowed": false,
+  "live_order_allowed": false,
+  "live_sell_allowed": false,
+  "automation_allowed": false,
+  "order_endpoint_allowed": false,
+  "cancel_endpoint_allowed": false,
+  "market_sell_allowed": false,
+  "scheduler_allowed": false,
+  "no_profit_guarantee": true,
+  "next_safe_action": "daily_digest_shadow_reference_only_no_trade_execution"
+}

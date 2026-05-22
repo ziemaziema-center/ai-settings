@@ -1,0 +1,69 @@
+{
+  "timestamp_kst": "2026-05-20T17:05:33+09:00",
+  "mode": "dot_live_sell_attempt_blocked",
+  "requested_steps": 10,
+  "completed_steps": [
+    "ETC finality recorded",
+    "KRW account band checked",
+    "open order precheck confirmed zero",
+    "DOT candidate rechecked",
+    "DOT orderbook checked",
+    "DOT sell quantity calculated",
+    "DOT sell-test executed"
+  ],
+  "blocked_steps": [
+    "DOT live-sell",
+    "DOT post-order stop",
+    "later candidate repricing"
+  ],
+  "etc_finality": {
+    "classification": "done",
+    "open_order_count": 0,
+    "executed_volume": "2.18702865",
+    "remaining_volume": "0"
+  },
+  "dot_precheck": {
+    "helper_health_ok": true,
+    "open_order_count_before": 0,
+    "open_order_exists_before": false,
+    "account_count": 17,
+    "krw_available_band": "30000+",
+    "currencies_present_includes_dot": true
+  },
+  "dot_order_plan": {
+    "market": "KRW-DOT",
+    "side": "ask",
+    "ord_type": "limit",
+    "best_bid": 1842,
+    "best_ask": 1846,
+    "price_above_best_bid": true,
+    "target_krw": 29000,
+    "max_krw": 30000,
+    "estimated_krw_value": 28999.99999962
+  },
+  "sell_test": {
+    "success": false,
+    "sell_order_test_passed": false,
+    "error_name": "LIVE_SELL_ORDERBOOK_STALE",
+    "error_message": "LIVE_SELL_ORDERBOOK_STALE",
+    "live_sell_attempted": false
+  },
+  "final_dot_open_order_check": {
+    "success": true,
+    "open_order_count": 0,
+    "open_order_exists": false
+  },
+  "safety": {
+    "new_live_order_submitted": false,
+    "dot_live_sell_submitted": false,
+    "cancel_submitted": false,
+    "retry_or_reorder_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

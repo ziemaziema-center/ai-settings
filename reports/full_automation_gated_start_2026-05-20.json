@@ -1,0 +1,83 @@
+{
+  "timestamp_kst": "2026-05-20T23:35:47+09:00",
+  "mode": "gated_full_automation_started",
+  "github_push": {
+    "project_root_is_git_repo": false,
+    "pushed_repo": "ziemaziema-center/ai-settings",
+    "branch": "main",
+    "commit": "448a60b",
+    "commit_message": "docs: update ops telemetry",
+    "scope_note": "Only ai-settings is a Git repository in the workspace; the main trading project has no .git remote."
+  },
+  "remote_automation": {
+    "host": "43.201.227.194",
+    "session": "kbia-full-auto",
+    "runner": "/tmp/kbia_full_automation_coordinator_20260520.py",
+    "status": "running",
+    "interval_seconds": 1800,
+    "state_path": "/home/ubuntu/kbia-logs/full-automation/state.json",
+    "events_path": "/home/ubuntu/kbia-logs/full-automation/events.jsonl",
+    "contract": "one_order_then_read_only_until_finality"
+  },
+  "trading_policy": {
+    "market_order_allowed": false,
+    "cancel_allowed": false,
+    "retry_reorder_loop_allowed": false,
+    "orders_per_cycle": 1,
+    "buy_branch_status": "blocked_until_brain_v4_buy_candidate",
+    "sell_branch_status": "enabled_with_helper_sell_test_and_live_sell_gates",
+    "scheduler_type": "tmux_gated_coordinator"
+  },
+  "completed_cleanup": [
+    {
+      "market": "KRW-ETC",
+      "classification": "done",
+      "open_order_count": 0
+    },
+    {
+      "market": "KRW-DOT",
+      "classification": "done",
+      "open_order_count": 0
+    }
+  ],
+  "first_cycles": {
+    "cycle_count": 2,
+    "open_orders": {
+      "KRW-BTC": 0,
+      "KRW-ETC": 0,
+      "KRW-DOT": 0,
+      "KRW-FCT2": 0,
+      "KRW-ALGO": 0,
+      "KRW-DOGE": 0
+    },
+    "candidate_results": [
+      {
+        "market": "KRW-FCT2",
+        "sell_test_passed": false,
+        "error_name": "LIVE_SELL_ORDERBOOK_STALE|LIVE_SELL_SPREAD_TOO_WIDE"
+      },
+      {
+        "market": "KRW-ALGO",
+        "sell_test_passed": false,
+        "error_name": "LIVE_SELL_SPREAD_TOO_WIDE"
+      },
+      {
+        "market": "KRW-DOGE",
+        "sell_test_passed": false,
+        "error_name": "LIVE_SELL_SPREAD_TOO_WIDE"
+      }
+    ]
+  },
+  "safety": {
+    "new_live_order_submitted": false,
+    "new_live_sell_submitted_after_start": false,
+    "cancel_submitted": false,
+    "workflow_activated": false,
+    "n8n_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

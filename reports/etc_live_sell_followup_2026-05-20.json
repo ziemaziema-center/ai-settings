@@ -1,0 +1,53 @@
+{
+  "timestamp_kst": "2026-05-20T13:21:16+09:00",
+  "mode": "etc_live_sell_followup_readonly",
+  "requested_steps": 10,
+  "completed_steps": [
+    "ETC order status monitor",
+    "ETC fill check",
+    "unfilled wait decision gate",
+    "open order zero check"
+  ],
+  "blocked_steps": [
+    "portfolio brain update after finality",
+    "DOT candidate precheck",
+    "DOT sell-test",
+    "DOT live-sell",
+    "DOT post-order stop",
+    "FCT2/ALGO/DOGE repricing"
+  ],
+  "current_state": {
+    "market": "KRW-ETC",
+    "classification": "wait",
+    "state": "wait",
+    "price": "13260",
+    "remaining_volume": "2.18702865",
+    "executed_volume": "0",
+    "trades_count": 0,
+    "open_order_count": 1,
+    "open_order_exists": true,
+    "next_safe_action": "remain_stopped",
+    "dot_review_allowed": false
+  },
+  "polls": [
+    "2026-05-20T13:19:46+09:00",
+    "2026-05-20T13:19:56+09:00",
+    "2026-05-20T13:20:16+09:00",
+    "2026-05-20T13:20:36+09:00",
+    "2026-05-20T13:20:56+09:00",
+    "2026-05-20T13:21:16+09:00"
+  ],
+  "safety": {
+    "new_live_order_submitted": false,
+    "new_live_sell_submitted": false,
+    "cancel_submitted": false,
+    "retry_or_reorder_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

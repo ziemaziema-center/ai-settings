@@ -1,0 +1,58 @@
+{
+  "timestamp_kst": "2026-05-20T12:49:07+09:00",
+  "mode": "etc_live_sell_once_result",
+  "market": "KRW-ETC",
+  "side": "ask",
+  "ord_type": "limit",
+  "target_krw": 29000,
+  "max_krw": 30000,
+  "order_price": 13260,
+  "estimated_krw_value": 28999.999899,
+  "volume": "2.18702865",
+  "precheck": {
+    "helper_health_ok": true,
+    "best_bid": 13240,
+    "best_ask": 13260,
+    "price_above_best_bid": true,
+    "sell_test_passed": true,
+    "sell_test_open_order_count": 0,
+    "asset_balance_sufficient": true,
+    "maker_limit_ok": true,
+    "market_order_used": false
+  },
+  "live_sell": {
+    "submitted": true,
+    "accepted": true,
+    "http_status": 201,
+    "side": "ask",
+    "ord_type": "limit",
+    "open_order_count_before_live_post": 0
+  },
+  "post_order_finality": {
+    "classification": "wait",
+    "state": "wait",
+    "open_order_count": 1,
+    "open_order_exists": true,
+    "executed_volume": "0",
+    "remaining_volume": "2.18702865",
+    "trades_count": 0,
+    "uuid_masked": "91b1...a624",
+    "next_safe_action": "remain_stopped",
+    "dot_review_allowed": false
+  },
+  "safety": {
+    "live_order_submitted": false,
+    "live_sell_submitted": true,
+    "live_sell_count": 1,
+    "cancel_submitted": false,
+    "retry_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_order_payload_exposed": false,
+    "raw_account_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

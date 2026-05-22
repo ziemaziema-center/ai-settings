@@ -1,0 +1,29 @@
+{
+  "timestamp_kst": "2026-05-20T17:02:28+09:00",
+  "mode": "etc_live_sell_finality_done_readonly",
+  "market": "KRW-ETC",
+  "classification": "done",
+  "state": "done",
+  "price": "13260",
+  "executed_volume": "2.18702865",
+  "remaining_volume": "0",
+  "trades_count": 1,
+  "open_order_count": 0,
+  "open_order_exists": false,
+  "uuid_masked": "91b1...a624",
+  "dot_review_allowed": true,
+  "next_safe_action": "remain_stopped_then_dot_precheck",
+  "safety": {
+    "new_live_order_submitted": false,
+    "new_live_sell_submitted": false,
+    "cancel_submitted": false,
+    "retry_or_reorder_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

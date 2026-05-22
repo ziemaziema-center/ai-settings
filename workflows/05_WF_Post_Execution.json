@@ -1,0 +1,205 @@
+{
+    "name":  "WF05_Reconciliation_ReadOnly",
+    "active":  false,
+    "nodes":  [
+                  {
+                      "id":  "0c439abd-8425-4f14-bdcc-7c3fc19cf501",
+                      "name":  "Manual Trigger",
+                      "type":  "n8n-nodes-base.manualTrigger",
+                      "typeVersion":  1,
+                      "position":  [
+                                       200,
+                                       300
+                                   ],
+                      "parameters":  {
+
+                                     }
+                  },
+                  {
+                      "id":  "178409f7-a6db-4c7a-9f2b-a5963f6f0a7a",
+                      "name":  "Set Read-Only Reconciliation Request",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  1,
+                      "position":  [
+                                       450,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "return {\n  workflow_name: \u0027WF05_Reconciliation_ReadOnly\u0027,\n  reconciliation_mode: \u0027read_only_lock_integrated\u0027,\n  market: String($json.market || \u0027KRW-BTC\u0027),\n  helper_base_url: String($json.helper_base_url || \u0027http://upbit-helper:8010\u0027),\n  runtime_action: \u0027read_only_classification_and_lock_status_only\u0027,\n  execution_allowed: false,\n  live_order_allowed: false,\n  automation_allowed: false,\n  lock_acquire_allowed: false,\n  lock_release_allowed: false,\n  auto_unlock_allowed: false,\n  retry_allowed: false,\n  forbidden_action_allowed: false,\n  forbidden_endpoint_check: \u0027PASS_READ_ONLY_DETAIL_AND_LOCK_STATUS_ONLY\u0027,\n  secrets_leak_check: \u0027PASS_SANITIZED_FIELDS_ONLY\u0027\n};"
+                                     }
+                  },
+                  {
+                      "id":  "25e4d073-f9b8-4c30-b4b4-ee8d92728257",
+                      "name":  "Get Helper Detail Telemetry From Helper",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       700,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "={{ $json.helper_base_url + \"/upbit/open-orders/detail-telemetry\" }}",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ JSON.stringify({ market: $json.market, run_id: \"wf05-readonly-lock-integration\", include_recent_closed: true, recent_closed_limit: 20, journal_enabled: true }) }}",
+                                         "options":  {
+                                                         "timeout":  15000
+                                                     }
+                                     }
+                  },
+                  {
+                      "id":  "90216be5-d3a4-4c07-9f52-92bb4ad9f5fb",
+                      "name":  "Get Execution Lock Status From Helper",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "typeVersion":  4.2,
+                      "position":  [
+                                       950,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "method":  "POST",
+                                         "url":  "={{ $items(\"Set Read-Only Reconciliation Request\")[0].json.helper_base_url + \"/execution-lock/status\" }}",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "jsonBody":  "={{ JSON.stringify({}) }}",
+                                         "options":  {
+                                                         "timeout":  15000
+                                                     }
+                                     }
+                  },
+                  {
+                      "id":  "27b371ea-f7e8-413d-813e-38f1de797944",
+                      "name":  "Classify Reconciliation And Lock State",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  1,
+                      "position":  [
+                                       1200,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const request = $items(\u0027Set Read-Only Reconciliation Request\u0027)[0].json;\nconst detail = $items(\u0027Get Helper Detail Telemetry From Helper\u0027)[0].json || {};\nconst lock = $json || {};\nconst classificationSummary = detail.classification_summary || {};\nconst finalClassification = String(classificationSummary.final_classification || detail.classification || \u0027unknown_stop\u0027);\nconst lockState = String(lock.lock_state || \u0027unknown_stop\u0027);\nconst lockExists = lock.lock_exists === true;\nconst staleLock = lock.stale_lock === true || lockState === \u0027stale_stop\u0027;\nconst lockStatusClear = lock.success === true \u0026\u0026 lockState === \u0027unlocked\u0027 \u0026\u0026 lockExists === false \u0026\u0026 staleLock === false;\nconst openOrderCount = Number(detail.open_order_count ?? 0);\nconst openOrderExists = detail.open_order_exists === true || openOrderCount \u003e 0;\nconst duplicateRaw = detail.duplicate_order_exists;\nconst duplicateKnown = duplicateRaw === true || duplicateRaw === false;\nconst duplicateOrderExists = duplicateRaw === true;\nconst detailSuccess = detail.success === true;\nconst finalReconciliation = [\u0027done\u0027, \u0027cancel\u0027].includes(finalClassification);\nconst blockedReasons = [];\nif (!detailSuccess) blockedReasons.push((classificationSummary.blocked_reason || detail.error_message || detail.error_name || \u0027HELPER_DETAIL_UNAVAILABLE\u0027));\nif (openOrderExists) blockedReasons.push(\u0027OPEN_ORDER_EXISTS\u0027);\nif (openOrderCount !== 0) blockedReasons.push(\u0027OPEN_ORDER_COUNT_NOT_ZERO\u0027);\nif (!duplicateKnown) blockedReasons.push(\u0027DUPLICATE_ORDER_STATUS_UNCLEAR\u0027);\nif (duplicateOrderExists) blockedReasons.push(\u0027DUPLICATE_ORDER_EXISTS\u0027);\nif (!finalReconciliation) blockedReasons.push(\u0027RECONCILIATION_UNCLEAR\u0027);\nif (lock.success !== true \u0026\u0026 lockState !== \u0027stale_stop\u0027) blockedReasons.push(lock.blocked_reason || \u0027LOCK_UNAVAILABLE\u0027);\nif (lockExists \u0026\u0026 !staleLock) blockedReasons.push(lock.blocked_reason || \u0027ACTIVE_LOCK_EXISTS\u0027);\nif (staleLock) blockedReasons.push(\u0027STALE_LOCK_EXISTS\u0027);\nif (!lockStatusClear \u0026\u0026 !staleLock \u0026\u0026 !lockExists \u0026\u0026 lock.success !== true) blockedReasons.push(\u0027LOCK_STATUS_UNCLEAR\u0027);\nconst uniqueBlockedReasons = [...new Set(blockedReasons.filter(Boolean))];\nlet lockClassification = \u0027lock_clear_read_only\u0027;\nlet humanReviewRequired = false;\nif (staleLock) {\n  lockClassification = \u0027stale_lock_stop\u0027;\n  humanReviewRequired = true;\n} else if (lockExists) {\n  lockClassification = \u0027active_lock_stop\u0027;\n  humanReviewRequired = true;\n} else if (!lockStatusClear) {\n  lockClassification = \u0027lock_unknown_stop\u0027;\n  humanReviewRequired = true;\n}\nconst overallClassification = uniqueBlockedReasons.length === 0 ? \u0027readonly_reconciliation_lock_clear\u0027 : \u0027readonly_stop\u0027;\nconst timestampKst = new Date().toLocaleString(\u0027sv-SE\u0027, { timeZone: \u0027Asia/Seoul\u0027, hour12: false }).replace(\u0027T\u0027, \u0027 \u0027) + \u0027 +09:00\u0027;\nconst safeLog = {\n  timestamp_kst: timestampKst,\n  workflow_name: \u0027WF05_Reconciliation_ReadOnly\u0027,\n  market: String(detail.market || request.market || \u0027KRW-BTC\u0027),\n  open_order_exists: openOrderExists,\n  open_order_count: openOrderCount,\n  duplicate_order_exists: duplicateKnown ? duplicateOrderExists : null,\n  reconciliation_classification: finalClassification,\n  lock_state: lockState,\n  lock_exists: lockExists,\n  stale_lock: staleLock,\n  lock_classification: lockClassification,\n  classification: overallClassification,\n  blocked_reason: uniqueBlockedReasons.length \u003e 0 ? uniqueBlockedReasons.join(\u0027|\u0027) : null,\n  human_review_required: humanReviewRequired,\n  forbidden_endpoint_check: \u0027PASS_READ_ONLY_DETAIL_AND_LOCK_STATUS_ONLY\u0027,\n  secrets_leak_check: \u0027PASS_NO_SECRET_FIELDS_PRESENT\u0027,\n  next_safe_action: uniqueBlockedReasons.length \u003e 0 ? \u0027remain_stopped_and_review\u0027 : \u0027remain_stopped\u0027\n};\nreturn {\n  workflow_name: \u0027WF05_Reconciliation_ReadOnly\u0027,\n  read_only: true,\n  reconciliation_status: overallClassification,\n  classification: overallClassification,\n  reconciliation_classification: finalClassification,\n  lock_classification: lockClassification,\n  blocked_reason: safeLog.blocked_reason,\n  human_review_required: humanReviewRequired,\n  execution_allowed: false,\n  live_order_allowed: false,\n  automation_allowed: false,\n  lock_acquire_attempted: false,\n  lock_release_attempted: false,\n  auto_unlock_attempted: false,\n  retry_attempted: false,\n  live_order_attempted: false,\n  forbidden_action_attempted: false,\n  workflow_activation_changed: false,\n  helper_detail_telemetry: {\n    success: detail.success ?? null,\n    market: safeLog.market,\n    open_order_exists: openOrderExists,\n    open_order_count: openOrderCount,\n    duplicate_order_exists: safeLog.duplicate_order_exists,\n    classification_summary: classificationSummary,\n    forbidden_endpoint_check: detail.forbidden_endpoint_check ?? null,\n    secrets_leak_check: detail.secrets_leak_check ?? null\n  },\n  execution_lock_status: {\n    success: lock.success ?? null,\n    lock_state: lockState,\n    lock_exists: lockExists,\n    stale_lock: staleLock,\n    human_review_required: lock.human_review_required === true,\n    blocked_reason: lock.blocked_reason ?? null\n  },\n  current_reconciliation: {\n    open_order_exists: openOrderExists,\n    open_order_count: openOrderCount,\n    market: safeLog.market,\n    classification: finalClassification,\n    lock_state: lockState,\n    stale_lock: staleLock\n  },\n  safe_reconciliation_log_payload: safeLog\n};"
+                                     }
+                  },
+                  {
+                      "id":  "bf697751-bf32-493f-ad20-b80b475f4f32",
+                      "name":  "Build Append-Only Lock Log Payload",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  1,
+                      "position":  [
+                                       1450,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "return {\n  ...$json,\n  append_only_log_ready: true,\n  log_sink: \u0027external_safe_append_only_required\u0027,\n  safe_reconciliation_log_payload: {\n    ...$json.safe_reconciliation_log_payload,\n    forbidden_endpoint_check: \u0027PASS_NO_FORBIDDEN_ENDPOINT_CALLED\u0027,\n    secrets_leak_check: \u0027PASS_NO_SECRET_FIELDS_PRESENT\u0027\n  }\n};"
+                                     }
+                  },
+                  {
+                      "id":  "5f621d7f-c581-4812-8a82-4a706e651d08",
+                      "name":  "Read-Only Lock STOP Report",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  1,
+                      "position":  [
+                                       1700,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "return {\n  ...$json,\n  final_status: \u0027STOP_READ_ONLY_RECONCILIATION_LOCK_CHECK_COMPLETE\u0027,\n  next_safe_action: $json.human_review_required ? \u0027Human review required; remain stopped\u0027 : \u0027Remain stopped; read-only monitoring only\u0027,\n  hard_stop_enforced: true,\n  execution_allowed: false,\n  live_order_allowed: false,\n  automation_allowed: false,\n  lock_acquire_allowed: false,\n  lock_release_allowed: false,\n  auto_unlock_allowed: false,\n  retry_allowed: false,\n  forbidden_action_allowed: false\n};"
+                                     }
+                  },
+                  {
+                      "id":  "c2e99699-8e7c-46df-9292-0100f49db2e2",
+                      "name":  "Build Operator Lock Integration Summary",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  1,
+                      "position":  [
+                                       1950,
+                                       300
+                                   ],
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const log = $json.safe_reconciliation_log_payload || {};\nconst current = $json.current_reconciliation || {};\nconst timestampKst = log.timestamp_kst || new Date().toLocaleString(\u0027sv-SE\u0027, { timeZone: \u0027Asia/Seoul\u0027, hour12: false }).replace(\u0027T\u0027, \u0027 \u0027) + \u0027 +09:00\u0027;\nconst summary = {\n  timestamp_kst: timestampKst,\n  market: log.market || current.market || \u0027KRW-BTC\u0027,\n  open_order_exists: log.open_order_exists === true,\n  open_order_count: Number(log.open_order_count ?? 0),\n  duplicate_order_exists: log.duplicate_order_exists,\n  reconciliation_classification: log.reconciliation_classification || $json.reconciliation_classification || \u0027unknown_stop\u0027,\n  lock_state: log.lock_state || (($json.execution_lock_status || {}).lock_state) || \u0027unknown_stop\u0027,\n  lock_exists: log.lock_exists === true,\n  stale_lock: log.stale_lock === true,\n  lock_classification: log.lock_classification || $json.lock_classification || \u0027lock_unknown_stop\u0027,\n  classification: log.classification || $json.classification || \u0027readonly_stop\u0027,\n  blocked_reason: log.blocked_reason || null,\n  human_review_required: log.human_review_required === true || $json.human_review_required === true,\n  forbidden_endpoint_check: log.forbidden_endpoint_check || \u0027PASS_NO_FORBIDDEN_ENDPOINT_CALLED\u0027,\n  secrets_leak_check: log.secrets_leak_check || \u0027PASS_NO_SECRET_FIELDS_PRESENT\u0027,\n  next_safe_action: log.next_safe_action || \u0027remain_stopped\u0027\n};\nconst markdown = [\n  \u0027# WF05 Read-Only Lock Integration Summary\u0027,\n  \u0027\u0027,\n  `- Timestamp KST: ${summary.timestamp_kst}`,\n  `- Market: ${summary.market}`,\n  `- Open order exists: ${summary.open_order_exists}`,\n  `- Open order count: ${summary.open_order_count}`,\n  `- Duplicate order exists: ${summary.duplicate_order_exists}`,\n  `- Reconciliation classification: ${summary.reconciliation_classification}`,\n  `- Lock state: ${summary.lock_state}`,\n  `- Lock exists: ${summary.lock_exists}`,\n  `- Stale lock: ${summary.stale_lock}`,\n  `- Lock classification: ${summary.lock_classification}`,\n  `- Classification: ${summary.classification}`,\n  `- Blocked reason: ${summary.blocked_reason}`,\n  `- Human review required: ${summary.human_review_required}`,\n  `- Forbidden endpoint check: ${summary.forbidden_endpoint_check}`,\n  `- Secrets leak check: ${summary.secrets_leak_check}`,\n  `- Next safe action: ${summary.next_safe_action}`\n].join(\u0027\\n\u0027);\nreturn {\n  ...$json,\n  operator_summary_ready: true,\n  operator_summary_payload: summary,\n  operator_summary_markdown: markdown,\n  execution_allowed: false,\n  live_order_allowed: false,\n  automation_allowed: false,\n  lock_acquire_attempted: false,\n  lock_release_attempted: false,\n  auto_unlock_attempted: false,\n  retry_attempted: false,\n  forbidden_action_allowed: false\n};"
+                                     }
+                  }
+              ],
+    "connections":  {
+                        "Manual Trigger":  {
+                                               "main":  [
+                                                            {
+                                                                "node":  "Set Read-Only Reconciliation Request",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ]
+                                           },
+                        "Set Read-Only Reconciliation Request":  {
+                                                                     "main":  [
+                                                                                  {
+                                                                                      "node":  "Get Helper Detail Telemetry From Helper",
+                                                                                      "type":  "main",
+                                                                                      "index":  0
+                                                                                  }
+                                                                              ]
+                                                                 },
+                        "Get Helper Detail Telemetry From Helper":  {
+                                                                        "main":  [
+                                                                                     {
+                                                                                         "node":  "Get Execution Lock Status From Helper",
+                                                                                         "type":  "main",
+                                                                                         "index":  0
+                                                                                     }
+                                                                                 ]
+                                                                    },
+                        "Get Execution Lock Status From Helper":  {
+                                                                      "main":  [
+                                                                                   {
+                                                                                       "node":  "Classify Reconciliation And Lock State",
+                                                                                       "type":  "main",
+                                                                                       "index":  0
+                                                                                   }
+                                                                               ]
+                                                                  },
+                        "Classify Reconciliation And Lock State":  {
+                                                                       "main":  [
+                                                                                    {
+                                                                                        "node":  "Build Append-Only Lock Log Payload",
+                                                                                        "type":  "main",
+                                                                                        "index":  0
+                                                                                    }
+                                                                                ]
+                                                                   },
+                        "Build Append-Only Lock Log Payload":  {
+                                                                   "main":  [
+                                                                                {
+                                                                                    "node":  "Read-Only Lock STOP Report",
+                                                                                    "type":  "main",
+                                                                                    "index":  0
+                                                                                }
+                                                                            ]
+                                                               },
+                        "Read-Only Lock STOP Report":  {
+                                                           "main":  [
+                                                                        {
+                                                                            "node":  "Build Operator Lock Integration Summary",
+                                                                            "type":  "main",
+                                                                            "index":  0
+                                                                        }
+                                                                    ]
+                                                       }
+                    },
+    "pinData":  {
+
+                },
+    "meta":  {
+                 "templateCredsSetupCompleted":  false,
+                 "safety_scope":  "wf05_read_only_reconciliation_lock_status_only"
+             },
+    "settings":  {
+                     "executionOrder":  "v1"
+                 },
+    "id":  "WF05LockROV2A11"
+}

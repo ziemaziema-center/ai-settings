@@ -1,0 +1,179 @@
+{
+  "suite": "WF05_Reconciliation_ReadOnly classification fixtures",
+  "version": "2026-05-11",
+  "mode": "offline_only",
+  "runtime_calls_allowed": false,
+  "workflow_execution_allowed": false,
+  "helper_call_allowed": false,
+  "upbit_call_allowed": false,
+  "fixtures": [
+    {
+      "id": "wf05_wait",
+      "description": "Open order waiting with no execution.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "wait",
+        "executed_volume": "0",
+        "remaining_volume": "0.0001"
+      },
+      "expected_classification": "wait"
+    },
+    {
+      "id": "wf05_partial_fill",
+      "description": "Open order partially filled and still has remaining volume.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "wait",
+        "executed_volume": "0.00005",
+        "remaining_volume": "0.00005"
+      },
+      "expected_classification": "partial_fill"
+    },
+    {
+      "id": "wf05_done_by_state",
+      "description": "Order reports done with executed volume and zero remaining volume.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": false,
+        "open_order_count": 0,
+        "state": "done",
+        "executed_volume": "0.0001",
+        "remaining_volume": "0"
+      },
+      "expected_classification": "done"
+    },
+    {
+      "id": "wf05_done_by_volume",
+      "description": "Order has executed volume and zero remaining volume even if state is still wait.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": false,
+        "open_order_count": 0,
+        "state": "wait",
+        "executed_volume": "0.0001",
+        "remaining_volume": "0"
+      },
+      "expected_classification": "done"
+    },
+    {
+      "id": "wf05_cancel",
+      "description": "Order reports exchange terminal cancel state.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": false,
+        "open_order_count": 0,
+        "state": "cancel",
+        "executed_volume": "0",
+        "remaining_volume": "0.0001"
+      },
+      "expected_classification": "cancel"
+    },
+    {
+      "id": "wf05_missing_state",
+      "description": "State is missing and must stop.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "executed_volume": "0",
+        "remaining_volume": "0.0001"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_missing_volume",
+      "description": "Volume is missing and must stop.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "wait",
+        "executed_volume": "0"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_malformed_numeric",
+      "description": "Remaining volume is not numeric and must stop.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "wait",
+        "executed_volume": "0",
+        "remaining_volume": "abc"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_negative_volume",
+      "description": "Negative remaining volume is invalid and must stop.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "wait",
+        "executed_volume": "0",
+        "remaining_volume": "-0.0001"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_inconsistent_done",
+      "description": "Done state without executed volume and with remaining volume is inconsistent.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "done",
+        "executed_volume": "0",
+        "remaining_volume": "0.0001"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_unsupported_state",
+      "description": "Unsupported exchange state must stop.",
+      "input": {
+        "helper_success": true,
+        "market": "KRW-BTC",
+        "open_order_exists": true,
+        "open_order_count": 1,
+        "state": "random_unknown",
+        "executed_volume": "0",
+        "remaining_volume": "0.0001"
+      },
+      "expected_classification": "unknown_stop"
+    },
+    {
+      "id": "wf05_helper_error",
+      "description": "Helper failure must stop.",
+      "input": {
+        "helper_success": false,
+        "market": "KRW-BTC",
+        "open_order_exists": false,
+        "open_order_count": 0,
+        "state": "wait",
+        "executed_volume": "0",
+        "remaining_volume": "0.0001",
+        "error_name": "HELPER_ERROR",
+        "error_message": "HELPER_ERROR"
+      },
+      "expected_classification": "unknown_stop"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "timestamp_kst": "2026-05-20T12:37:35+09:00",
+  "mode": "live_sell_gate_plan",
+  "portfolio_plan_valid": true,
+  "news_bias": "DEFENSIVE_REFERENCE",
+  "buy_automation_allowed": false,
+  "live_sell_scheduler_allowed": false,
+  "order_endpoint_allowed": false,
+  "cancel_endpoint_allowed": false,
+  "market_sell_allowed": false,
+  "retry_allowed": false,
+  "workflow_activation_allowed": false,
+  "helper_endpoint_required": "/upbit/live-sell/telemetry",
+  "helper_test_endpoint_required": "/upbit/sell-test/telemetry",
+  "primary_candidate": {
+    "rank": 1,
+    "symbol": "ETC",
+    "market": "KRW-ETC",
+    "action": "EXIT_STAGED",
+    "first_shadow_slice_krw": 99816.0,
+    "single_live_cap_krw": 30000,
+    "execution_quality": "GOOD",
+    "liquidity_state": "LIQUID",
+    "hq_score": 91.43,
+    "auto_candidate_allowed_after_helper_validation": true,
+    "hold_reason": null,
+    "flags": []
+  },
+  "cleanup_sequence": [
+    {
+      "rank": 1,
+      "symbol": "ETC",
+      "market": "KRW-ETC",
+      "action": "EXIT_STAGED",
+      "first_shadow_slice_krw": 99816.0,
+      "single_live_cap_krw": 30000,
+      "execution_quality": "GOOD",
+      "liquidity_state": "LIQUID",
+      "hq_score": 91.43,
+      "auto_candidate_allowed_after_helper_validation": true,
+      "hold_reason": null,
+      "flags": []
+    },
+    {
+      "rank": 2,
+      "symbol": "DOT",
+      "market": "KRW-DOT",
+      "action": "EXIT_STAGED",
+      "first_shadow_slice_krw": 34029.0,
+      "single_live_cap_krw": 30000,
+      "execution_quality": "GOOD",
+      "liquidity_state": "LOW_LIQUIDITY",
+      "hq_score": 61.43,
+      "auto_candidate_allowed_after_helper_validation": true,
+      "hold_reason": null,
+      "flags": []
+    },
+    {
+      "rank": 3,
+      "symbol": "FCT2",
+      "market": "KRW-FCT2",
+      "action": "EXIT_STAGED",
+      "first_shadow_slice_krw": 55588.0,
+      "single_live_cap_krw": 30000,
+      "execution_quality": "CAUTION",
+      "liquidity_state": "WIDE_SPREAD",
+      "hq_score": 72.86,
+      "auto_candidate_allowed_after_helper_validation": false,
+      "hold_reason": "SPREAD_OR_PRIORITY_GATE",
+      "flags": [
+        "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+      ]
+    },
+    {
+      "rank": 4,
+      "symbol": "ALGO",
+      "market": "KRW-ALGO",
+      "action": "EXIT_STAGED",
+      "first_shadow_slice_krw": 21493.0,
+      "single_live_cap_krw": 21493,
+      "execution_quality": "CAUTION",
+      "liquidity_state": "WIDE_SPREAD",
+      "hq_score": 55.71,
+      "auto_candidate_allowed_after_helper_validation": false,
+      "hold_reason": "SPREAD_OR_PRIORITY_GATE",
+      "flags": [
+        "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+      ]
+    },
+    {
+      "rank": 5,
+      "symbol": "DOGE",
+      "market": "KRW-DOGE",
+      "action": "REDUCE_STAGED",
+      "first_shadow_slice_krw": 61996.0,
+      "single_live_cap_krw": 30000,
+      "execution_quality": "CAUTION",
+      "liquidity_state": "WIDE_SPREAD",
+      "hq_score": 47.14,
+      "auto_candidate_allowed_after_helper_validation": false,
+      "hold_reason": "SPREAD_OR_PRIORITY_GATE",
+      "flags": [
+        "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+      ]
+    }
+  ],
+  "scheduler_contract": {
+    "mode": "gated_coordinator_only",
+    "read_decision_loop_allowed": true,
+    "order_loop_allowed": false,
+    "orders_per_cycle": 1,
+    "stop_immediately_after_order": true,
+    "resume_condition": "post_order_detail_final_state_done_or_cancel_and_open_order_count_zero"
+  },
+  "blocked_until": [
+    "helper live sell endpoints deployed and smoke-tested",
+    "open_order_count globally equals 0",
+    "sell-test passes with exact fingerprint",
+    "orderbook fresh under 10 seconds",
+    "maker-limit price is above best_bid",
+    "asset balance is sufficient",
+    "one-time live sell fuse is explicitly true"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "overall_status": "PASS",
+  "workflow_checks": {
+    "json_valid": true,
+    "workflow_name": "WF05_Reconciliation_ReadOnly",
+    "workflow_active": false,
+    "manual_trigger_only": true,
+    "no_cron_or_schedule": true,
+    "helper_detail_endpoint_present": true,
+    "lock_status_endpoint_present": true,
+    "forbidden_endpoint_hits": [],
+    "no_forbidden_endpoint": true,
+    "no_telegram_send": true,
+    "no_lock_acquire_release": true,
+    "nodes": [
+      "Manual Trigger",
+      "Set Read-Only Reconciliation Request",
+      "Get Helper Detail Telemetry From Helper",
+      "Get Execution Lock Status From Helper",
+      "Classify Reconciliation And Lock State",
+      "Build Append-Only Lock Log Payload",
+      "Read-Only Lock STOP Report",
+      "Build Operator Lock Integration Summary"
+    ]
+  },
+  "case_results": [
+    {
+      "id": "no_lock_path",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_reconciliation_lock_clear",
+        "lock_classification": "lock_clear_read_only",
+        "blocked_reason": null,
+        "human_review_required": false
+      }
+    },
+    {
+      "id": "active_lock_stop",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_stop",
+        "lock_classification": "active_lock_stop",
+        "blocked_reason": "ACTIVE_LOCK_EXISTS",
+        "human_review_required": true
+      }
+    },
+    {
+      "id": "stale_lock_stop",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_stop",
+        "lock_classification": "stale_lock_stop",
+        "blocked_reason": "STALE_LOCK_EXISTS",
+        "human_review_required": true
+      }
+    },
+    {
+      "id": "helper_endpoint_failure_stop",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_stop",
+        "lock_classification": "lock_clear_read_only",
+        "blocked_reason": "HELPER_UNAVAILABLE",
+        "human_review_required": false
+      }
+    },
+    {
+      "id": "duplicate_unclear_stop",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_stop",
+        "lock_classification": "lock_clear_read_only",
+        "blocked_reason": "DUPLICATE_ORDER_STATUS_UNCLEAR",
+        "human_review_required": false
+      }
+    },
+    {
+      "id": "reconciliation_unclear_stop",
+      "passed": true,
+      "actual": {
+        "classification": "readonly_stop",
+        "lock_classification": "lock_clear_read_only",
+        "blocked_reason": "RECONCILIATION_UNCLEAR",
+        "human_review_required": false
+      }
+    }
+  ],
+  "summary": {
+    "offline_dryrun_tests": "PASS",
+    "no_lock_path": "PASS",
+    "active_lock_stop": "PASS",
+    "stale_lock_stop": "PASS",
+    "helper_endpoint_reachable": "PASS",
+    "helper_endpoint_failure_stop": "PASS",
+    "duplicate_unclear_stop": "PASS",
+    "reconciliation_unclear_stop": "PASS",
+    "live_api_called": false
+  },
+  "safety": {
+    "wf03_untouched": true,
+    "wf04_untouched": true,
+    "workflow_activation_changed": false,
+    "cron_enabled": false,
+    "live_api_called": false,
+    "live_order_attempted": false,
+    "cancel_attempted": false,
+    "reorder_attempted": false,
+    "telegram_runtime_send_attempted": false,
+    "live_fuse_reset_attempted": false
+  }
+}

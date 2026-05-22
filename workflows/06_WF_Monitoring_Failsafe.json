@@ -1,0 +1,168 @@
+{
+  "name": "KBIA_06_WF_Upbit_Monitoring_Failsafe",
+  "nodes": [
+    {
+      "id": "def43136-1a09-4ab7-a180-2d795da068dc",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [200, 320],
+      "parameters": {}
+    },
+    {
+      "id": "8d97ba80-b6bc-4d39-96e2-3c5aab0fafae",
+      "name": "Build Upbit Incident",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [450, 320],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const incomingRetry = typeof $json.retry_count === 'number' ? $json.retry_count : 0;\nconst errorMessage = $json.execution?.error?.message || $json.message || 'Unhandled workflow error';\nconst isRateLimit = /429|Too Many Requests|rate.?limit|Remaining-Req|418/i.test(errorMessage);\nreturn [{\n  json: {\n    detected_at: new Date().toISOString(),\n    project: 'KBIA_UPBIT',\n    severity: isRateLimit ? 'critical' : 'high',\n    action: isRateLimit ? 'stop_no_retry_rate_limit' : 'stop_log_alert',\n    message: errorMessage,\n    workflow_name: $json.execution?.workflowData?.name || 'unknown',\n    node_name: $json.execution?.lastNodeExecuted || 'unknown',\n    retry_count: incomingRetry,\n    retry_allowed: false,\n    no_order_retry: true,\n    telegram_config_present: Boolean($env.KBIA_TELEGRAM_BOT_TOKEN && $env.KBIA_TELEGRAM_CHAT_ID)\n  }\n}];"
+      }
+    },
+    {
+      "id": "20991995-1ef8-403d-8c46-f6289329263d",
+      "name": "Escalation Required?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [700, 320],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.severity === 'critical' || $json.retry_count >= 1 }}",
+              "value2": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "0768dc36-2427-4d2c-8ed6-b38e7229cf3f",
+      "name": "Build Alert Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [950, 180],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    status: 'alert',\n    telegram_text: '<b>KBIA Upbit Alert</b>\\n\\n' +\n      'Execution stopped. Human review required.\\n\\n' +\n      '<b>Workflow:</b> ' + $json.workflow_name + '\\n' +\n      '<b>Node:</b> ' + $json.node_name + '\\n' +\n      '<b>Severity:</b> ' + $json.severity + '\\n' +\n      '<b>Time:</b> ' + $json.detected_at + '\\n' +\n      '<b>Message:</b> ' + String($json.message).slice(0, 800)\n  }\n}];"
+      }
+    },
+    {
+      "id": "a187b7a9-8d17-40ca-baa1-8a023c88df49",
+      "name": "Build Escalate Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [950, 460],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    status: 'escalate',\n    telegram_text: '<b>KBIA Upbit ESCALATION</b>\\n\\n' +\n      'Immediate manual intervention required. No automatic retry is allowed.\\n\\n' +\n      '<b>Workflow:</b> ' + $json.workflow_name + '\\n' +\n      '<b>Node:</b> ' + $json.node_name + '\\n' +\n      '<b>Severity:</b> ' + $json.severity + '\\n' +\n      '<b>Time:</b> ' + $json.detected_at + '\\n' +\n      '<b>Message:</b> ' + String($json.message).slice(0, 800)\n  }\n}];"
+      }
+    },
+    {
+      "id": "b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e",
+      "name": "Send Alert Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 180],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.telegram.org/bot' + $env.KBIA_TELEGRAM_BOT_TOKEN + '/sendMessage' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: $env.KBIA_TELEGRAM_CHAT_ID, parse_mode: 'HTML', text: $json.telegram_text }) }}",
+        "options": {
+          "timeout": 10000
+        }
+      }
+    },
+    {
+      "id": "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f",
+      "name": "Send Escalate Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 460],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.telegram.org/bot' + $env.KBIA_TELEGRAM_BOT_TOKEN + '/sendMessage' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: $env.KBIA_TELEGRAM_CHAT_ID, parse_mode: 'HTML', text: $json.telegram_text }) }}",
+        "options": {
+          "timeout": 10000
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Upbit Incident",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Upbit Incident": {
+      "main": [
+        [
+          {
+            "node": "Escalation Required?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalation Required?": {
+      "main": [
+        [
+          {
+            "node": "Build Escalate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Alert Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Alert Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Alert Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Escalate Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Escalate Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

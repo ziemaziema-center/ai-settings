@@ -1,0 +1,175 @@
+{
+  "name": "KBIA_01_WF_Upbit_Market_Data_Collector",
+  "nodes": [
+    {
+      "id": "f09c08f4-fa2a-4767-9ece-2b4f6c309610",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "29a1559f-f6e9-4f25-8d89-b06bce610485",
+      "name": "Set Upbit Runtime Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "mode",
+              "value": "collect_only"
+            },
+            {
+              "name": "upbit_api_base",
+              "value": "https://api.upbit.com"
+            },
+            {
+              "name": "markets",
+              "value": "KRW-BTC,KRW-ETH,KRW-XRP,KRW-SOL"
+            },
+            {
+              "name": "quote_currency",
+              "value": "KRW"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "dry_run",
+              "value": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "db1c0c03-3cce-4bc1-9aa2-88a78dd32b3b",
+      "name": "Fetch Upbit KRW Markets",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 180],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.upbit_api_base + '/v1/market/all?isDetails=true' }}",
+        "options": {
+          "timeout": 10000
+        }
+      }
+    },
+    {
+      "id": "79ca07de-902b-408b-836e-98f283066bc7",
+      "name": "Fetch Upbit Tickers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 420],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.upbit_api_base + '/v1/ticker?markets=' + encodeURIComponent($json.markets) }}",
+        "options": {
+          "timeout": 10000
+        }
+      }
+    },
+    {
+      "id": "a3b2c1d0-e9f8-4a7b-6c5d-1e2f3a4b5c6d",
+      "name": "Merge Market Data",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [960, 300],
+      "parameters": {
+        "mode": "append"
+      }
+    },
+    {
+      "id": "feba4916-7399-41e4-8114-5d74b3038c4c",
+      "name": "Normalize Upbit Market Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [1200, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const payloads = items.map(item => item.json);\nconst rows = payloads.flatMap(value => Array.isArray(value) ? value : [value]);\nconst tickers = rows\n  .filter(row => row && row.market && typeof row.trade_price !== 'undefined')\n  .map(row => ({\n    market: row.market,\n    trade_price: Number(row.trade_price),\n    signed_change_rate: Number(row.signed_change_rate || 0),\n    acc_trade_price_24h: Number(row.acc_trade_price_24h || 0),\n    acc_trade_volume_24h: Number(row.acc_trade_volume_24h || 0),\n    high_price: Number(row.high_price || 0),\n    low_price: Number(row.low_price || 0),\n    timestamp: row.timestamp || null\n  }));\nconst knownMarkets = rows\n  .filter(row => row && row.market && typeof row.trade_price === 'undefined')\n  .map(row => ({ market: row.market, korean_name: row.korean_name, market_event: row.market_event || null }));\nreturn [{\n  json: {\n    stage: 'upbit_market_data_collector',\n    collected: true,\n    dry_run: true,\n    collected_at: new Date().toISOString(),\n    quote_currency: 'KRW',\n    ticker_count: tickers.length,\n    known_market_count: knownMarkets.length,\n    tickers,\n    known_markets: knownMarkets\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Upbit Runtime Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Upbit Runtime Config": {
+      "main": [
+        [
+          {
+            "node": "Fetch Upbit KRW Markets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Upbit Tickers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Upbit KRW Markets": {
+      "main": [
+        [
+          {
+            "node": "Merge Market Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Upbit Tickers": {
+      "main": [
+        [
+          {
+            "node": "Merge Market Data",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Market Data": {
+      "main": [
+        [
+          {
+            "node": "Normalize Upbit Market Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

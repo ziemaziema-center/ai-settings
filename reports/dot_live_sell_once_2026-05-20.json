@@ -1,0 +1,72 @@
+{
+  "timestamp_kst": "2026-05-20T17:17:09+09:00",
+  "mode": "dot_live_sell_once_after_hq_patch",
+  "hq_resolution": {
+    "agents_called": true,
+    "classification": "legitimate_safety_block_plus_telemetry_gap",
+    "patch_scope": "orderbook_diagnostics_and_clock_skew_detection",
+    "stale_threshold_changed": false,
+    "workflow_or_scheduler_changed": false,
+    "helper_deployment_result": "PASS",
+    "remote_backup": "/home/ubuntu/kbia_backups/upbit-helper-live-sell-20260520_171539",
+    "rollback_image": "upbit-helper:rollback-live-sell-20260520_171539"
+  },
+  "market": "KRW-DOT",
+  "side": "ask",
+  "ord_type": "limit",
+  "target_krw": 29000,
+  "max_krw": 30000,
+  "order_price": 1843,
+  "estimated_krw_value": 28999.99999176,
+  "volume": "15.73521432",
+  "precheck": {
+    "helper_health_ok": true,
+    "open_order_count_before": 0,
+    "open_order_exists_before": false,
+    "krw_available_band": "30000+",
+    "dot_present": true,
+    "best_bid": 1840,
+    "best_ask": 1843,
+    "price_above_best_bid": true
+  },
+  "sell_test": {
+    "success": true,
+    "sell_order_test_passed": true,
+    "orderbook_age_ms": 6538,
+    "maker_limit_ok": true
+  },
+  "live_sell": {
+    "submitted": true,
+    "accepted": true,
+    "http_status": 201,
+    "orderbook_age_ms": 6722,
+    "open_order_count_before_live_post": 0
+  },
+  "post_order_finality": {
+    "classification": "wait",
+    "state": "wait",
+    "open_order_count": 1,
+    "open_order_exists": true,
+    "executed_volume": "0",
+    "remaining_volume": "15.73521432",
+    "trades_count": 0,
+    "uuid_masked": "f089...0a09",
+    "next_safe_action": "remain_stopped",
+    "later_candidate_review_allowed": false
+  },
+  "safety": {
+    "live_order_submitted": false,
+    "dot_live_sell_submitted": true,
+    "dot_live_sell_count": 1,
+    "market_order_submitted": false,
+    "cancel_submitted": false,
+    "retry_or_reorder_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

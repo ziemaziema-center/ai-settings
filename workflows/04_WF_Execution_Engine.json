@@ -1,0 +1,515 @@
+{
+  "name": "KBIA_04_WF_Upbit_Execution_Engine",
+  "nodes": [
+    {
+      "id": "d292f5aa-e7d1-4be7-b373-495caee384d0",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        320
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "85537808-1b4e-442b-ba89-cdb9288d0f07",
+      "name": "Receive WF03 Handoff Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        450,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const incoming = $json.handoff_payload || $json.precheck_handoff_payload || $json;\nconst hasIncomingHandoff = incoming && typeof incoming === 'object' && Object.prototype.hasOwnProperty.call(incoming, 'precheck_status');\nconst safeLog = {\n  workflow: 'KBIA_03_WF_Upbit_PreCheck_Engine',\n  mode: 'dry_run',\n  market: 'KRW-BTC',\n  side: 'bid',\n  ord_type: 'limit',\n  system_stop_active: false,\n  duplicate_lock_status: 'clear',\n  order_size_status: 'clear',\n  open_order_telemetry: { open_order_exists: false }\n};\nconst handoff = hasIncomingHandoff ? incoming : {\n  market: 'KRW-BTC',\n  side: 'bid',\n  ord_type: 'limit',\n  price: 100000000,\n  volume: 0.0001,\n  estimated_krw_value: 10000,\n  precheck_status: 'dry_run_ready',\n  all_pass: true,\n  execution_allowed: true,\n  execution_mode: 'dry_run',\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  duplicate_lock_status: 'clear',\n  order_size_status: 'clear',\n  open_order_exists: false,\n  system_stop_active: false,\n  safe_log_payload: safeLog\n};\nconst requestedMode = String(handoff.execution_mode || (handoff.safe_log_payload || {}).mode || 'dry_run');\nconst liveFlagsExplicit = requestedMode === 'live'\n  && handoff.live_order_enabled === true\n  && handoff.execution_allowed === true\n  && handoff.one_time_live_attempt_allowed === true;\nconst estimated = Number(handoff.estimated_krw_value || 0);\nconst price = Number(handoff.price || 100000000);\nconst volume = Number(handoff.volume || (price > 0 && estimated > 0 ? estimated / price : 0));\nconst safe = handoff.safe_log_payload || {};\nconst openOrderExists = Object.prototype.hasOwnProperty.call(handoff, 'open_order_exists')\n  ? handoff.open_order_exists === true\n  : ((safe.open_order_telemetry || {}).open_order_exists === true);\nreturn {\n  handoff_payload: handoff,\n  handoff_received: true,\n  handoff_source: hasIncomingHandoff ? 'input' : 'manual_default_valid_dry_run_handoff',\n  handoff_validated: false,\n  handoff_rejected_reason: null,\n  execution_flow_entered: false,\n  entered_execution_flow: false,\n  reached_order_preparation: false,\n  reached_order_test: false,\n  reached_live_order: false,\n  reached_dry_run_block: false,\n  reached_fail_safe: false,\n  reached_log_payload: false,\n  helper_base_url: String($json.helper_base_url || 'http://upbit-helper:8010'),\n  market: String(handoff.market || 'KRW-BTC'),\n  side: String(handoff.side || 'bid'),\n  ord_type: String(handoff.ord_type || 'limit'),\n  price,\n  volume,\n  estimated_krw_value: estimated,\n  all_pass: handoff.all_pass === true,\n  duplicate_lock_status: String(handoff.duplicate_lock_status || ''),\n  order_size_status: String(handoff.order_size_status || ''),\n  open_order_exists: openOrderExists,\n  system_stop_active: handoff.system_stop_active === true,\n  requested_execution_mode: requestedMode,\n  execution_mode: requestedMode === 'live' ? 'live' : 'dry_run',\n  execution_allowed: liveFlagsExplicit,\n  live_order_enabled: liveFlagsExplicit,\n  one_time_live_attempt_allowed: liveFlagsExplicit,\n  live_path_auto_disabled: false,\n  no_order_submitted: true,\n  reason_codes: []\n};"
+      }
+    },
+    {
+      "id": "0a0c5c18-fd46-4fcb-a310-b4b0ce4038b2",
+      "name": "Validate WF03 Handoff",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        700,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const handoff = $json.handoff_payload || {};\nconst safeLog = handoff.safe_log_payload || {};\nconst mode = String(handoff.execution_mode || safeLog.mode || 'dry_run');\nconst rejected = [];\nif (!['ready', 'dry_run_ready'].includes(String(handoff.precheck_status || ''))) rejected.push('HANDOFF_PRECHECK_NOT_READY');\nif (handoff.all_pass !== true) rejected.push('HANDOFF_ALL_PASS_NOT_TRUE');\nif (handoff.execution_allowed !== true) rejected.push('HANDOFF_EXECUTION_NOT_ALLOWED');\nif (mode === 'live' && handoff.live_order_enabled !== true) rejected.push('HANDOFF_LIVE_GATE_NOT_ENABLED');\nif (mode === 'live' && handoff.one_time_live_attempt_allowed !== true) rejected.push('HANDOFF_ONE_TIME_LIVE_ATTEMPT_NOT_ALLOWED');\nif (handoff.system_stop_active === true) rejected.push('HANDOFF_SYSTEM_STOP_ACTIVE');\nif (String(handoff.duplicate_lock_status || '') !== 'clear') rejected.push('HANDOFF_DUPLICATE_LOCK_NOT_CLEAR');\nif (String(handoff.order_size_status || '') !== 'clear') rejected.push('HANDOFF_ORDER_SIZE_NOT_CLEAR');\nif (String(handoff.market || '') !== 'KRW-BTC') rejected.push('HANDOFF_MARKET_NOT_KRW_BTC');\nif (String(handoff.side || '') !== 'bid') rejected.push('HANDOFF_SIDE_NOT_BID');\nif (String(handoff.ord_type || '') !== 'limit') rejected.push('HANDOFF_ORD_TYPE_NOT_LIMIT');\nif (!handoff.safe_log_payload || typeof handoff.safe_log_payload !== 'object') rejected.push('HANDOFF_SAFE_LOG_MISSING');\nconst handoffValidated = rejected.length === 0;\nconst liveFlagsExplicit = mode === 'live'\n  && handoff.live_order_enabled === true\n  && handoff.execution_allowed === true\n  && handoff.one_time_live_attempt_allowed === true;\nreturn {\n  ...$json,\n  handoff_mode: mode,\n  handoff_validated: handoffValidated,\n  handoff_rejected_reason: handoffValidated ? null : rejected,\n  execution_flow_entered: handoffValidated,\n  entered_execution_flow: handoffValidated,\n  market: String(handoff.market || $json.market || 'KRW-BTC'),\n  side: String(handoff.side || $json.side || 'bid'),\n  ord_type: String(handoff.ord_type || $json.ord_type || 'limit'),\n  estimated_krw_value: Number(handoff.estimated_krw_value || $json.estimated_krw_value || 0),\n  all_pass: handoff.all_pass === true,\n  execution_mode: mode === 'live' ? 'live' : 'dry_run',\n  execution_allowed: handoffValidated && liveFlagsExplicit,\n  live_order_enabled: handoffValidated && liveFlagsExplicit,\n  one_time_live_attempt_allowed: handoffValidated && liveFlagsExplicit,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), ...(handoffValidated ? [] : ['HANDOFF_REJECTED', ...rejected])])]\n};"
+      }
+    },
+    {
+      "id": "e6341ab1-9b49-4838-b4f2-0fb5c1f60658",
+      "name": "Validate Execution Gates",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        950,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const liveRequested = $json.execution_mode === 'live';\nconst liveFlagsExplicit = liveRequested\n  && $json.live_order_enabled === true\n  && $json.execution_allowed === true\n  && $json.one_time_live_attempt_allowed === true;\nconst gates = {\n  handoff_validated: $json.handoff_validated === true,\n  execution_mode_supported: ['dry_run', 'live'].includes($json.execution_mode),\n  live_flags_explicit: liveRequested ? liveFlagsExplicit : false,\n  dry_run_default_safe: liveRequested ? false : ($json.execution_allowed === false && $json.live_order_enabled === false),\n  limit_order_only: $json.ord_type === 'limit',\n  market_is_krw_btc: $json.market === 'KRW-BTC',\n  side_is_bid: $json.side === 'bid'\n};\nconst reasonCodes = [...($json.reason_codes || [])];\nif (!liveRequested) reasonCodes.push('DRY_RUN_ORDER_BLOCKED');\nif (liveRequested && !liveFlagsExplicit) reasonCodes.push('LIVE_FLAGS_NOT_EXPLICIT');\nreturn {\n  ...$json,\n  execution_gates: gates,\n  gate_status: $json.handoff_validated === true ? (liveRequested ? 'live_handoff_order_test_required' : 'valid_handoff_order_test_required') : 'handoff_rejected_dry_run_blocked',\n  execution_allowed: liveRequested && liveFlagsExplicit && $json.handoff_validated === true,\n  live_order_enabled: liveRequested && liveFlagsExplicit && $json.handoff_validated === true,\n  no_order_submitted: true,\n  reason_codes: [...new Set(reasonCodes)]\n};"
+      }
+    },
+    {
+      "id": "2c3d4e5f-6071-489a-bcde-123456789abc",
+      "name": "Prepare Dry Run Order Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        450
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const dryRunPayload = {\n  market: String($json.market || 'KRW-BTC'),\n  side: String($json.side || 'bid'),\n  ord_type: String($json.ord_type || 'limit'),\n  estimated_krw_value: Number($json.estimated_krw_value || 0),\n  execution_mode: 'dry_run',\n  execution_allowed: false,\n  live_order_enabled: false,\n  dry_run_blocked: true\n};\nreturn {\n  ...$json,\n  reached_order_preparation: true,\n  dry_run_payload: dryRunPayload,\n  order_preparation_status: 'prepared_for_trace_only',\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  live_path_auto_disabled: $json.live_path_auto_disabled === true,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), 'DRY_RUN_ORDER_BLOCKED'])]\n};"
+      }
+    },
+    {
+      "id": "168b8927-6111-407d-9ada-6a64e64ddfcc",
+      "name": "DRY_RUN_BLOCK Upbit Order Submission",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2950,
+        450
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  ...$json,\n  reached_dry_run_block: true,\n  dry_run_blocked: true,\n  order_submission_status: 'blocked_before_http',\n  order_endpoint_called: false,\n  forbidden_endpoint_used: false,\n  no_order_submitted: true,\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), 'DRY_RUN_ORDER_BLOCKED'])]\n};"
+      }
+    },
+    {
+      "id": "4d5e6f70-8192-4abc-def0-23456789abcd",
+      "name": "Fail Safe Trace",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3450,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const liveAttempted = $json.live_order_attempted === true;\nreturn {\n  ...$json,\n  reached_fail_safe: true,\n  fail_safe_status: liveAttempted ? 'armed_after_one_live_attempt_no_retry' : 'armed_no_order_submitted',\n  fail_safe_reason: liveAttempted ? 'live_attempt_consumed_no_retry' : ($json.handoff_validated === true ? 'dry_run_order_blocked_before_http' : 'handoff_rejected_before_order_http'),\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  no_order_submitted: liveAttempted ? false : true\n};"
+      }
+    },
+    {
+      "id": "375df533-3fe2-443b-ad75-61086007c08d",
+      "name": "Build Execution Log Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const handoffTrace = {\n  handoff_received: $json.handoff_received === true,\n  handoff_validated: $json.handoff_validated === true,\n  handoff_rejected_reason: $json.handoff_rejected_reason || null,\n  execution_flow_entered: $json.execution_flow_entered === true\n};\nconst executionTrace = {\n  ...handoffTrace,\n  entered_execution_flow: $json.entered_execution_flow === true,\n  reached_order_preparation: $json.reached_order_preparation === true,\n  reached_order_test: $json.reached_order_test === true,\n  reached_live_order: $json.reached_live_order === true,\n  reached_dry_run_block: $json.reached_dry_run_block === true,\n  reached_fail_safe: $json.reached_fail_safe === true,\n  reached_log_payload: true\n};\nconst dryRunPayload = $json.dry_run_payload || {\n  market: String($json.market || 'KRW-BTC'),\n  side: String($json.side || 'bid'),\n  ord_type: String($json.ord_type || 'limit'),\n  estimated_krw_value: Number($json.estimated_krw_value || 0),\n  execution_mode: 'dry_run',\n  execution_allowed: false,\n  live_order_enabled: false,\n  dry_run_blocked: true\n};\nconst reasonCodes = [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), ...($json.live_order_attempted === true ? ['LIVE_ATTEMPT_CONSUMED'] : ['DRY_RUN_ORDER_BLOCKED'])])];\nconst logPayload = {\n  timestamp: new Date().toISOString(),\n  workflow: 'KBIA_04_WF_Upbit_Execution_Engine',\n  handoff_trace: handoffTrace,\n  execution_trace: executionTrace,\n  dry_run_payload: dryRunPayload,\n  order_test_telemetry: $json.order_test_telemetry || null,\n  live_order_telemetry: $json.live_order_telemetry || null,\n  live_order_attempted: $json.live_order_attempted === true,\n  live_order_accepted: $json.live_order_accepted === true,\n  live_path_auto_disabled: $json.live_path_auto_disabled === true,\n  dry_run_blocked: $json.dry_run_blocked === true,\n  reason_codes: reasonCodes,\n  fail_safe_status: $json.fail_safe_status || 'armed_no_order_submitted',\n  order_endpoint_called: $json.live_order_attempted === true,\n  forbidden_endpoint_used: false,\n  live_order_enabled: false,\n  execution_mode: $json.live_order_attempted === true ? 'live_attempt_consumed' : 'dry_run',\n  execution_allowed: false\n};\nreturn {\n  ...$json,\n  reached_log_payload: true,\n  handoff_trace: handoffTrace,\n  execution_trace: executionTrace,\n  dry_run_payload: dryRunPayload,\n  order_test_telemetry: $json.order_test_telemetry || null,\n  order_test_passed: $json.order_test_passed === true,\n  live_order_telemetry: $json.live_order_telemetry || null,\n  live_order_attempted: $json.live_order_attempted === true,\n  live_order_accepted: $json.live_order_accepted === true,\n  live_path_auto_disabled: $json.live_path_auto_disabled === true,\n  dry_run_blocked: $json.dry_run_blocked === true,\n  execution_status: $json.live_order_attempted === true ? 'one_time_live_attempt_consumed' : ($json.handoff_validated === true ? 'valid_handoff_dry_run_blocked' : 'handoff_rejected_dry_run_blocked'),\n  reason_codes: reasonCodes,\n  execution_log_payload: logPayload,\n  fail_safe_trace: {\n    reached_fail_safe: true,\n    fail_safe_status: $json.fail_safe_status || 'armed_no_order_submitted',\n    fail_safe_reason: $json.fail_safe_reason || 'dry_run_order_blocked_before_http'\n  },\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  no_order_submitted: $json.live_order_attempted === true ? false : true\n};"
+      }
+    },
+    {
+      "id": "b343cfd7-4b2f-4ab3-9f15-f1b70f987001",
+      "name": "Validate Order Test Eligibility",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const estimated = Number($json.estimated_krw_value || 0);\nconst price = Number($json.price || 0);\nconst volume = Number($json.volume || 0);\nconst blockedReasons = [];\nif ($json.handoff_validated !== true) blockedReasons.push('ORDER_TEST_HANDOFF_NOT_VALIDATED');\nif (!['dry_run', 'live'].includes($json.execution_mode)) blockedReasons.push('ORDER_TEST_MODE_NOT_SUPPORTED');\nif ($json.market !== 'KRW-BTC') blockedReasons.push('ORDER_TEST_MARKET_NOT_ALLOWED');\nif ($json.side !== 'bid') blockedReasons.push('ORDER_TEST_SIDE_NOT_ALLOWED');\nif ($json.ord_type !== 'limit') blockedReasons.push('ORDER_TEST_LIMIT_ONLY');\nif (!Number.isFinite(price) || price <= 0 || !Number.isFinite(volume) || volume <= 0) blockedReasons.push('ORDER_TEST_INVALID_PRICE_VOLUME');\nif (!Number.isFinite(estimated) || estimated < 5000) blockedReasons.push('ORDER_TEST_MIN_KRW_NOT_MET');\nif (!Number.isFinite(estimated) || estimated > 10000) blockedReasons.push('ORDER_TEST_MAX_KRW_EXCEEDED');\nconst eligible = blockedReasons.length === 0;\nreturn {\n  ...$json,\n  order_test_status: eligible ? 'eligible' : 'blocked',\n  order_test_eligible: eligible,\n  order_test_blocked_reasons: blockedReasons,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), ...blockedReasons])]\n};"
+      }
+    },
+    {
+      "id": "0e3a57dd-7d9d-44b5-a093-73790d932bc2",
+      "name": "Order Test Eligible?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1450,
+        320
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "order-test-eligible-condition",
+              "leftValue": "={{ $json.order_test_status }}",
+              "rightValue": "eligible",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "9732ad4a-00de-498b-9016-a5d9dbde7a6f",
+      "name": "Run Upbit Order Test Telemetry",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1700,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.helper_base_url + \"/upbit/order-test/telemetry\" }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ market: $json.market, side: $json.side, ord_type: $json.ord_type, price: $json.price, volume: $json.volume }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    },
+    {
+      "id": "cc6b7663-f60a-40a9-a2d9-4b291e67129c",
+      "name": "Attach Order Test Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1950,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const request = $items('Validate Order Test Eligibility')[0].json;\nconst telemetry = $json || {};\nconst passed = telemetry.order_test_passed === true;\nconst reasonCodes = [...(Array.isArray(request.reason_codes) ? request.reason_codes : [])];\nif (!passed) reasonCodes.push(telemetry.error_message || telemetry.error_name || 'ORDER_TEST_NOT_PASSED');\nreturn {\n  ...request,\n  reached_order_test: true,\n  order_test_telemetry: {\n    http_status: telemetry.http_status ?? null,\n    success: telemetry.success === true,\n    market: String(telemetry.market || request.market),\n    side: String(telemetry.side || request.side),\n    ord_type: String(telemetry.ord_type || request.ord_type),\n    estimated_krw_value: Number(telemetry.estimated_krw_value || request.estimated_krw_value || 0),\n    order_test_passed: passed,\n    remaining_req: telemetry.remaining_req ?? null,\n    error_name: telemetry.error_name ?? null,\n    error_message: telemetry.error_message ?? null\n  },\n  order_test_passed: passed,\n  reason_codes: [...new Set(reasonCodes)]\n};"
+      }
+    },
+    {
+      "id": "55383b9b-96a0-4724-a5ef-59681fa750c1",
+      "name": "Build Order Test Skipped Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        450
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const reason = Array.isArray($json.order_test_blocked_reasons) && $json.order_test_blocked_reasons.length ? $json.order_test_blocked_reasons[0] : 'ORDER_TEST_NOT_ELIGIBLE';\nreturn {\n  ...$json,\n  reached_order_test: false,\n  order_test_telemetry: {\n    http_status: null,\n    success: false,\n    market: String($json.market || 'KRW-BTC'),\n    side: String($json.side || 'bid'),\n    ord_type: String($json.ord_type || 'limit'),\n    estimated_krw_value: Number($json.estimated_krw_value || 0),\n    order_test_passed: false,\n    remaining_req: null,\n    error_name: reason,\n    error_message: reason\n  },\n  order_test_passed: false,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), reason])]\n};"
+      }
+    },
+    {
+      "id": "adbb7fc0-59a7-4b2a-9dd1-bfef7f04f001",
+      "name": "Validate Manual Live Override",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        320
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const handoff = $json.handoff_payload || {};\nconst safeLog = handoff.safe_log_payload || {};\nconst openOrderExists = Object.prototype.hasOwnProperty.call($json, 'open_order_exists')\n  ? $json.open_order_exists === true\n  : ((safeLog.open_order_telemetry || {}).open_order_exists === true);\nconst estimated = Number($json.estimated_krw_value || 0);\nconst price = Number($json.price || 0);\nconst volume = Number($json.volume || 0);\nlet staticData = null;\nlet storage = 'workflow_static_data';\ntry {\n  if (typeof $getWorkflowStaticData === 'function') {\n    staticData = $getWorkflowStaticData('global');\n  } else if (typeof getWorkflowStaticData === 'function') {\n    staticData = getWorkflowStaticData('global');\n  }\n} catch (error) {\n  staticData = null;\n}\nif (!staticData) storage = 'workflow_static_data_unavailable';\nif (staticData && (!staticData.kbia_wf04_live_order_attempt || typeof staticData.kbia_wf04_live_order_attempt !== 'object')) {\n  staticData.kbia_wf04_live_order_attempt = {};\n}\nconst consumed = staticData && staticData.kbia_wf04_live_order_attempt.consumed === true;\nconst blockedReasons = [];\nif ($json.execution_mode !== 'live') blockedReasons.push('LIVE_MODE_NOT_REQUESTED');\nif ($json.handoff_validated !== true) blockedReasons.push('LIVE_HANDOFF_NOT_VALIDATED');\nif ($json.live_order_enabled !== true) blockedReasons.push('LIVE_ORDER_NOT_ENABLED');\nif ($json.execution_allowed !== true) blockedReasons.push('LIVE_EXECUTION_NOT_ALLOWED');\nif ($json.one_time_live_attempt_allowed !== true) blockedReasons.push('LIVE_ONE_TIME_ATTEMPT_NOT_ALLOWED');\nif ($json.all_pass !== true) blockedReasons.push('LIVE_ALL_PASS_REQUIRED');\nif ($json.market !== 'KRW-BTC') blockedReasons.push('LIVE_MARKET_NOT_ALLOWED');\nif ($json.side !== 'bid') blockedReasons.push('LIVE_SIDE_NOT_ALLOWED');\nif ($json.ord_type !== 'limit') blockedReasons.push('LIVE_LIMIT_ONLY');\nif (!Number.isFinite(price) || price <= 0 || !Number.isFinite(volume) || volume <= 0) blockedReasons.push('LIVE_INVALID_PRICE_VOLUME');\nif (!Number.isFinite(estimated) || estimated < 5000) blockedReasons.push('LIVE_MIN_KRW_NOT_MET');\nif (!Number.isFinite(estimated) || estimated > 10000) blockedReasons.push('LIVE_MAX_KRW_EXCEEDED');\nif (String($json.duplicate_lock_status || '') !== 'clear') blockedReasons.push('LIVE_DUPLICATE_LOCK_NOT_CLEAR');\nif (openOrderExists !== false) blockedReasons.push('LIVE_OPEN_ORDER_EXISTS_OR_UNKNOWN');\nif ($json.system_stop_active === true) blockedReasons.push('LIVE_SYSTEM_STOP_ACTIVE');\nif ($json.order_test_passed !== true) blockedReasons.push('LIVE_ORDER_TEST_NOT_PASSED');\nif (!staticData) blockedReasons.push('LIVE_ATTEMPT_STORAGE_UNAVAILABLE');\nif (consumed) blockedReasons.push('LIVE_ATTEMPT_CONSUMED');\nconst eligible = blockedReasons.length === 0;\nlet consumedAt = null;\nif (eligible) {\n  consumedAt = new Date().toISOString();\n  staticData.kbia_wf04_live_order_attempt = {\n    consumed: true,\n    consumed_at: consumedAt,\n    market: $json.market,\n    side: $json.side,\n    ord_type: $json.ord_type,\n    estimated_krw_value: estimated\n  };\n}\nreturn {\n  ...$json,\n  live_attempt_storage: storage,\n  live_order_status: eligible ? 'eligible_attempt_consumed_before_http' : 'blocked',\n  live_order_eligible: eligible,\n  live_order_blocked_reasons: blockedReasons,\n  live_path_auto_disabled: eligible ? true : false,\n  live_attempt_consumed_at: consumedAt,\n  one_time_live_attempt_consumed: consumed === true || eligible,\n  open_order_exists: openOrderExists,\n  live_order_payload: eligible ? {\n    live_order_enabled: true,\n    execution_allowed: true,\n    execution_mode: 'live',\n    all_pass: true,\n    market: $json.market,\n    side: $json.side,\n    ord_type: $json.ord_type,\n    price,\n    volume,\n    estimated_krw_value: estimated,\n    duplicate_lock_status: $json.duplicate_lock_status,\n    open_order_exists: false,\n    system_stop_active: false,\n    order_test_passed: true,\n    one_time_live_attempt_allowed: true\n  } : null,\n  execution_allowed: eligible,\n  live_order_enabled: eligible,\n  one_time_live_attempt_allowed: eligible,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), ...(eligible ? ['LIVE_ATTEMPT_CONSUMED'] : blockedReasons)])]\n};"
+      }
+    },
+    {
+      "id": "adbb7fc0-59a7-4b2a-9dd1-bfef7f04f002",
+      "name": "Manual Live Eligible?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2450,
+        320
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "manual-live-eligible-condition",
+              "leftValue": "={{ $json.live_order_status }}",
+              "rightValue": "eligible_attempt_consumed_before_http",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "adbb7fc0-59a7-4b2a-9dd1-bfef7f04f003",
+      "name": "Run Upbit Live Order Telemetry",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2700,
+        200
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.helper_base_url + \"/upbit/live-order/telemetry\" }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.live_order_payload) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    },
+    {
+      "id": "adbb7fc0-59a7-4b2a-9dd1-bfef7f04f004",
+      "name": "Attach Live Order Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2950,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const request = $items('Validate Manual Live Override')[0].json;\nconst telemetry = $json || {};\nconst attempted = telemetry.live_order_attempted === true;\nconst accepted = telemetry.live_order_accepted === true;\nconst reasonCodes = [...(Array.isArray(request.reason_codes) ? request.reason_codes : []), 'LIVE_ATTEMPT_CONSUMED'];\nif (!accepted) reasonCodes.push(telemetry.error_message || telemetry.error_name || 'LIVE_ORDER_NOT_ACCEPTED');\nreturn {\n  ...request,\n  reached_live_order: true,\n  live_order_telemetry: {\n    http_status: telemetry.http_status ?? null,\n    success: telemetry.success === true,\n    market: String(telemetry.market || request.market),\n    side: String(telemetry.side || request.side),\n    ord_type: String(telemetry.ord_type || request.ord_type),\n    estimated_krw_value: Number(telemetry.estimated_krw_value || request.estimated_krw_value || 0),\n    live_order_attempted: attempted,\n    live_order_accepted: accepted,\n    remaining_req: telemetry.remaining_req ?? null,\n    error_name: telemetry.error_name ?? null,\n    error_message: telemetry.error_message ?? null\n  },\n  live_order_attempted: attempted,\n  live_order_accepted: accepted,\n  live_path_auto_disabled: true,\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  reason_codes: [...new Set(reasonCodes)]\n};"
+      }
+    },
+    {
+      "id": "adbb7fc0-59a7-4b2a-9dd1-bfef7f04f005",
+      "name": "Auto Disable Live Path",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  ...$json,\n  live_path_auto_disabled: true,\n  execution_allowed: false,\n  live_order_enabled: false,\n  one_time_live_attempt_allowed: false,\n  reason_codes: [...new Set([...(Array.isArray($json.reason_codes) ? $json.reason_codes : []), 'LIVE_ATTEMPT_CONSUMED'])]\n};"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Receive WF03 Handoff Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Receive WF03 Handoff Payload": {
+      "main": [
+        [
+          {
+            "node": "Validate WF03 Handoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate WF03 Handoff": {
+      "main": [
+        [
+          {
+            "node": "Validate Execution Gates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Execution Gates": {
+      "main": [
+        [
+          {
+            "node": "Validate Order Test Eligibility",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Order Test Eligibility": {
+      "main": [
+        [
+          {
+            "node": "Order Test Eligible?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Test Eligible?": {
+      "main": [
+        [
+          {
+            "node": "Run Upbit Order Test Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Order Test Skipped Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Upbit Order Test Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Attach Order Test Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Order Test Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Manual Live Override",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Order Test Skipped Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Validate Manual Live Override",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Dry Run Order Payload": {
+      "main": [
+        [
+          {
+            "node": "DRY_RUN_BLOCK Upbit Order Submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DRY_RUN_BLOCK Upbit Order Submission": {
+      "main": [
+        [
+          {
+            "node": "Fail Safe Trace",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail Safe Trace": {
+      "main": [
+        [
+          {
+            "node": "Build Execution Log Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Manual Live Override": {
+      "main": [
+        [
+          {
+            "node": "Manual Live Eligible?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Live Eligible?": {
+      "main": [
+        [
+          {
+            "node": "Run Upbit Live Order Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Dry Run Order Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Upbit Live Order Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Attach Live Order Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Live Order Telemetry": {
+      "main": [
+        [
+          {
+            "node": "Auto Disable Live Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto Disable Live Path": {
+      "main": [
+        [
+          {
+            "node": "Fail Safe Trace",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

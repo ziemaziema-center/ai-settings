@@ -1,0 +1,1173 @@
+{
+  "timestamp_kst": "2026-05-20T12:29:18+09:00",
+  "source": "user_screenshot_2026-05-19_1354",
+  "mode": "portfolio_shadow_liquidation_run",
+  "market_data_symbols": [
+    "ALGO",
+    "BTC",
+    "DOGE",
+    "DOT",
+    "ETC",
+    "ETH",
+    "FCT2",
+    "SOL"
+  ],
+  "plan": {
+    "schema_version": "kbia.portfolio_liquidation_brain.v3",
+    "mode": "portfolio_shadow_liquidation_plan",
+    "portfolio_total_value_krw": 3583421.0,
+    "cash_krw": 14272.0,
+    "cash_pct": 0.004,
+    "core_value_krw": 2395459.0,
+    "core_pct": 0.6685,
+    "market_regime": {
+      "name": "NEUTRAL",
+      "btc_signed_change_rate": -0.0032,
+      "weak_assets": 0,
+      "strong_assets": 0,
+      "checked_assets": 8,
+      "sell_aggression_multiplier": 1.0,
+      "cleanup_bias": "NORMAL"
+    },
+    "target_cash_pct_after_cleanup": 0.25,
+    "projected_cash_after_first_slice_krw": 287194.0,
+    "projected_cash_after_first_slice_pct": 0.0801,
+    "planned_first_slice_krw": 272922.0,
+    "planned_total_shadow_sell_krw": 516996.0,
+    "plan_valid": true,
+    "validation_errors": [],
+    "exit_candidates": [
+      "FCT2",
+      "DOT",
+      "ALGO",
+      "ETC"
+    ],
+    "reduce_candidates": [
+      "DOGE"
+    ],
+    "keep_candidates": [
+      "SOL",
+      "BTC",
+      "ETH"
+    ],
+    "decisions": [
+      {
+        "symbol": "FCT2",
+        "market": "KRW-FCT2",
+        "tier": "TAIL_OR_ILLIQUID",
+        "classification": {
+          "tier": "TAIL_OR_ILLIQUID",
+          "classification_source": "locked_tail_asset_list",
+          "classification_confidence": 0.8,
+          "classification_reason": "TAIL_OR_AIRDROP_OR_ILLIQUID",
+          "unknown_asset_review_required": false
+        },
+        "action": "EXIT_STAGED",
+        "priority": 90,
+        "valuation_krw": 222352.0,
+        "buy_amount_krw": 2753878.0,
+        "pnl_pct": -0.9193,
+        "weight_pct": 0.062,
+        "target_weight_pct": 0.05,
+        "liquidity_state": "WIDE_SPREAD",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LAGGARD",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "CAUTION",
+          "bid_depth_top5_krw": 26791297.07,
+          "ask_depth_top5_krw": 11820019.94,
+          "bid_depth_coverage": 120.4905,
+          "sell_pressure_ratio": 0.3061,
+          "max_first_slice_by_depth_krw": 669782.0,
+          "flags": [
+            "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+          ]
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 7,
+          "total_votes": 10,
+          "score": 72.86,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": true,
+              "score": 10,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": true,
+              "score": 9,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": true,
+              "score": 6,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": true,
+              "score": 6,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": false,
+              "score": 0,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "RELATIVE_STRENGTH_LAGGARD",
+          "SEVERE_DRAWDOWN",
+          "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT",
+          "WIDE_SPREAD"
+        ],
+        "reasons": [
+          "CAPITAL_RECYCLING_FROM_DEAD_ALT"
+        ],
+        "shadow_total_sell_pct": 0.35,
+        "shadow_first_slice_pct": 0.25,
+        "shadow_total_sell_value_krw": 77823.0,
+        "shadow_first_slice_value_krw": 55588.0,
+        "execution_plan": {
+          "profile": "CAUTIOUS_CLEANUP",
+          "slices": [
+            {
+              "slice": 1,
+              "pct": 0.25,
+              "shadow_value_krw": 55588.0,
+              "condition": "maker_limit_near_best_ask_after_spread_check"
+            },
+            {
+              "slice": 2,
+              "pct": 0.1,
+              "shadow_value_krw": 22235.0,
+              "condition": "only_after_previous_slice_final_and_no_new_open_order"
+            }
+          ],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "SPREAD_TOO_WIDE",
+            "BID_DEPTH_COLLAPSE",
+            "RATE_LIMIT",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "DOT",
+        "market": "KRW-DOT",
+        "tier": "LEGACY_ALT",
+        "classification": {
+          "tier": "LEGACY_ALT",
+          "classification_source": "locked_legacy_alt_list",
+          "classification_confidence": 0.75,
+          "classification_reason": "LEGACY_ALT_UNDERPERFORMANCE_RISK",
+          "unknown_asset_review_required": false
+        },
+        "action": "EXIT_STAGED",
+        "priority": 90,
+        "valuation_krw": 136115.0,
+        "buy_amount_krw": 3849055.0,
+        "pnl_pct": -0.9646,
+        "weight_pct": 0.038,
+        "target_weight_pct": 0.05,
+        "liquidity_state": "LOW_LIQUIDITY",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LEADER",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "GOOD",
+          "bid_depth_top5_krw": 45842041.54,
+          "ask_depth_top5_krw": 45424078.89,
+          "bid_depth_coverage": 336.789,
+          "sell_pressure_ratio": 0.4977,
+          "max_first_slice_by_depth_krw": 1146051.0,
+          "flags": []
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 6,
+          "total_votes": 10,
+          "score": 61.43,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": true,
+              "score": 10,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": true,
+              "score": 9,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": true,
+              "score": 4,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "LOW_LIQUIDITY",
+          "SEVERE_DRAWDOWN"
+        ],
+        "reasons": [
+          "CAPITAL_RECYCLING_FROM_DEAD_ALT"
+        ],
+        "shadow_total_sell_pct": 0.35,
+        "shadow_first_slice_pct": 0.25,
+        "shadow_total_sell_value_krw": 47640.0,
+        "shadow_first_slice_value_krw": 34029.0,
+        "execution_plan": {
+          "profile": "CAUTIOUS_CLEANUP",
+          "slices": [
+            {
+              "slice": 1,
+              "pct": 0.25,
+              "shadow_value_krw": 34029.0,
+              "condition": "maker_limit_near_best_ask_after_spread_check"
+            },
+            {
+              "slice": 2,
+              "pct": 0.1,
+              "shadow_value_krw": 13611.0,
+              "condition": "only_after_previous_slice_final_and_no_new_open_order"
+            }
+          ],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "SPREAD_TOO_WIDE",
+            "BID_DEPTH_COLLAPSE",
+            "RATE_LIMIT",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "ALGO",
+        "market": "KRW-ALGO",
+        "tier": "LEGACY_ALT",
+        "classification": {
+          "tier": "LEGACY_ALT",
+          "classification_source": "locked_legacy_alt_list",
+          "classification_confidence": 0.75,
+          "classification_reason": "LEGACY_ALT_UNDERPERFORMANCE_RISK",
+          "unknown_asset_review_required": false
+        },
+        "action": "EXIT_STAGED",
+        "priority": 90,
+        "valuation_krw": 85971.0,
+        "buy_amount_krw": 1369858.0,
+        "pnl_pct": -0.9372,
+        "weight_pct": 0.024,
+        "target_weight_pct": 0.05,
+        "liquidity_state": "WIDE_SPREAD",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LEADER",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "CAUTION",
+          "bid_depth_top5_krw": 181413869.05,
+          "ask_depth_top5_krw": 259573485.36,
+          "bid_depth_coverage": 2110.1752,
+          "sell_pressure_ratio": 0.5886,
+          "max_first_slice_by_depth_krw": 4535347.0,
+          "flags": [
+            "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+          ]
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 5,
+          "total_votes": 10,
+          "score": 55.71,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": true,
+              "score": 10,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": true,
+              "score": 9,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": false,
+              "score": 0,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "SEVERE_DRAWDOWN",
+          "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT",
+          "WIDE_SPREAD"
+        ],
+        "reasons": [
+          "CAPITAL_RECYCLING_FROM_DEAD_ALT"
+        ],
+        "shadow_total_sell_pct": 0.35,
+        "shadow_first_slice_pct": 0.25,
+        "shadow_total_sell_value_krw": 30090.0,
+        "shadow_first_slice_value_krw": 21493.0,
+        "execution_plan": {
+          "profile": "CAUTIOUS_CLEANUP",
+          "slices": [
+            {
+              "slice": 1,
+              "pct": 0.25,
+              "shadow_value_krw": 21493.0,
+              "condition": "maker_limit_near_best_ask_after_spread_check"
+            },
+            {
+              "slice": 2,
+              "pct": 0.1,
+              "shadow_value_krw": 8597.0,
+              "condition": "only_after_previous_slice_final_and_no_new_open_order"
+            }
+          ],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "SPREAD_TOO_WIDE",
+            "BID_DEPTH_COLLAPSE",
+            "RATE_LIMIT",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "ETC",
+        "market": "KRW-ETC",
+        "tier": "LEGACY_ALT",
+        "classification": {
+          "tier": "LEGACY_ALT",
+          "classification_source": "locked_legacy_alt_list",
+          "classification_confidence": 0.75,
+          "classification_reason": "LEGACY_ALT_UNDERPERFORMANCE_RISK",
+          "unknown_asset_review_required": false
+        },
+        "action": "EXIT_STAGED",
+        "priority": 80,
+        "valuation_krw": 399263.0,
+        "buy_amount_krw": 1999938.0,
+        "pnl_pct": -0.8004,
+        "weight_pct": 0.111,
+        "target_weight_pct": 0.05,
+        "liquidity_state": "LIQUID",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LAGGARD",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "GOOD",
+          "bid_depth_top5_krw": 84344522.26,
+          "ask_depth_top5_krw": 92025725.05,
+          "bid_depth_coverage": 211.2505,
+          "sell_pressure_ratio": 0.5218,
+          "max_first_slice_by_depth_krw": 2108613.0,
+          "flags": []
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 9,
+          "total_votes": 10,
+          "score": 91.43,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": true,
+              "score": 10,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": true,
+              "score": 9,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": true,
+              "score": 6,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": true,
+              "score": 4,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "DEEP_DRAWDOWN",
+          "OVER_TARGET_ALT_WEIGHT",
+          "RELATIVE_STRENGTH_LAGGARD"
+        ],
+        "reasons": [
+          "CAPITAL_RECYCLING_FROM_DEAD_ALT"
+        ],
+        "shadow_total_sell_pct": 0.75,
+        "shadow_first_slice_pct": 0.25,
+        "shadow_total_sell_value_krw": 299447.0,
+        "shadow_first_slice_value_krw": 99816.0,
+        "execution_plan": {
+          "profile": "CAUTIOUS_CLEANUP",
+          "slices": [
+            {
+              "slice": 1,
+              "pct": 0.25,
+              "shadow_value_krw": 99816.0,
+              "condition": "maker_limit_near_best_ask_after_spread_check"
+            },
+            {
+              "slice": 2,
+              "pct": 0.25,
+              "shadow_value_krw": 99816.0,
+              "condition": "only_after_previous_slice_final_and_no_new_open_order"
+            },
+            {
+              "slice": 3,
+              "pct": 0.25,
+              "shadow_value_krw": 99816.0,
+              "condition": "only_after_previous_slice_final_and_no_new_open_order"
+            }
+          ],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "SPREAD_TOO_WIDE",
+            "BID_DEPTH_COLLAPSE",
+            "RATE_LIMIT",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "DOGE",
+        "market": "KRW-DOGE",
+        "tier": "MEME",
+        "classification": {
+          "tier": "MEME",
+          "classification_source": "locked_meme_list",
+          "classification_confidence": 0.8,
+          "classification_reason": "MEME_EXPOSURE_CAP",
+          "unknown_asset_review_required": false
+        },
+        "action": "REDUCE_STAGED",
+        "priority": 65,
+        "valuation_krw": 247984.0,
+        "buy_amount_krw": 770659.0,
+        "pnl_pct": -0.6782,
+        "weight_pct": 0.069,
+        "target_weight_pct": 0.03,
+        "liquidity_state": "WIDE_SPREAD",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "MID",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "CAUTION",
+          "bid_depth_top5_krw": 6890030471.18,
+          "ask_depth_top5_krw": 5083767668.06,
+          "bid_depth_coverage": 27784.1735,
+          "sell_pressure_ratio": 0.4246,
+          "max_first_slice_by_depth_krw": 172250762.0,
+          "flags": [
+            "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT"
+          ]
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 5,
+          "total_votes": 10,
+          "score": 47.14,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": false,
+              "score": 0,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": true,
+              "score": 6,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": false,
+              "score": 0,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "OVER_TARGET_ALT_WEIGHT",
+          "SPREAD_TOO_WIDE_FOR_CLEAN_EXIT",
+          "WEAK_DRAWDOWN",
+          "WIDE_SPREAD"
+        ],
+        "reasons": [
+          "LIMIT_FIRST_SLICE_BECAUSE_LIQUIDITY_WEAK",
+          "MEME_EXPOSURE_NOT_CORE_CAPITAL"
+        ],
+        "shadow_total_sell_pct": 0.25,
+        "shadow_first_slice_pct": 0.25,
+        "shadow_total_sell_value_krw": 61996.0,
+        "shadow_first_slice_value_krw": 61996.0,
+        "execution_plan": {
+          "profile": "CAUTIOUS_CLEANUP",
+          "slices": [
+            {
+              "slice": 1,
+              "pct": 0.25,
+              "shadow_value_krw": 61996.0,
+              "condition": "maker_limit_near_best_ask_after_spread_check"
+            }
+          ],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "SPREAD_TOO_WIDE",
+            "BID_DEPTH_COLLAPSE",
+            "RATE_LIMIT",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "SOL",
+        "market": "KRW-SOL",
+        "tier": "CORE_GROWTH",
+        "classification": {
+          "tier": "CORE_GROWTH",
+          "classification_source": "locked_core_growth_list",
+          "classification_confidence": 0.8,
+          "classification_reason": "HIGH_BETA_MAJOR",
+          "unknown_asset_review_required": false
+        },
+        "action": "KEEP_OR_TRIM_ON_BOUNCE",
+        "priority": 25,
+        "valuation_krw": 881632.0,
+        "buy_amount_krw": 2001938.0,
+        "pnl_pct": -0.5596,
+        "weight_pct": 0.246,
+        "target_weight_pct": 0.12,
+        "liquidity_state": "LIQUID",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "MID",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "GOOD",
+          "bid_depth_top5_krw": 642157880.45,
+          "ask_depth_top5_krw": 462388599.79,
+          "bid_depth_coverage": 728.3741,
+          "sell_pressure_ratio": 0.4186,
+          "max_first_slice_by_depth_krw": 16053947.0,
+          "flags": []
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 5,
+          "total_votes": 10,
+          "score": 44.29,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": false,
+              "score": 0,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": true,
+              "score": 5,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": true,
+              "score": 4,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "WEAK_DRAWDOWN"
+        ],
+        "reasons": [
+          "SOL_HIGH_BETA_CORE_GROWTH_NOT_PANIC_EXIT"
+        ],
+        "shadow_total_sell_pct": 0.0,
+        "shadow_first_slice_pct": 0.0,
+        "shadow_total_sell_value_krw": 0.0,
+        "shadow_first_slice_value_krw": 0.0,
+        "execution_plan": {
+          "profile": "NO_ACTION",
+          "slices": [],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "WIDE_SPREAD",
+            "RISK_OFF_PANIC",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "BTC",
+        "market": "KRW-BTC",
+        "tier": "CORE",
+        "classification": {
+          "tier": "CORE",
+          "classification_source": "locked_core_list",
+          "classification_confidence": 0.95,
+          "classification_reason": "BTC_ETH_CORE",
+          "unknown_asset_review_required": false
+        },
+        "action": "KEEP_CORE",
+        "priority": 10,
+        "valuation_krw": 616078.0,
+        "buy_amount_krw": 770884.0,
+        "pnl_pct": -0.2008,
+        "weight_pct": 0.172,
+        "target_weight_pct": 0.18,
+        "liquidity_state": "LIQUID",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LAGGARD",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "GOOD",
+          "bid_depth_top5_krw": 428354631.34,
+          "ask_depth_top5_krw": 8869477.87,
+          "bid_depth_coverage": 695.2929,
+          "sell_pressure_ratio": 0.0203,
+          "max_first_slice_by_depth_krw": 10708866.0,
+          "flags": []
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 4,
+          "total_votes": 10,
+          "score": 35.71,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": false,
+              "score": 0,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": true,
+              "score": 6,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": false,
+              "score": 0,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": true,
+              "score": 4,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [
+          "RELATIVE_STRENGTH_LAGGARD"
+        ],
+        "reasons": [
+          "BTC_ETH_CORE_LIQUIDITY_ANCHOR"
+        ],
+        "shadow_total_sell_pct": 0.0,
+        "shadow_first_slice_pct": 0.0,
+        "shadow_total_sell_value_krw": 0.0,
+        "shadow_first_slice_value_krw": 0.0,
+        "execution_plan": {
+          "profile": "NO_ACTION",
+          "slices": [],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "WIDE_SPREAD",
+            "RISK_OFF_PANIC",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      {
+        "symbol": "ETH",
+        "market": "KRW-ETH",
+        "tier": "CORE",
+        "classification": {
+          "tier": "CORE",
+          "classification_source": "locked_core_list",
+          "classification_confidence": 0.95,
+          "classification_reason": "BTC_ETH_CORE",
+          "unknown_asset_review_required": false
+        },
+        "action": "KEEP_CORE",
+        "priority": 10,
+        "valuation_krw": 897749.0,
+        "buy_amount_krw": 1426270.0,
+        "pnl_pct": -0.3706,
+        "weight_pct": 0.251,
+        "target_weight_pct": 0.18,
+        "liquidity_state": "LIQUID",
+        "trend_state": "NEUTRAL",
+        "relative_strength": "LEADER",
+        "market_regime": "NEUTRAL",
+        "execution_quality": {
+          "quality": "GOOD",
+          "bid_depth_top5_krw": 851130266.89,
+          "ask_depth_top5_krw": 284823572.76,
+          "bid_depth_coverage": 948.0715,
+          "sell_pressure_ratio": 0.2507,
+          "max_first_slice_by_depth_krw": 21278257.0,
+          "flags": []
+        },
+        "hq_committee": {
+          "role": "HQ_20Y_TRADING_MASTER_PLUS_IQ180_CRYPTO_AGENTS",
+          "yes_votes": 4,
+          "total_votes": 10,
+          "score": 37.14,
+          "votes": [
+            {
+              "name": "hq_capital_rotation",
+              "vote": false,
+              "score": 0,
+              "weight": 10
+            },
+            {
+              "name": "survival_quality",
+              "vote": false,
+              "score": 0,
+              "weight": 9
+            },
+            {
+              "name": "core_anchor_protection",
+              "vote": false,
+              "score": 0,
+              "weight": 8
+            },
+            {
+              "name": "concentration_risk",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "liquidity_exit_quality",
+              "vote": true,
+              "score": 8,
+              "weight": 8
+            },
+            {
+              "name": "avoid_panic_dump",
+              "vote": true,
+              "score": 7,
+              "weight": 7
+            },
+            {
+              "name": "relative_weakness",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "meme_tail_risk",
+              "vote": false,
+              "score": 0,
+              "weight": 6
+            },
+            {
+              "name": "cash_rebuild_need",
+              "vote": false,
+              "score": 0,
+              "weight": 5
+            },
+            {
+              "name": "spread_depth_discipline",
+              "vote": true,
+              "score": 4,
+              "weight": 4
+            }
+          ]
+        },
+        "risk_flags": [],
+        "reasons": [
+          "BTC_ETH_CORE_LIQUIDITY_ANCHOR"
+        ],
+        "shadow_total_sell_pct": 0.0,
+        "shadow_first_slice_pct": 0.0,
+        "shadow_total_sell_value_krw": 0.0,
+        "shadow_first_slice_value_krw": 0.0,
+        "execution_plan": {
+          "profile": "NO_ACTION",
+          "slices": [],
+          "limit_only": true,
+          "market_order_allowed": false,
+          "stop_conditions": [
+            "OPEN_ORDER_EXISTS",
+            "WIDE_SPREAD",
+            "RISK_OFF_PANIC",
+            "MANUAL_REVIEW_REQUIRED"
+          ]
+        },
+        "execution_allowed": false,
+        "live_sell_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      }
+    ],
+    "hq_upgrade_layers": [
+      "stage_1_market_regime_overlay",
+      "stage_2_hq_committee_asset_scoring",
+      "stage_3_execution_quality_and_slice_schedule"
+    ],
+    "portfolio_action": "CLEANUP_SHADOW_ONLY",
+    "execution_allowed": false,
+    "live_sell_allowed": false,
+    "automation_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "market_sell_allowed": false,
+    "scheduler_allowed": false,
+    "no_profit_guarantee": true,
+    "review_required": true,
+    "next_safe_action": "human_review_then_shadow_rehearsal_only_no_live_sell"
+  },
+  "runtime_modified": false,
+  "live_order_submitted": false,
+  "live_sell_submitted": false,
+  "cancel_attempted": false,
+  "workflow_activation_changed": false,
+  "cron_enabled": false,
+  "secrets_exposed": false
+}

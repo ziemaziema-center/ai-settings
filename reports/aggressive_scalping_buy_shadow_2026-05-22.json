@@ -1,0 +1,259 @@
+{
+  "date": "2026-05-22",
+  "mode": "aggressive_scalping_buy_shadow_v1",
+  "purpose": "prepare live buy gate inputs without submitting live orders",
+  "upgrade_stages": [
+    "stage_a_live_buy_helper_gate_payload",
+    "stage_b_aggressive_scalping_shadow_candidate_loop",
+    "stage_c_three_loop_blocker_and_candidate_evidence"
+  ],
+  "news_context": {
+    "daily_brain_bias": "DEFENSIVE_REFERENCE",
+    "risk_tag_counts": {
+      "EXCHANGE": 1,
+      "MACRO": 5,
+      "MARKET_STRESS": 1,
+      "REGULATION": 6
+    },
+    "symbol_counts": {
+      "BTC": 10,
+      "DOGE": 1,
+      "ETH": 3,
+      "SOL": 1
+    }
+  },
+  "loop_count": 3,
+  "ready_for_buy_test_count": 0,
+  "live_buy_submitted": false,
+  "live_order_count": 0,
+  "cases": [
+    {
+      "loop_no": 1,
+      "market": "KRW-BTC",
+      "decision": {
+        "schema_version": "kbia.strategy_brain.v4.1",
+        "action": "HOLD",
+        "committee_score": 77.83,
+        "confidence_bucket": "C",
+        "stage_pass": {
+          "regime": true,
+          "setup": true,
+          "trigger": false,
+          "risk": true,
+          "guards": true,
+          "trader_council": false,
+          "whale_money_operator": true
+        },
+        "scalping_shadow": {
+          "schema_version": "kbia.scalping_shadow.v1",
+          "mode": "reference_only_conservative_scalping",
+          "candidate": false,
+          "gates": {
+            "spread": true,
+            "volume": true,
+            "bid_support": true,
+            "regime": true,
+            "momentum": true,
+            "open_order_clear": true,
+            "news_not_defensive": false
+          },
+          "passed_gate_count": 6,
+          "total_gate_count": 7,
+          "score_bonus": 0.0,
+          "spread_bps": 5.0,
+          "bid_support_ratio": 0.6182,
+          "can_execute_live": false,
+          "can_bypass_safety_gates": false,
+          "can_increase_order_frequency": false,
+          "can_enable_simultaneous_orders": false
+        },
+        "live_start_readiness": {
+          "ready": false,
+          "blockers": [
+            "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+            "COUNCIL_NEWS_DEFENSIVE_VETO",
+            "NO_BUY_CANDIDATE"
+          ],
+          "requires_manual_final_confirmation": true,
+          "reference_bonus_does_not_bypass_gates": true
+        },
+        "execution_allowed": false,
+        "live_order_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      "helper_buy_test_payload": {
+        "market": "KRW-BTC",
+        "side": "bid",
+        "ord_type": "limit",
+        "price": "100000000",
+        "volume": "0.00010000",
+        "estimated_krw_value": "10000",
+        "open_order_exists": false,
+        "brain_schema_version": "kbia.strategy_brain.v4.1",
+        "brain_action": "HOLD",
+        "brain_live_ready": false,
+        "brain_candidate_score": 77.83,
+        "news_bias": "DEFENSIVE_REFERENCE",
+        "scalping_candidate": false
+      },
+      "ready_for_buy_test_endpoint": false,
+      "live_buy_submitted": false
+    },
+    {
+      "loop_no": 2,
+      "market": "KRW-ETH",
+      "decision": {
+        "schema_version": "kbia.strategy_brain.v4.1",
+        "action": "HOLD",
+        "committee_score": 77.83,
+        "confidence_bucket": "C",
+        "stage_pass": {
+          "regime": true,
+          "setup": true,
+          "trigger": false,
+          "risk": true,
+          "guards": true,
+          "trader_council": false,
+          "whale_money_operator": true
+        },
+        "scalping_shadow": {
+          "schema_version": "kbia.scalping_shadow.v1",
+          "mode": "reference_only_conservative_scalping",
+          "candidate": false,
+          "gates": {
+            "spread": true,
+            "volume": true,
+            "bid_support": true,
+            "regime": true,
+            "momentum": true,
+            "open_order_clear": true,
+            "news_not_defensive": false
+          },
+          "passed_gate_count": 6,
+          "total_gate_count": 7,
+          "score_bonus": 0.0,
+          "spread_bps": 7.0,
+          "bid_support_ratio": 0.6182,
+          "can_execute_live": false,
+          "can_bypass_safety_gates": false,
+          "can_increase_order_frequency": false,
+          "can_enable_simultaneous_orders": false
+        },
+        "live_start_readiness": {
+          "ready": false,
+          "blockers": [
+            "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+            "COUNCIL_NEWS_DEFENSIVE_VETO",
+            "NO_BUY_CANDIDATE"
+          ],
+          "requires_manual_final_confirmation": true,
+          "reference_bonus_does_not_bypass_gates": true
+        },
+        "execution_allowed": false,
+        "live_order_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      "helper_buy_test_payload": {
+        "market": "KRW-ETH",
+        "side": "bid",
+        "ord_type": "limit",
+        "price": "5000000",
+        "volume": "0.00200000",
+        "estimated_krw_value": "10000",
+        "open_order_exists": false,
+        "brain_schema_version": "kbia.strategy_brain.v4.1",
+        "brain_action": "HOLD",
+        "brain_live_ready": false,
+        "brain_candidate_score": 77.83,
+        "news_bias": "DEFENSIVE_REFERENCE",
+        "scalping_candidate": false
+      },
+      "ready_for_buy_test_endpoint": false,
+      "live_buy_submitted": false
+    },
+    {
+      "loop_no": 3,
+      "market": "KRW-SOL",
+      "decision": {
+        "schema_version": "kbia.strategy_brain.v4.1",
+        "action": "HOLD",
+        "committee_score": 77.83,
+        "confidence_bucket": "C",
+        "stage_pass": {
+          "regime": true,
+          "setup": true,
+          "trigger": false,
+          "risk": true,
+          "guards": true,
+          "trader_council": false,
+          "whale_money_operator": true
+        },
+        "scalping_shadow": {
+          "schema_version": "kbia.scalping_shadow.v1",
+          "mode": "reference_only_conservative_scalping",
+          "candidate": false,
+          "gates": {
+            "spread": true,
+            "volume": true,
+            "bid_support": true,
+            "regime": true,
+            "momentum": true,
+            "open_order_clear": true,
+            "news_not_defensive": false
+          },
+          "passed_gate_count": 6,
+          "total_gate_count": 7,
+          "score_bonus": 0.0,
+          "spread_bps": 6.0,
+          "bid_support_ratio": 0.6182,
+          "can_execute_live": false,
+          "can_bypass_safety_gates": false,
+          "can_increase_order_frequency": false,
+          "can_enable_simultaneous_orders": false
+        },
+        "live_start_readiness": {
+          "ready": false,
+          "blockers": [
+            "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+            "COUNCIL_NEWS_DEFENSIVE_VETO",
+            "NO_BUY_CANDIDATE"
+          ],
+          "requires_manual_final_confirmation": true,
+          "reference_bonus_does_not_bypass_gates": true
+        },
+        "execution_allowed": false,
+        "live_order_allowed": false,
+        "order_endpoint_allowed": false,
+        "cancel_endpoint_allowed": false
+      },
+      "helper_buy_test_payload": {
+        "market": "KRW-SOL",
+        "side": "bid",
+        "ord_type": "limit",
+        "price": "280000",
+        "volume": "0.03571428",
+        "estimated_krw_value": "9999",
+        "open_order_exists": false,
+        "brain_schema_version": "kbia.strategy_brain.v4.1",
+        "brain_action": "HOLD",
+        "brain_live_ready": false,
+        "brain_candidate_score": 77.83,
+        "news_bias": "DEFENSIVE_REFERENCE",
+        "scalping_candidate": false
+      },
+      "ready_for_buy_test_endpoint": false,
+      "live_buy_submitted": false
+    }
+  ],
+  "safety": {
+    "runtime_mutated": false,
+    "live_buy_submitted": false,
+    "live_sell_submitted": false,
+    "cancel_submitted": false,
+    "market_order_allowed": false,
+    "scheduler_started": false,
+    "secret_exposure": false
+  }
+}

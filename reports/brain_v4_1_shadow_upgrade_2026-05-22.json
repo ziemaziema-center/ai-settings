@@ -1,0 +1,152 @@
+{
+  "date": "2026-05-22",
+  "mode": "brain_v4_1_shadow_upgrade",
+  "news_context": {
+    "daily_brain_bias": "DEFENSIVE_REFERENCE",
+    "risk_tag_counts": {
+      "EXCHANGE": 1,
+      "MACRO": 5,
+      "MARKET_STRESS": 1,
+      "REGULATION": 6
+    },
+    "symbol_counts": {
+      "BTC": 10,
+      "DOGE": 1,
+      "ETH": 3,
+      "SOL": 1
+    }
+  },
+  "observed_win_feature_sample": {
+    "schema_version": "kbia.trade_learning.v1",
+    "market": "KRW-DOGE",
+    "side": "bid",
+    "entry_time_bucket": "unknown",
+    "exit_time_bucket": "unknown",
+    "holding_time_bucket": "5m_to_30m",
+    "fee_adjusted_return_bucket": "material_win",
+    "realized_pnl_bucket": "material_win",
+    "material_profit": true,
+    "spread_bucket": "normal",
+    "orderbook_freshness_bucket": "fresh",
+    "fill_speed_bucket": "unknown",
+    "trend_1m": "unknown",
+    "trend_5m": "unknown",
+    "trend_15m": "unknown",
+    "volatility_bucket": "normal",
+    "volume_bucket": "elevated",
+    "liquidity_bucket": "unknown",
+    "news_bias": "DEFENSIVE_REFERENCE",
+    "btc_eth_regime": "UNKNOWN",
+    "brain_version": "kbia.strategy_brain.v4.1",
+    "candidate_reason_codes": [
+      "bid_support",
+      "tight_spread",
+      "volume_elevated"
+    ],
+    "gate_summary": "all_reference_gates_passed",
+    "position_size_bucket": "small",
+    "execution_allowed": false,
+    "live_order_allowed": false,
+    "automation_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "market_sell_allowed": false,
+    "no_profit_guarantee": true
+  },
+  "approved_pattern_sample": {
+    "observation_count": 5,
+    "promotion_level": "VALIDATED_EDGE_CANDIDATE",
+    "bounded_score_weight": 3.5,
+    "loss_case_checked": true,
+    "shadow_validation_passed": true,
+    "hq_review_passed": true,
+    "pattern_keys": [
+      "tight_spread",
+      "volume_elevated",
+      "bid_support"
+    ],
+    "schema_version": "kbia.trade_learning.v1",
+    "can_reinforce_brain": true,
+    "execution_allowed": false,
+    "live_order_allowed": false,
+    "automation_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "market_sell_allowed": false,
+    "no_profit_guarantee": true
+  },
+  "shadow_decision_sample": {
+    "schema_version": "kbia.strategy_brain.v4.1",
+    "market": "KRW-DOGE",
+    "action": "HOLD",
+    "committee_score": 81.33,
+    "committee_score_raw": 87.83,
+    "scalping_shadow": {
+      "schema_version": "kbia.scalping_shadow.v1",
+      "mode": "reference_only_conservative_scalping",
+      "candidate": false,
+      "gates": {
+        "spread": true,
+        "volume": true,
+        "bid_support": true,
+        "regime": true,
+        "momentum": true,
+        "open_order_clear": true,
+        "news_not_defensive": false
+      },
+      "passed_gate_count": 6,
+      "total_gate_count": 7,
+      "score_bonus": 0.0,
+      "spread_bps": 5.0,
+      "bid_support_ratio": 0.5921,
+      "can_execute_live": false,
+      "can_bypass_safety_gates": false,
+      "can_increase_order_frequency": false,
+      "can_enable_simultaneous_orders": false
+    },
+    "edge_learning": {
+      "schema_version": "kbia.edge_learning_reference.v1",
+      "reference_only": true,
+      "approved_pattern_count": 1,
+      "score_bonus": 3.5,
+      "patterns": [
+        {
+          "promotion_level": "VALIDATED_EDGE_CANDIDATE",
+          "bounded_score_weight": 3.5,
+          "pattern_keys": [
+            "tight_spread",
+            "volume_elevated",
+            "bid_support"
+          ]
+        }
+      ],
+      "can_bypass_safety_gates": false,
+      "can_increase_live_size": false,
+      "can_enable_simultaneous_orders": false
+    },
+    "live_start_readiness": {
+      "ready": false,
+      "blockers": [
+        "COUNCIL_APPROVALS_BELOW_THRESHOLD",
+        "COUNCIL_NEWS_DEFENSIVE_VETO",
+        "NO_BUY_CANDIDATE"
+      ],
+      "requires_manual_final_confirmation": true,
+      "reference_bonus_does_not_bypass_gates": true
+    },
+    "execution_allowed": false,
+    "live_order_allowed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false,
+    "automation_allowed": false
+  },
+  "safety": {
+    "runtime_mutated": false,
+    "live_order": false,
+    "live_sell": false,
+    "cancel": false,
+    "scheduler_mutation": false,
+    "workflow_activation": false,
+    "secret_exposure": false
+  }
+}

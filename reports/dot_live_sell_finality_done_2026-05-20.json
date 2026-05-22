@@ -1,0 +1,29 @@
+{
+  "timestamp_kst": "2026-05-20T23:30:51+09:00",
+  "mode": "dot_live_sell_finality_done_readonly",
+  "market": "KRW-DOT",
+  "classification": "done",
+  "state": "done",
+  "price": "1843",
+  "executed_volume": "15.73521432",
+  "remaining_volume": "0",
+  "trades_count": 2,
+  "open_order_count": 0,
+  "open_order_exists": false,
+  "uuid_masked": "f089...0a09",
+  "later_candidate_review_allowed": true,
+  "next_safe_action": "remain_stopped_then_next_candidate_precheck",
+  "safety": {
+    "new_live_order_submitted": false,
+    "new_live_sell_submitted": false,
+    "cancel_submitted": false,
+    "retry_or_reorder_loop_started": false,
+    "workflow_activated": false,
+    "scheduler_mutated": false,
+    "secret_exposed": false,
+    "jwt_exposed": false,
+    "authorization_header_exposed": false,
+    "raw_payload_exposed": false,
+    "full_uuid_exposed": false
+  }
+}

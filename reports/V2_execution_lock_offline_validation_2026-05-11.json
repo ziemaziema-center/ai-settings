@@ -1,0 +1,27 @@
+{
+  "overall_status": "PASS",
+  "lock_routes": [
+    "/execution-lock/acquire",
+    "/execution-lock/release",
+    "/execution-lock/status"
+  ],
+  "results": {
+    "offline_lock_tests": "PASS",
+    "acquire_no_lock": "PASS",
+    "acquire_existing_lock_blocked": "PASS",
+    "stale_lock_blocked": "PASS",
+    "matching_release": "PASS",
+    "mismatched_release_blocked": "PASS",
+    "journal_append": "PASS",
+    "partial_write_safety": "PASS",
+    "existing_helper_endpoints_offline": "PASS",
+    "workflow_interaction_added": false,
+    "live_api_called": false,
+    "network_called_before_existing_endpoint_mock": {
+      "get": false,
+      "post": false
+    }
+  },
+  "fixture_root": "C:\\Users\\minho\\Documents\\02_work\\03_AI\\03_investment_automation\\01_planning\\tests\\execution_lock_runtime_fixture",
+  "lock_journal_validation_path": "C:\\Users\\minho\\Documents\\02_work\\03_AI\\03_investment_automation\\01_planning\\tests\\execution_lock_runtime_fixture\\execution-lock-journal\\execution_lock_2026-05-11.jsonl"
+}

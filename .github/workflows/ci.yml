@@ -1,0 +1,47 @@
+name: kbia-upbit-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  dependency-free-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile core files
+        run: |
+          python -m py_compile \
+            upbit-helper/app/main.py \
+            strategy/kbia_strategy_kernel.py \
+            strategy/kbia_news_brain.py \
+            strategy/kbia_portfolio_liquidation_brain.py \
+            strategy/kbia_trade_learning.py \
+            tests/test_helper_live_buy_endpoints.py \
+            tests/test_helper_live_sell_endpoints.py \
+            tests/test_helper_detail_no_journal.py \
+            tmp/secret_scan_20260522.py \
+            tmp/run_aggressive_scalping_buy_shadow_20260522.py
+      - name: Secret scan
+        run: python tmp/secret_scan_20260522.py
+      - name: Helper endpoint tests
+        run: |
+          python tests/test_helper_detail_no_journal.py
+          python tests/test_helper_live_sell_endpoints.py
+          python tests/test_helper_live_buy_endpoints.py
+      - name: Strategy and safety tests
+        run: |
+          python tests/test_kbia_news_brain.py
+          python tests/test_kbia_portfolio_liquidation_brain.py
+          python tests/test_kbia_strategy_kernel.py
+          python tests/test_kbia_trade_learning.py
+      - name: Regression and lock validation
+        run: |
+          python tests/wf05_offline_regression_runner_2026-05-11.py
+          python tmp/v2_execution_lock_offline_validation_20260511.py
+          python tests/test_remote_runtime_replay_guards.py
+      - name: Docker build
+        run: docker build -t upbit-helper:ci upbit-helper

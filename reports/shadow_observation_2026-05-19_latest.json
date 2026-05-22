@@ -1,0 +1,81 @@
+{
+  "timestamp_kst": "2026-05-19T17:47:35+09:00",
+  "schema_version": "kbia.shadow_observation.v1",
+  "mode": "24h_shadow_observation",
+  "summary": {
+    "observation_state": "SHADOW_STOP_REVIEW",
+    "flags": [
+      "OPEN_ORDER_READ_FAILED",
+      "NEWS_DEFENSIVE_BIAS"
+    ],
+    "open_order_success": false,
+    "open_order_exists": null,
+    "open_order_count": null,
+    "news_bias": "DEFENSIVE_REFERENCE",
+    "news_items_scanned": 100,
+    "portfolio_plan_valid": true,
+    "cleanup_first_slice_krw": 272922.0,
+    "cleanup_total_shadow_krw": 571442.0
+  },
+  "market_snapshot": {
+    "BTC": {
+      "market": "KRW-BTC",
+      "trade_price": 114833000.0,
+      "signed_change_rate": 0.0044171157,
+      "acc_trade_price_24h": 144958456645.69733
+    },
+    "ETH": {
+      "market": "KRW-ETH",
+      "trade_price": 3180000.0,
+      "signed_change_rate": 0.0060107561,
+      "acc_trade_price_24h": 80591504203.04916
+    },
+    "SOL": {
+      "market": "KRW-SOL",
+      "trade_price": 127100.0,
+      "signed_change_rate": 0.0031570639,
+      "acc_trade_price_24h": 26769528229.631104
+    },
+    "ETC": {
+      "market": "KRW-ETC",
+      "trade_price": 13370.0,
+      "signed_change_rate": 0.0082956259,
+      "acc_trade_price_24h": 2233309031.9166756
+    },
+    "DOGE": {
+      "market": "KRW-DOGE",
+      "trade_price": 156.0,
+      "signed_change_rate": 0,
+      "acc_trade_price_24h": 39493477889.359184
+    },
+    "DOT": {
+      "market": "KRW-DOT",
+      "trade_price": 1855.0,
+      "signed_change_rate": -0.0005387931,
+      "acc_trade_price_24h": 548662121.1006536
+    },
+    "ALGO": {
+      "market": "KRW-ALGO",
+      "trade_price": 163.0,
+      "signed_change_rate": 0.0124223602,
+      "acc_trade_price_24h": 1534559291.4733782
+    },
+    "FCT2": {
+      "market": "KRW-FCT2",
+      "trade_price": 18.0,
+      "signed_change_rate": 0,
+      "acc_trade_price_24h": 54902539.09908199
+    }
+  },
+  "safety": {
+    "runtime_modified": false,
+    "live_order_submitted": false,
+    "live_sell_submitted": false,
+    "cancel_attempted": false,
+    "workflow_activation_changed": false,
+    "project_scheduler_changed": false,
+    "secrets_exposed": false,
+    "order_endpoint_allowed": false,
+    "cancel_endpoint_allowed": false
+  }
+}
