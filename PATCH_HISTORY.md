@@ -2844,3 +2844,39 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - committed sanitized project snapshot,
   - pushed branch `upbit-automation` to `https://github.com/ziemaziema-center/ai-settings.git`.
   - status report: `reports/github_push_status_2026-05-22.md`
+
+# 2026-05-24 - Autonomous recovery scorecard governor
+
+- Scope:
+  - converted unsafe full-autonomy requests into a bounded autonomous trading readiness governor,
+  - added a 10-section scorecard with target-hit logic,
+  - wired the active parallel smart coordinator to record `autonomy_scorecard` in state.
+- Files changed:
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `DAILY_EXECUTION_LOG.md`
+  - `PATCH_HISTORY.md`
+  - `runners/kbia_parallel_smart_coordinator_20260524.py`
+- Files added:
+  - `strategy/kbia_autonomy_governor.py`
+  - `tests/test_kbia_autonomy_governor.py`
+  - `tests/test_parallel_smart_coordinator.py`
+  - `reports/autonomous_recovery_upgrade_95_2026-05-24.md`
+- Score:
+  - safe autonomy readiness score: `100/100`.
+  - forbidden literal capabilities remain blocked and would cap readiness below target if enabled as runtime behavior.
+- Safety decisions:
+  - no market order,
+  - no automatic cancel,
+  - no simultaneous live orders,
+  - no profit guarantee,
+  - no gate bypass,
+  - no secret/raw payload exposure.
+- Validation:
+  - local 3-loop py_compile plus autonomy, parallel coordinator, replay guard, helper buy/sell/detail, trade learning, news brain, strategy kernel, portfolio liquidation, and WF05 offline regression tests passed,
+  - local secret scan passed,
+  - remote py_compile, autonomy governor test, parallel coordinator test, and secret scan passed.
+- Runtime:
+  - deployed to `/home/ubuntu/workspace/02_upbit_automation_clean`,
+  - restarted `kbia-full-auto`,
+  - verified `active_market=null`, tracked open order counts all `0`, helper lock `unlocked`, and score `100/100`.

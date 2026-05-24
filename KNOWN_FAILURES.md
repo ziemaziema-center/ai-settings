@@ -71,3 +71,8 @@
 - One or a few profitable trades can be luck, broad market beta, or survivorship bias.
 - Resolution: Winning-trade conditions may be recorded only as sanitized features and promoted only after repeated independent examples, loss-case checks, fee/slippage checks, shadow validation, and HQ review.
 - Rule: Profit logs alone must never increase live size, order frequency, simultaneous orders, or bypass open-order, stale, spread, maker-limit, asset-balance, cap, fingerprint, or finality gates.
+
+### KF-015: Unsafe autonomy wording
+- Requests for profit guarantee, unlimited auto-buy, simultaneous live orders, or guaranteed loss recovery can sound like product requirements but are unsafe trading promises.
+- Resolution: Convert those requests into bounded autonomy capabilities: parallel read-only scan, capped staged sizing, helper-gated limit orders, finality-based sequencing, and explicit no-trade states.
+- Rule: A 95+ system score may mean automation readiness, not profit certainty. Forbidden capabilities must reduce or block readiness if they are requested as literal runtime behavior.

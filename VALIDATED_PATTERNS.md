@@ -128,3 +128,11 @@
   - system stop false,
   - one-time live fuse.
 - Profit logs, user urgency, or opportunity cost must not bypass this helper gate.
+
+## VP-016: Autonomous scorecard governor
+
+- A 95+ readiness score must be calculated from explicit safety, execution, portfolio, data, strategy, news, learning, observability, finality, and deployment sections.
+- The scorecard may approve bounded autonomy only when market orders, auto-cancel, secret exposure, gate bypass, simultaneous live orders, and profit guarantees remain blocked.
+- Valid automation pattern is parallel scanning with single live limit order sequencing until finality.
+- Runtime state should record the current `autonomy_scorecard` so the operator can see whether the system is ready, blocked, or degraded.
+- Forbidden capability requests must be documented as blockers or converted into safe equivalents before runtime activation.

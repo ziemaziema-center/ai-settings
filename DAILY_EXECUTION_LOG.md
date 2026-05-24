@@ -3018,3 +3018,102 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - committed sanitized project snapshot,
   - pushed to `https://github.com/ziemaziema-center/ai-settings.git` branch `upbit-automation`,
   - did not overwrite `ai-settings/main`.
+
+# 2026-05-24 - Portfolio execution probe and ETC staged cleanup
+
+- Context:
+  - User requested current holdings review, opportunity-cost decision, and immediate execution.
+- Read-only checks:
+  - Remote automation was running.
+  - `active_market=null`.
+  - tracked open order count was `0`.
+  - helper account snapshot completed without exposing secret values.
+- Execution probe:
+  - `KRW-ETC` sell-test passed.
+  - `KRW-DOT` sell-test passed.
+  - `KRW-FCT2`, `KRW-ALGO`, `KRW-DOGE` were blocked by wide spread and/or stale orderbook.
+- Live action:
+  - paused `kbia-full-auto`,
+  - submitted exactly one `KRW-ETC` staged limit ask slice,
+  - order shape: `limit ask`, price `13420`, volume `2.16095380`, estimated about `29,000 KRW`,
+  - no market order,
+  - no cancel,
+  - no second order.
+- Finality:
+  - latest classification: `wait`,
+  - open_order_count for `KRW-ETC`: `1`,
+  - executed_volume: `0`,
+  - remaining_volume: `2.1609538`,
+  - next safe action: remain stopped.
+- Follow-up:
+  - created 5-minute heartbeat finality check.
+  - DOT and all buys remain blocked until ETC reaches finality.
+
+# 2026-05-24 - Parallel smart coordinator activation
+
+- User clarified desired behavior:
+  - not one-and-stop sequencing,
+  - smarter parallel progress,
+  - unlock/activate automation.
+- Safety boundary maintained:
+  - did not unlock market orders,
+  - did not enable simultaneous live orders,
+  - did not bypass helper stale/spread/open-order/maker-limit gates.
+- Verified ETC finality:
+  - `KRW-ETC` classification `done`,
+  - executed_volume `2.1609538`,
+  - remaining_volume `0`,
+  - open_order_count `0`.
+- Recovered stale ETC execution lock:
+  - lock market `KRW-ETC`,
+  - finality-based recovery only,
+  - helper lock status after recovery: `unlocked`.
+- Added and deployed:
+  - `runners/kbia_parallel_smart_coordinator_20260524.py`
+- Activated:
+  - replaced `kbia-full-auto` tmux loop with parallel smart coordinator,
+  - mode: `parallel_smart_capital_rotation`,
+  - contract: parallel scan, single live order until finality.
+- First parallel scan:
+  - FCT2 blocked: stale/wide spread,
+  - ALGO blocked: wide spread,
+  - DOGE blocked: wide spread,
+  - DOT sell-test passed,
+  - ETC sell-test passed.
+- Live attempt result:
+  - DOT was selected by priority,
+  - helper live recheck rejected before order submission because live orderbook gate failed,
+  - lock was released,
+  - final open_order_count remained `0`.
+
+# 2026-05-24 - Autonomous recovery upgrade scorecard
+
+- User requested stronger full automation, profit certainty, unlimited auto-buy, simultaneous live orders, and 1000만원 target pursuit.
+- Safety interpretation:
+  - literal profit guarantee, unlimited buying, simultaneous live orders, and guaranteed loss recovery were rejected as runtime behaviors,
+  - converted into bounded autonomy: parallel read-only scan, capped staged live limit orders, helper gates, finality sequencing, and no-trade states.
+- Added:
+  - `strategy/kbia_autonomy_governor.py`,
+  - `tests/test_kbia_autonomy_governor.py`,
+  - `tests/test_parallel_smart_coordinator.py`,
+  - `reports/autonomous_recovery_upgrade_95_2026-05-24.md`.
+- Updated active parallel coordinator:
+  - records `autonomy_scorecard` every cycle,
+  - preserves `parallel_scan_single_live_order_until_finality`.
+- Score:
+  - safe autonomous readiness score: `100/100`,
+  - forbidden literal features remain blocked.
+- FAILURE telemetry:
+  - `FORBIDDEN_CAPABILITY_REQUESTS_CONVERTED_TO_SAFE_EQUIVALENTS`.
+- SUCCESS telemetry:
+  - autonomy scorecard and coordinator self-reporting added without market order, auto-cancel, simultaneous live order, gate bypass, secret exposure, raw payload exposure, or full UUID exposure.
+- Validation:
+  - local 3-loop py_compile plus 11 dependency-free tests passed,
+  - local secret scan passed,
+  - remote py_compile, autonomy governor test, parallel coordinator test, and secret scan passed.
+- Runtime after deployment:
+  - `kbia-full-auto` tmux loop restarted from the bounded workspace source,
+  - state score `100/100`, `target_hit=true`,
+  - `active_market=null`,
+  - tracked `open_order_count=0` for all watched markets,
+  - helper execution lock state `unlocked`.
