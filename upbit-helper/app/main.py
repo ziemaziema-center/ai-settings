@@ -173,6 +173,14 @@ class ExecutionLockReleaseRequest(BaseModel):
     now_kst: str | None = None
 
 
+class ExecutionLockRecoverStaleFinalityRequest(BaseModel):
+    automated_recovery_allowed: bool | str | int | None = None
+    recovery_reason: str | None = None
+    workflow_active: bool | str | int | None = None
+    cron_enabled: bool | str | int | None = None
+    now_kst: str | None = None
+
+
 LIVE_SELL_ALLOWED_MARKETS = {"KRW-FCT2", "KRW-DOT", "KRW-ALGO", "KRW-ETC", "KRW-DOGE"}
 LIVE_SELL_ALLOWED_ACTIONS = {"EXIT_STAGED", "REDUCE_STAGED"}
 LIVE_SELL_MIN_KRW = Decimal("5000")
@@ -670,6 +678,94 @@ def _release_gate_failures(payload: ExecutionLockReleaseRequest, lock: dict[str,
     if not payload.release_reason:
         failures.append("RELEASE_REASON_REQUIRED")
     return failures
+
+
+def _stale_lock_recovery_blocked(
+    payload: ExecutionLockRecoverStaleFinalityRequest,
+    status: dict[str, Any],
+    lock: dict[str, Any],
+) -> list[str]:
+    failures: list[str] = []
+    if not _strict_true(payload.automated_recovery_allowed):
+        failures.append("AUTOMATED_RECOVERY_ALLOWED_REQUIRED")
+    if not payload.recovery_reason:
+        failures.append("RECOVERY_REASON_REQUIRED")
+    if not _strict_false(payload.workflow_active):
+        failures.append("WORKFLOW_ACTIVE_OR_UNKNOWN")
+    if not _strict_false(payload.cron_enabled):
+        failures.append("CRON_ENABLED_OR_UNKNOWN")
+    if status.get("lock_state") != "stale_stop" or status.get("stale_lock") is not True:
+        failures.append("LOCK_NOT_STALE")
+    if status.get("partial_files"):
+        failures.append("LOCK_PARTIAL_WRITE_PRESENT")
+    if str(lock.get("lock_state") or "") != "active":
+        failures.append("LOCK_STATE_NOT_ACTIVE")
+    if str(lock.get("market") or "") not in LIVE_SELL_ALLOWED_MARKETS | LIVE_BUY_ALLOWED_MARKETS:
+        failures.append("LOCK_MARKET_UNSUPPORTED")
+    if str(lock.get("side") or "") not in {"ask", "bid"}:
+        failures.append("LOCK_SIDE_UNSUPPORTED")
+    if str(lock.get("ord_type") or "") != "limit":
+        failures.append("LOCK_LIMIT_ONLY")
+    return failures
+
+
+def _stale_lock_finality_evidence(market: str, side: str, ord_type: str) -> dict[str, Any]:
+    open_result = _upbit_get("/v1/orders/open", {"market": market})
+    open_status = open_result["status"]
+    open_body = open_result["body"]
+    open_classification = _classify(open_status, open_body)
+    open_orders = open_body if isinstance(open_body, list) else []
+    open_success = open_classification["stop_code"] is None and isinstance(open_body, list)
+    if not open_success:
+        return {
+            "success": False,
+            "blocked_reason": open_classification["error_name"] or "OPEN_ORDER_TELEMETRY_FAILED",
+            "open_order_count": None,
+            "open_order_exists": None,
+            "final_classification": "unknown_stop",
+            "order": None,
+        }
+    if len(open_orders) > 0:
+        return {
+            "success": False,
+            "blocked_reason": "OPEN_ORDER_EXISTS",
+            "open_order_count": len(open_orders),
+            "open_order_exists": True,
+            "final_classification": "wait",
+            "order": None,
+        }
+
+    closed_result = _upbit_get(
+        "/v1/orders/closed",
+        {"market": market, "limit": "10", "order_by": "desc"},
+    )
+    closed_body = closed_result["body"]
+    closed_orders = closed_body if isinstance(closed_body, list) else []
+    sanitized_orders = [_sanitize_detail_order(row) for row in closed_orders if isinstance(row, dict)]
+    matching = [
+        order
+        for order in sanitized_orders
+        if order.get("market") == market and order.get("side") == side and order.get("ord_type") == ord_type
+    ]
+    selected = matching[:1]
+    final_classification, blocked_reason = _final_detail_classification(selected, True, None)
+    if final_classification not in {"done", "cancel"}:
+        return {
+            "success": False,
+            "blocked_reason": blocked_reason or "STALE_LOCK_RECENT_ORDER_NOT_FINAL",
+            "open_order_count": 0,
+            "open_order_exists": False,
+            "final_classification": final_classification,
+            "order": selected[0] if selected else None,
+        }
+    return {
+        "success": True,
+        "blocked_reason": None,
+        "open_order_count": 0,
+        "open_order_exists": False,
+        "final_classification": final_classification,
+        "order": selected[0] if selected else None,
+    }
 
 
 def _credentials() -> tuple[str | None, str | None]:
@@ -1192,6 +1288,170 @@ def execution_lock_release(payload: ExecutionLockReleaseRequest) -> dict[str, An
         "human_review_required": not release_result["success"],
         "journal_write": journal,
         "released_path": release_result["released_path"],
+        "active_lock_path": str(path),
+        "forbidden_endpoint_check": True,
+        "secrets_leak_check": True,
+        "next_safe_action": "remain_stopped",
+    }
+
+
+@app.post("/execution-lock/recover-stale-finality")
+def execution_lock_recover_stale_finality(payload: ExecutionLockRecoverStaleFinalityRequest) -> dict[str, Any]:
+    now = _lock_now(payload.now_kst)
+    path = _active_lock_path()
+    status = _execution_lock_status(payload.now_kst)
+    lock = (status.get("lock") or {}).copy()
+    lock_with_hash, read_error = _read_json_file(path)
+    if lock_with_hash is None:
+        journal = _append_lock_journal(
+            {
+                "timestamp_kst": now.isoformat(timespec="seconds"),
+                "event_type": "lock_stale_recovery_attempt",
+                "result": "blocked",
+                "lock_id": None,
+                "market": None,
+                "side": None,
+                "ord_type": None,
+                "run_id": None,
+                "approval_id": None,
+                "open_order_exists": None,
+                "open_order_count": None,
+                "reconciliation_classification": "unknown_stop",
+                "blocked_reason": read_error or status.get("blocked_reason") or "NO_LOCK_TO_RECOVER",
+                "next_safe_action": "remain_stopped",
+                "forbidden_endpoint_check": True,
+                "secrets_leak_check": True,
+            },
+            now,
+        )
+        return {
+            "success": False,
+            "mode": "execution_lock_stale_finality_recovery",
+            "lock_recovered": False,
+            "lock_id": None,
+            "market": None,
+            "lock_state": status["lock_state"],
+            "blocked_reason": read_error or status.get("blocked_reason") or "NO_LOCK_TO_RECOVER",
+            "human_review_required": True,
+            "journal_write": journal,
+            "active_lock_path": str(path),
+            "forbidden_endpoint_check": True,
+            "secrets_leak_check": True,
+            "next_safe_action": "remain_stopped",
+        }
+
+    failures = _stale_lock_recovery_blocked(payload, status, lock_with_hash)
+    market = str(lock_with_hash.get("market") or "")
+    side = str(lock_with_hash.get("side") or "")
+    ord_type = str(lock_with_hash.get("ord_type") or "")
+    evidence = None
+    if not failures:
+        evidence = _stale_lock_finality_evidence(market, side, ord_type)
+        if not evidence.get("success"):
+            failures.append(str(evidence.get("blocked_reason") or "STALE_LOCK_FINALITY_NOT_PROVEN"))
+
+    if failures:
+        journal = _append_lock_journal(
+            {
+                "timestamp_kst": now.isoformat(timespec="seconds"),
+                "event_type": "lock_stale_recovery_attempt",
+                "result": "blocked",
+                "lock_id": _sanitize_message(lock_with_hash.get("lock_id")),
+                "market": market,
+                "side": side,
+                "ord_type": ord_type,
+                "run_id": _sanitize_message(lock_with_hash.get("run_id")),
+                "approval_id": _sanitize_message(lock_with_hash.get("approval_id")),
+                "open_order_exists": evidence.get("open_order_exists") if evidence else None,
+                "open_order_count": evidence.get("open_order_count") if evidence else None,
+                "reconciliation_classification": evidence.get("final_classification") if evidence else "unknown_stop",
+                "blocked_reason": "|".join(failures),
+                "next_safe_action": "remain_stopped",
+                "forbidden_endpoint_check": True,
+                "secrets_leak_check": True,
+            },
+            now,
+        )
+        return {
+            "success": False,
+            "mode": "execution_lock_stale_finality_recovery",
+            "lock_recovered": False,
+            "lock_id": _sanitize_message(lock_with_hash.get("lock_id")),
+            "market": market,
+            "lock_state": status["lock_state"],
+            "blocked_reason": "|".join(failures),
+            "human_review_required": True,
+            "journal_write": journal,
+            "open_order_count": evidence.get("open_order_count") if evidence else None,
+            "final_classification": evidence.get("final_classification") if evidence else "unknown_stop",
+            "active_lock_path": str(path),
+            "forbidden_endpoint_check": True,
+            "secrets_leak_check": True,
+            "next_safe_action": "remain_stopped",
+        }
+
+    order = (evidence or {}).get("order") or {}
+    journal = _append_lock_journal(
+        {
+            "timestamp_kst": now.isoformat(timespec="seconds"),
+            "event_type": "lock_stale_recovery",
+            "result": "released",
+            "lock_id": _sanitize_message(lock_with_hash.get("lock_id")),
+            "market": market,
+            "side": side,
+            "ord_type": ord_type,
+            "run_id": _sanitize_message(lock_with_hash.get("run_id")),
+            "approval_id": _sanitize_message(lock_with_hash.get("approval_id")),
+            "open_order_exists": False,
+            "open_order_count": 0,
+            "reconciliation_classification": evidence["final_classification"],
+            "blocked_reason": None,
+            "next_safe_action": "remain_stopped",
+            "forbidden_endpoint_check": True,
+            "secrets_leak_check": True,
+        },
+        now,
+    )
+    if not journal["success"]:
+        return {
+            "success": False,
+            "mode": "execution_lock_stale_finality_recovery",
+            "lock_recovered": False,
+            "lock_id": _sanitize_message(lock_with_hash.get("lock_id")),
+            "market": market,
+            "lock_state": status["lock_state"],
+            "blocked_reason": journal["error_name"] or "LOCK_JOURNAL_APPEND_FAILED",
+            "human_review_required": True,
+            "journal_write": journal,
+            "open_order_count": 0,
+            "final_classification": evidence["final_classification"],
+            "active_lock_path": str(path),
+            "forbidden_endpoint_check": True,
+            "secrets_leak_check": True,
+            "next_safe_action": "remain_stopped",
+        }
+
+    release_result = _remove_active_lock(path)
+    return {
+        "success": release_result["success"],
+        "mode": "execution_lock_stale_finality_recovery",
+        "lock_recovered": release_result["success"],
+        "lock_id": _sanitize_message(lock_with_hash.get("lock_id")),
+        "market": market,
+        "side": side,
+        "ord_type": ord_type,
+        "lock_state": "released" if release_result["success"] else status["lock_state"],
+        "blocked_reason": None if release_result["success"] else release_result["error_name"],
+        "human_review_required": not release_result["success"],
+        "journal_write": journal,
+        "released_path": release_result["released_path"],
+        "open_order_count": 0,
+        "open_order_exists": False,
+        "final_classification": evidence["final_classification"],
+        "order_state": order.get("state"),
+        "executed_volume": order.get("executed_volume"),
+        "remaining_volume": order.get("remaining_volume"),
+        "uuid_masked": order.get("uuid_masked"),
         "active_lock_path": str(path),
         "forbidden_endpoint_check": True,
         "secrets_leak_check": True,

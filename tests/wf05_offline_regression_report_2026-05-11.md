@@ -1,7 +1,7 @@
 # WF05 Offline Regression Report - 2026-05-11
 
 ## Summary
-- timestamp_kst: 2026-05-24T13:46:16+09:00
+- timestamp_kst: 2026-05-24T18:30:42+09:00
 - classifier_version: wf05-offline-classifier-2026-05-11-v1
 - fixture_count: 12
 - passed_count: 12

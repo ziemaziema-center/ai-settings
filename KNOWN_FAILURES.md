@@ -76,3 +76,8 @@
 - Requests for profit guarantee, unlimited auto-buy, simultaneous live orders, or guaranteed loss recovery can sound like product requirements but are unsafe trading promises.
 - Resolution: Convert those requests into bounded autonomy capabilities: parallel read-only scan, capped staged sizing, helper-gated limit orders, finality-based sequencing, and explicit no-trade states.
 - Rule: A 95+ system score may mean automation readiness, not profit certainty. Forbidden capabilities must reduce or block readiness if they are requested as literal runtime behavior.
+
+### KF-016: Stale lock requiring human release
+- A live order can outlive the lock expiry window, leaving the helper in `stale_stop` while the order is still open or after it later reaches finality.
+- Resolution: The helper may recover a stale lock without an owner token only after read-only evidence proves `open_order_count=0` and the latest matching order is `done` or `cancel`.
+- Rule: If any open order exists for the locked market, stale-lock recovery must stay blocked and the coordinator must monitor that open market as the active market.

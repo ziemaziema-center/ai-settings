@@ -3117,3 +3117,35 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `active_market=null`,
   - tracked `open_order_count=0` for all watched markets,
   - helper execution lock state `unlocked`.
+
+# 2026-05-24 - Self-running stale lock recovery
+
+- Problem:
+  - DOT finality completed, but helper status later showed a stale execution lock path that could block future automation.
+  - Manual-only stale lock release is not acceptable for a self-running system.
+- Added:
+  - helper endpoint `POST /execution-lock/recover-stale-finality`,
+  - coordinator stale lock recovery check at the start of every cycle,
+  - coordinator active-market reconciliation from actual open-order telemetry.
+- Recovery rules:
+  - recover only if lock is stale,
+  - no partial lock writes,
+  - supported KRW market,
+  - limit order only,
+  - locked market open_order_count is `0`,
+  - latest matching closed order is `done` or `cancel`,
+  - workflow and cron flags false.
+- Runtime result:
+  - helper rebuilt and restarted,
+  - `kbia-full-auto` restarted,
+  - current `KRW-ETC` open_order_count is `1`,
+  - ETC classification is `wait`,
+  - stale recovery correctly blocked with `OPEN_ORDER_EXISTS`,
+  - coordinator corrected `active_market` to `KRW-ETC` and remains in read-only monitoring until finality.
+- Validation:
+  - local py_compile, helper recovery tests, coordinator tests, live-sell helper regression, and secret scan passed,
+  - remote py_compile, helper recovery tests, coordinator tests, and secret scan passed.
+- FAILURE telemetry:
+  - `STALE_LOCK_RECOVERY_BLOCKED_OPEN_ORDER_EXISTS`.
+- SUCCESS telemetry:
+  - self-running stale lock recovery path deployed and active without market order, cancel, simultaneous live order, gate bypass, owner token exposure, raw payload exposure, or full UUID exposure.

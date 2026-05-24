@@ -128,6 +128,50 @@ def any_open_order(open_orders: dict) -> bool:
     return any(row.get("open_order_exists") is True or int(row.get("open_order_count") or 0) > 0 for row in open_orders.values())
 
 
+def first_open_market(open_orders: dict) -> str | None:
+    for market in WATCH_MARKETS:
+        row = open_orders.get(market) or {}
+        if row.get("open_order_exists") is True or int(row.get("open_order_count") or 0) > 0:
+            return market
+    return None
+
+
+def recover_stale_lock_if_safe(state: dict) -> dict:
+    status = post_json("/execution-lock/status", {})
+    state["last_execution_lock_status"] = {
+        "lock_state": status.get("lock_state"),
+        "lock_exists": status.get("lock_exists"),
+        "stale_lock": status.get("stale_lock"),
+        "blocked_reason": status.get("blocked_reason"),
+    }
+    if status.get("lock_state") != "stale_stop" or status.get("stale_lock") is not True:
+        return {"attempted": False, "lock_recovered": None, "blocked_reason": status.get("blocked_reason")}
+    recovery = post_json(
+        "/execution-lock/recover-stale-finality",
+        {
+            "automated_recovery_allowed": True,
+            "recovery_reason": "parallel_smart_stale_lock_finality_recovery",
+            "workflow_active": False,
+            "cron_enabled": False,
+            "now_kst": kst_now(),
+        },
+    )
+    recovery["attempted"] = True
+    state["last_stale_lock_recovery"] = {
+        "attempted": True,
+        "lock_recovered": recovery.get("lock_recovered"),
+        "market": recovery.get("market"),
+        "final_classification": recovery.get("final_classification"),
+        "open_order_count": recovery.get("open_order_count"),
+        "blocked_reason": recovery.get("blocked_reason"),
+    }
+    if recovery.get("lock_recovered") is True:
+        state["active_execution_lock"] = None
+        if state.get("active_market") == recovery.get("market"):
+            state["active_market"] = None
+    return recovery
+
+
 def refresh_autonomy_score(state: dict) -> None:
     autonomy_state = default_live_autonomy_state()
     autonomy_state.update(
@@ -318,14 +362,31 @@ def cycle(state: dict) -> dict:
     if health.get("ok") is not True:
         log_event({"event": "stop", "reason": "HELPER_HEALTH_FAILED"})
         return state
+    lock_recovery = recover_stale_lock_if_safe(state)
+    if lock_recovery.get("attempted") or lock_recovery.get("lock_recovered") is not None:
+        log_event(
+            {
+                "event": "stale_lock_recovery_check",
+                "attempted": lock_recovery.get("attempted"),
+                "lock_recovered": lock_recovery.get("lock_recovered"),
+                "market": lock_recovery.get("market"),
+                "final_classification": lock_recovery.get("final_classification"),
+                "open_order_count": lock_recovery.get("open_order_count"),
+                "blocked_reason": lock_recovery.get("blocked_reason"),
+            }
+        )
 
     open_orders = open_orders_parallel()
     state["last_open_orders"] = open_orders
     if any_open_order(open_orders):
+        open_market = first_open_market(open_orders)
         active = state.get("active_market")
+        if open_market and ((open_orders.get(active) or {}).get("open_order_exists") is not True):
+            state["active_market"] = open_market
+            active = open_market
         finality = detail_finality(active) if active else None
         state["last_finality"] = finality
-        log_event({"event": "read_only_stop_open_order", "active_market": active, "finality": finality, "open_orders": open_orders})
+        log_event({"event": "read_only_stop_open_order", "active_market": active, "open_market": open_market, "finality": finality, "open_orders": open_orders})
         return state
 
     active = state.get("active_market")

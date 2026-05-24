@@ -136,3 +136,17 @@
 - Valid automation pattern is parallel scanning with single live limit order sequencing until finality.
 - Runtime state should record the current `autonomy_scorecard` so the operator can see whether the system is ready, blocked, or degraded.
 - Forbidden capability requests must be documented as blockers or converted into safe equivalents before runtime activation.
+
+## VP-017: Self-running stale lock recovery
+
+- A stale execution lock may be recovered automatically only through `POST /execution-lock/recover-stale-finality`.
+- Recovery requires:
+  - stale lock state,
+  - no partial lock writes,
+  - supported KRW market,
+  - `ord_type=limit`,
+  - open-order telemetry for the locked market returning `open_order_count=0`,
+  - latest matching closed order classified as `done` or `cancel`,
+  - workflow and cron flags false.
+- If the locked market still has an open order, recovery is blocked and the coordinator must update `active_market` to the open market and keep read-only monitoring.
+- The recovery path must not submit orders, cancel orders, expose owner tokens, expose raw Upbit payloads, or bypass finality.

@@ -2880,3 +2880,46 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - deployed to `/home/ubuntu/workspace/02_upbit_automation_clean`,
   - restarted `kbia-full-auto`,
   - verified `active_market=null`, tracked open order counts all `0`, helper lock `unlocked`, and score `100/100`.
+
+# 2026-05-24 - Self-running stale lock recovery
+
+- Scope:
+  - removed the manual-only stale-lock blocker from the automation loop,
+  - added helper-side finality-proven stale lock recovery,
+  - added coordinator-side stale lock recovery call and active-market reconciliation.
+- Files changed:
+  - `upbit-helper/app/main.py`
+  - `runners/kbia_parallel_smart_coordinator_20260524.py`
+  - `tests/test_parallel_smart_coordinator.py`
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Files added:
+  - `tests/test_helper_execution_lock_recovery.py`
+  - `reports/self_running_stale_lock_recovery_2026-05-24.md`
+- Implementation:
+  - Added `POST /execution-lock/recover-stale-finality`.
+  - The endpoint recovers only stale locks with no partial files, supported market, limit order, `open_order_count=0`, and latest matching finality `done` or `cancel`.
+  - If an open order exists, recovery remains blocked and no file is moved.
+  - Coordinator now checks stale lock recovery every cycle and corrects `active_market` to the market that actually has an open order.
+- Deployment:
+  - deployed to EC2 bounded workspace,
+  - rebuilt `upbit-helper:stale-recovery-20260524`,
+  - restarted only the `upbit-helper` container,
+  - restarted `kbia-full-auto` tmux runner.
+- Runtime:
+  - helper health passed,
+  - current ETC order remains `wait` with open_order_count `1`,
+  - stale recovery correctly blocked with `OPEN_ORDER_EXISTS`,
+  - coordinator set `active_market=KRW-ETC` and is monitoring read-only.
+- Validation:
+  - local py_compile, helper recovery tests, coordinator tests, live-sell helper regression, and secret scan passed,
+  - remote py_compile, helper recovery tests, coordinator tests, and secret scan passed.
+- Safety decisions:
+  - no market order,
+  - no cancel,
+  - no simultaneous live order,
+  - no gate bypass,
+  - no owner token exposure,
+  - no raw payload exposure.
