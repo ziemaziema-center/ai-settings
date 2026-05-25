@@ -150,3 +150,22 @@
   - workflow and cron flags false.
 - If the locked market still has an open order, recovery is blocked and the coordinator must update `active_market` to the open market and keep read-only monitoring.
 - The recovery path must not submit orders, cancel orders, expose owner tokens, expose raw Upbit payloads, or bypass finality.
+
+## VP-018: Bounded stale limit cancel/reprice
+
+- A stale open order may be cancelled only through `POST /upbit/cancel-stale-order/telemetry`.
+- Cancel gate requires:
+  - supported cleanup market,
+  - `side=ask`,
+  - `ord_type=limit`,
+  - exactly one open order,
+  - order state `wait`,
+  - executed volume `0`,
+  - remaining volume positive,
+  - created_at parsed and older than the configured minimum age,
+  - matching active or stale execution lock,
+  - workflow/cron/system stop safe flags,
+  - one-time cancel flag.
+- Helper may use the raw Upbit UUID only internally for `DELETE /v1/order`; responses must expose only `uuid_masked`.
+- After a cancel attempt, the coordinator must re-read finality before any next live order.
+- Reprice is not market order chasing: the next order still goes through sell-test, fresh orderbook, spread, maker-limit, balance, lock, and live-sell gates.

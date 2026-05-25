@@ -209,6 +209,39 @@ def detail_finality(market: str) -> dict:
     }
 
 
+def cancel_stale_order_if_safe(market: str, finality: dict, state: dict) -> dict:
+    if finality.get("classification") != "wait":
+        return {"attempted": False, "cancel_accepted": None, "blocked_reason": "FINALITY_NOT_WAIT"}
+    result = post_json(
+        "/upbit/cancel-stale-order/telemetry",
+        {
+            "market": market,
+            "side": "ask",
+            "ord_type": "limit",
+            "cancel_enabled": True,
+            "execution_allowed": True,
+            "execution_mode": "live",
+            "one_time_cancel_allowed": True,
+            "human_approval": True,
+            "min_open_age_minutes": 30,
+            "workflow_active": False,
+            "cron_enabled": False,
+            "system_stop_active": False,
+            "now_kst": kst_now(),
+        },
+    )
+    state["last_cancel_stale_order"] = {
+        "attempted": result.get("cancel_attempted"),
+        "cancel_accepted": result.get("cancel_accepted"),
+        "market": result.get("market"),
+        "open_order_count": result.get("open_order_count"),
+        "order_age_minutes": result.get("order_age_minutes"),
+        "blocked_reason": result.get("blocked_reason"),
+        "http_status": result.get("http_status"),
+    }
+    return result
+
+
 def build_sell_payload(candidate: dict) -> tuple[dict, dict]:
     market = candidate["market"]
     ob = public_orderbook(market)
@@ -386,7 +419,20 @@ def cycle(state: dict) -> dict:
             active = open_market
         finality = detail_finality(active) if active else None
         state["last_finality"] = finality
+        cancel = cancel_stale_order_if_safe(active, finality or {}, state) if active else {"attempted": False}
         log_event({"event": "read_only_stop_open_order", "active_market": active, "open_market": open_market, "finality": finality, "open_orders": open_orders})
+        if cancel.get("attempted") or cancel.get("cancel_accepted") is not None:
+            log_event(
+                {
+                    "event": "cancel_stale_order_check",
+                    "market": active,
+                    "attempted": cancel.get("cancel_attempted") or cancel.get("attempted"),
+                    "cancel_accepted": cancel.get("cancel_accepted"),
+                    "order_age_minutes": cancel.get("order_age_minutes"),
+                    "blocked_reason": cancel.get("blocked_reason"),
+                    "http_status": cancel.get("http_status"),
+                }
+            )
         return state
 
     active = state.get("active_market")

@@ -2923,3 +2923,49 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no gate bypass,
   - no owner token exposure,
   - no raw payload exposure.
+
+# 2026-05-25 - Bounded cancel/reprice activation
+
+- Scope:
+  - implemented approved bounded cancel/reprice for stale unfilled cleanup sell orders,
+  - kept one-order-at-a-time and finality-first contract.
+- Files changed:
+  - `upbit-helper/app/main.py`
+  - `runners/kbia_parallel_smart_coordinator_20260524.py`
+  - `tests/test_parallel_smart_coordinator.py`
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Files added:
+  - `tests/test_helper_cancel_stale_order.py`
+  - `reports/bounded_cancel_reprice_activation_2026-05-25.md`
+- Implementation:
+  - Added internal `_upbit_delete`.
+  - Added `POST /upbit/cancel-stale-order/telemetry`.
+  - Cancel requires one stale zero-fill `ask limit` order, matching lock, safe flags, and one-time cancel permission.
+  - Responses return only masked UUID.
+  - Coordinator calls cancel gate when the active open order remains `wait`.
+- Deployment:
+  - deployed to EC2 bounded workspace,
+  - built `upbit-helper:cancel-stale-20260525`,
+  - restarted only `upbit-helper`,
+  - restarted `kbia-full-auto`.
+- Runtime:
+  - stale ETC cancel accepted,
+  - ETC finality became `cancel`,
+  - stale lock recovered,
+  - coordinator rescanned,
+  - new ETC helper-gated live limit ask accepted,
+  - current ETC state is `wait`, open_order_count `1`, lock `active`.
+- Validation:
+  - local py_compile, cancel helper tests, coordinator tests, live sell/buy helper regressions, and secret scan passed,
+  - remote py_compile, cancel helper tests, coordinator tests, and secret scan passed.
+- Safety decisions:
+  - no market order,
+  - no cancel loop,
+  - no simultaneous live order,
+  - no partial-fill cancel,
+  - no raw UUID exposure,
+  - no secret exposure,
+  - no gate bypass.

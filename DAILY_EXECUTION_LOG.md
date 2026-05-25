@@ -3149,3 +3149,40 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `STALE_LOCK_RECOVERY_BLOCKED_OPEN_ORDER_EXISTS`.
 - SUCCESS telemetry:
   - self-running stale lock recovery path deployed and active without market order, cancel, simultaneous live order, gate bypass, owner token exposure, raw payload exposure, or full UUID exposure.
+
+# 2026-05-25 - Bounded cancel/reprice activation
+
+- User approved the next money-circulation upgrade.
+- Added:
+  - helper endpoint `POST /upbit/cancel-stale-order/telemetry`,
+  - internal Upbit `DELETE /v1/order` helper wrapper,
+  - coordinator cancel-stale-order check while an open order is `wait`,
+  - helper cancel unit tests.
+- Cancel gate:
+  - supported cleanup market only,
+  - `ask limit` only,
+  - exactly one open order,
+  - zero executed volume,
+  - positive remaining volume,
+  - stale open age threshold,
+  - matching active/stale lock,
+  - one-time cancel flag,
+  - no raw UUID in response.
+- Runtime:
+  - rebuilt and restarted only `upbit-helper`,
+  - restarted `kbia-full-auto`,
+  - stale ETC order cancel accepted,
+  - ETC finality after cancel: `cancel`,
+  - open_order_count after cancel: `0`,
+  - stale lock recovery succeeded,
+  - coordinator rescanned and submitted a new ETC helper-gated limit ask,
+  - current ETC state: `wait`,
+  - current ETC open_order_count: `1`,
+  - current helper lock state: `active`.
+- Validation:
+  - local py_compile, cancel helper tests, coordinator tests, live sell/buy helper regressions, and secret scan passed,
+  - remote py_compile, cancel helper tests, coordinator tests, and secret scan passed.
+- FAILURE telemetry:
+  - none for implementation.
+- SUCCESS telemetry:
+  - bounded cancel/reprice activated without market order, cancel loop, simultaneous live order, raw UUID exposure, secret exposure, or gate bypass.

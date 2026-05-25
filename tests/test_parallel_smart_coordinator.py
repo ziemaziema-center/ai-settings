@@ -38,6 +38,8 @@ def test_open_order_blocks_candidate_scan_and_live_sell():
             return {"success": True, "open_order_count": 1 if exists else 0, "open_order_exists": exists}
         if path == "/upbit/open-orders/detail-telemetry-no-journal":
             return {"classification_summary": {"final_classification": "wait", "next_safe_action": "remain_stopped"}, "orders": [{"state": "wait"}]}
+        if path == "/upbit/cancel-stale-order/telemetry":
+            return {"cancel_attempted": False, "cancel_accepted": False, "blocked_reason": "CANCEL_CREATED_AT_REQUIRED"}
         raise AssertionError(f"unexpected path {path}")
 
     runner.get_json = fake_get_json
@@ -209,6 +211,9 @@ def test_open_order_market_reconciles_active_market_when_state_is_stale():
                 "classification_summary": {"final_classification": "wait", "next_safe_action": "remain_stopped"},
                 "orders": [{"state": "wait", "executed_volume": "0", "remaining_volume": "1"}],
             }
+        if path == "/upbit/cancel-stale-order/telemetry":
+            assert payload["market"] == "KRW-ETC"
+            return {"cancel_attempted": True, "cancel_accepted": True, "blocked_reason": None, "order_age_minutes": 60, "http_status": 200}
         raise AssertionError(f"unexpected path {path}")
 
     runner.get_json = fake_get_json
@@ -217,6 +222,7 @@ def test_open_order_market_reconciles_active_market_when_state_is_stale():
     result = runner.cycle(state)
     assert result["active_market"] == "KRW-ETC"
     assert result["last_finality"]["classification"] == "wait"
+    assert result["last_cancel_stale_order"]["cancel_accepted"] is True
 
 
 if __name__ == "__main__":

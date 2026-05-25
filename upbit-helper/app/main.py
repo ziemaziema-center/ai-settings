@@ -101,6 +101,22 @@ class LiveSellRequest(SellTestRequest):
     one_time_live_sell_attempt_allowed: bool | str | int | None = None
 
 
+class CancelStaleOrderRequest(BaseModel):
+    market: str
+    side: str
+    ord_type: str
+    cancel_enabled: bool | str | int | None = None
+    execution_allowed: bool | str | int | None = None
+    execution_mode: str | None = None
+    one_time_cancel_allowed: bool | str | int | None = None
+    human_approval: bool | str | int | None = None
+    min_open_age_minutes: int | str | None = None
+    workflow_active: bool | str | int | None = None
+    cron_enabled: bool | str | int | None = None
+    system_stop_active: bool | str | int | None = None
+    now_kst: str | None = None
+
+
 class BuyTestRequest(BaseModel):
     market: str
     side: str
@@ -186,6 +202,8 @@ LIVE_SELL_ALLOWED_ACTIONS = {"EXIT_STAGED", "REDUCE_STAGED"}
 LIVE_SELL_MIN_KRW = Decimal("5000")
 LIVE_SELL_MAX_KRW = Decimal("30000")
 LIVE_SELL_MAX_ORDERBOOK_AGE_MS = 10000
+LIVE_CANCEL_MIN_OPEN_AGE_MINUTES = 30
+LIVE_CANCEL_MAX_OPEN_AGE_MINUTES = 1440
 LIVE_BUY_ALLOWED_MARKETS = {"KRW-BTC", "KRW-ETH", "KRW-SOL"}
 LIVE_BUY_MIN_KRW = Decimal("5000")
 LIVE_BUY_MAX_KRW = Decimal("10000")
@@ -322,6 +340,16 @@ def _sanitize_detail_order(row: Any) -> dict[str, Any]:
         "classification": classification,
         "blocked_reason": blocked_reason,
     }
+
+
+def _order_age_minutes(created_at: Any, now: datetime | None = None) -> int | None:
+    if not created_at:
+        return None
+    created = _parse_kst(str(created_at))
+    if created is None:
+        return None
+    current = now or datetime.now(timezone(timedelta(hours=9)))
+    return max(0, int((current - created).total_seconds() // 60))
 
 
 def _final_detail_classification(orders: list[dict[str, Any]], success: bool, error_name: str | None) -> tuple[str, str | None]:
@@ -919,6 +947,48 @@ def _upbit_post(path: str, payload: dict[str, str]) -> dict[str, Any]:
             "Content-Type": "application/json",
         },
     )
+    try:
+        with request.urlopen(req, timeout=10) as response:
+            raw_body = response.read().decode("utf-8", errors="replace")
+            body = json.loads(raw_body) if raw_body else None
+            return {
+                "status": response.status,
+                "remaining_req": response.headers.get("Remaining-Req"),
+                "body": body,
+            }
+    except error.HTTPError as exc:
+        raw_body = exc.read().decode("utf-8", errors="replace")
+        try:
+            body = json.loads(raw_body) if raw_body else None
+        except json.JSONDecodeError:
+            body = {"error": {"name": "HTTP_ERROR", "message": "HTTP_ERROR"}}
+        return {
+            "status": exc.code,
+            "remaining_req": exc.headers.get("Remaining-Req"),
+            "body": body,
+        }
+    except Exception as exc:
+        return {
+            "status": None,
+            "remaining_req": None,
+            "body": {"error": {"name": exc.__class__.__name__, "message": str(exc)}},
+        }
+
+
+def _upbit_delete(path: str, query: dict[str, str]) -> dict[str, Any]:
+    query_string = parse.urlencode(query)
+    jwt = _create_jwt(query_string)
+    if jwt is None:
+        return {
+            "status": None,
+            "remaining_req": None,
+            "body": {"error": {"name": "CREDENTIAL_MISSING", "message": "CREDENTIAL_MISSING"}},
+        }
+
+    endpoint = f"{UPBIT_BASE_URL}{path}"
+    if query_string:
+        endpoint = f"{endpoint}?{query_string}"
+    req = request.Request(endpoint, method="DELETE", headers={"Authorization": f"Bearer {jwt}"})
     try:
         with request.urlopen(req, timeout=10) as response:
             raw_body = response.read().decode("utf-8", errors="replace")
@@ -1630,6 +1700,198 @@ def open_orders_detail_telemetry_no_journal(payload: DetailTelemetryRequest) -> 
         "/upbit/open-orders/detail-telemetry-no-journal",
         False,
     )
+
+
+def _cancel_stale_order_failures(
+    payload: CancelStaleOrderRequest,
+    open_orders: list[Any],
+    lock_status: dict[str, Any],
+    now: datetime,
+) -> tuple[list[str], dict[str, Any] | None, int | None]:
+    failures: list[str] = []
+    market = str(payload.market or "")
+    side = str(payload.side or "")
+    ord_type = str(payload.ord_type or "")
+    min_age = _safe_int(
+        payload.min_open_age_minutes,
+        default=LIVE_CANCEL_MIN_OPEN_AGE_MINUTES,
+        minimum=LIVE_CANCEL_MIN_OPEN_AGE_MINUTES,
+        maximum=LIVE_CANCEL_MAX_OPEN_AGE_MINUTES,
+    )
+
+    if not _strict_true(payload.cancel_enabled):
+        failures.append("CANCEL_ENABLED_REQUIRED")
+    if not _strict_true(payload.execution_allowed):
+        failures.append("EXECUTION_ALLOWED_REQUIRED")
+    if str(payload.execution_mode or "") != "live":
+        failures.append("LIVE_MODE_REQUIRED")
+    if not _strict_true(payload.one_time_cancel_allowed):
+        failures.append("ONE_TIME_CANCEL_REQUIRED")
+    if not _strict_true(payload.human_approval):
+        failures.append("HUMAN_APPROVAL_REQUIRED")
+    if not _strict_false(payload.workflow_active):
+        failures.append("WORKFLOW_ACTIVE_OR_UNKNOWN")
+    if not _strict_false(payload.cron_enabled):
+        failures.append("CRON_ENABLED_OR_UNKNOWN")
+    if _strict_true(payload.system_stop_active):
+        failures.append("SYSTEM_STOP_ACTIVE")
+    if market not in LIVE_SELL_ALLOWED_MARKETS:
+        failures.append("CANCEL_MARKET_NOT_ALLOWED")
+    if side != "ask":
+        failures.append("CANCEL_ASK_ONLY")
+    if ord_type != "limit":
+        failures.append("CANCEL_LIMIT_ONLY")
+    if len(open_orders) != 1:
+        failures.append("CANCEL_REQUIRES_EXACTLY_ONE_OPEN_ORDER")
+
+    order = open_orders[0] if len(open_orders) == 1 and isinstance(open_orders[0], dict) else None
+    age_minutes: int | None = None
+    if order is None:
+        return failures, None, age_minutes
+
+    remaining = _decimal_or_none(order.get("remaining_volume"))
+    executed = _decimal_or_none(order.get("executed_volume"))
+    age_minutes = _order_age_minutes(order.get("created_at"), now)
+    if order.get("uuid") in (None, ""):
+        failures.append("CANCEL_UUID_MISSING")
+    if str(order.get("market") or "") != market:
+        failures.append("CANCEL_MARKET_MISMATCH")
+    if str(order.get("side") or "") != side:
+        failures.append("CANCEL_SIDE_MISMATCH")
+    if str(order.get("ord_type") or "") != ord_type:
+        failures.append("CANCEL_ORD_TYPE_MISMATCH")
+    if str(order.get("state") or "") != "wait":
+        failures.append("CANCEL_WAIT_STATE_REQUIRED")
+    if executed is None or executed != 0:
+        failures.append("CANCEL_ZERO_EXECUTION_REQUIRED")
+    if remaining is None or remaining <= 0:
+        failures.append("CANCEL_REMAINING_VOLUME_REQUIRED")
+    if age_minutes is None:
+        failures.append("CANCEL_CREATED_AT_REQUIRED")
+    elif age_minutes < min_age:
+        failures.append("CANCEL_ORDER_NOT_STALE_ENOUGH")
+
+    lock = lock_status.get("lock") or {}
+    if lock_status.get("lock_state") not in {"active", "stale_stop"}:
+        failures.append("CANCEL_LOCK_ACTIVE_OR_STALE_REQUIRED")
+    if str(lock.get("market") or "") != market:
+        failures.append("CANCEL_LOCK_MARKET_MISMATCH")
+    if str(lock.get("side") or "") != side:
+        failures.append("CANCEL_LOCK_SIDE_MISMATCH")
+    if str(lock.get("ord_type") or "") != ord_type:
+        failures.append("CANCEL_LOCK_ORD_TYPE_MISMATCH")
+    return failures, order, age_minutes
+
+
+@app.post("/upbit/cancel-stale-order/telemetry")
+def cancel_stale_order_telemetry(payload: CancelStaleOrderRequest) -> dict[str, Any]:
+    now = _lock_now(payload.now_kst)
+    market = str(payload.market or "")
+    side = str(payload.side or "")
+    ord_type = str(payload.ord_type or "")
+    open_result = _upbit_get("/v1/orders/open", {"market": market})
+    open_body = open_result["body"]
+    open_classification = _classify(open_result["status"], open_body)
+    open_success = open_classification["stop_code"] is None and isinstance(open_body, list)
+    open_orders = open_body if isinstance(open_body, list) else []
+    lock_status = _execution_lock_status(payload.now_kst)
+
+    if not open_success:
+        failures = [open_classification["error_name"] or "OPEN_ORDER_TELEMETRY_FAILED"]
+        order = None
+        age_minutes = None
+    else:
+        failures, order, age_minutes = _cancel_stale_order_failures(payload, open_orders, lock_status, now)
+
+    response_base = {
+        "mode": "cancel_stale_order_telemetry",
+        "market": market,
+        "side": side,
+        "ord_type": ord_type,
+        "open_order_count": len(open_orders),
+        "open_order_exists": len(open_orders) > 0,
+        "order_age_minutes": age_minutes,
+        "lock_state": lock_status.get("lock_state"),
+        "stale_lock": lock_status.get("stale_lock"),
+        "uuid_masked": _mask_uuid(order.get("uuid")) if order else None,
+        "forbidden_endpoint_check": True,
+        "secrets_leak_check": True,
+        "next_safe_action": "remain_stopped",
+    }
+    if failures:
+        journal = _append_lock_journal(
+            {
+                "timestamp_kst": now.isoformat(timespec="seconds"),
+                "event_type": "cancel_stale_order_attempt",
+                "result": "blocked",
+                "lock_id": _sanitize_message((lock_status.get("lock") or {}).get("lock_id")),
+                "market": market,
+                "side": side,
+                "ord_type": ord_type,
+                "run_id": _sanitize_message((lock_status.get("lock") or {}).get("run_id")),
+                "approval_id": _sanitize_message((lock_status.get("lock") or {}).get("approval_id")),
+                "open_order_exists": len(open_orders) > 0,
+                "open_order_count": len(open_orders),
+                "reconciliation_classification": "wait",
+                "blocked_reason": "|".join(failures),
+                "next_safe_action": "remain_stopped",
+                "forbidden_endpoint_check": True,
+                "secrets_leak_check": True,
+            },
+            now,
+        )
+        return {
+            "success": False,
+            **response_base,
+            "cancel_attempted": False,
+            "cancel_accepted": False,
+            "blocked_reason": "|".join(failures),
+            "human_review_required": True,
+            "journal_write": journal,
+            "remaining_req": open_result["remaining_req"],
+            "error_name": "|".join(failures),
+            "error_message": "|".join(failures),
+        }
+
+    cancel_result = _upbit_delete("/v1/order", {"uuid": str(order.get("uuid"))})
+    cancel_classification = _classify(cancel_result["status"], cancel_result["body"])
+    accepted = cancel_classification["stop_code"] is None and cancel_result["status"] in {200, 201}
+    journal = _append_lock_journal(
+        {
+            "timestamp_kst": now.isoformat(timespec="seconds"),
+            "event_type": "cancel_stale_order",
+            "result": "accepted" if accepted else "rejected",
+            "lock_id": _sanitize_message((lock_status.get("lock") or {}).get("lock_id")),
+            "market": market,
+            "side": side,
+            "ord_type": ord_type,
+            "run_id": _sanitize_message((lock_status.get("lock") or {}).get("run_id")),
+            "approval_id": _sanitize_message((lock_status.get("lock") or {}).get("approval_id")),
+            "open_order_exists": True,
+            "open_order_count": 1,
+            "reconciliation_classification": "wait",
+            "blocked_reason": None if accepted else cancel_classification["error_name"],
+            "next_safe_action": "remain_stopped",
+            "forbidden_endpoint_check": True,
+            "secrets_leak_check": True,
+        },
+        now,
+    )
+    body = cancel_result["body"] if isinstance(cancel_result["body"], dict) else {}
+    return {
+        "success": accepted,
+        **response_base,
+        "cancel_attempted": True,
+        "cancel_accepted": accepted,
+        "http_status": cancel_result["status"],
+        "cancel_state": _sanitize_message(body.get("state")),
+        "blocked_reason": None if accepted else cancel_classification["error_name"],
+        "human_review_required": not accepted,
+        "journal_write": journal,
+        "remaining_req": cancel_result["remaining_req"],
+        "error_name": None if accepted else cancel_classification["error_name"],
+        "error_message": None if accepted else cancel_classification["error_message"],
+    }
 
 
 def _sell_fingerprint(market: str, side: str, ord_type: str, price: Decimal, volume: Decimal, estimated: Decimal) -> str:

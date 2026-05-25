@@ -81,3 +81,8 @@
 - A live order can outlive the lock expiry window, leaving the helper in `stale_stop` while the order is still open or after it later reaches finality.
 - Resolution: The helper may recover a stale lock without an owner token only after read-only evidence proves `open_order_count=0` and the latest matching order is `done` or `cancel`.
 - Rule: If any open order exists for the locked market, stale-lock recovery must stay blocked and the coordinator must monitor that open market as the active market.
+
+### KF-017: Dead capital from stale unfilled limit order
+- A maker limit order can remain unfilled for hours and block all further capital rotation under the one-order-at-a-time contract.
+- Resolution: Allow a bounded cancel/reprice gate only for a single stale `ask limit` order with zero execution, matching lock, supported market, and sufficient open age.
+- Rule: Cancel must never run as an unrestricted loop. It must be one checked action per coordinator cycle and must stop after the cancel attempt so finality can be re-read before any next live order.
