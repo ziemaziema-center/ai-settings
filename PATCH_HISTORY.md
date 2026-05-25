@@ -2993,3 +2993,29 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no order cancel,
   - no runtime deployment,
   - no secret exposure.
+
+# 2026-05-25 - Runtime autonomy final status check
+
+- Scope:
+  - verified remote runtime after CI recovery and previous bounded cancel/reprice activation.
+- Files added:
+  - `reports/runtime_autonomy_final_status_2026-05-25.md`
+- Files changed:
+  - `DAILY_EXECUTION_LOG.md`
+  - `PATCH_HISTORY.md`
+- Runtime:
+  - helper health passed,
+  - parallel-smart tmux runner is active,
+  - state path `/home/ubuntu/kbia-logs/parallel-smart-automation/state.json` is current,
+  - open order count is `0` across watched markets,
+  - execution lock is `unlocked`,
+  - active market is `null`.
+- Current blocker:
+  - FCT2/ALGO/DOGE sell tests fail because spread or orderbook freshness gates do not pass.
+- Safety decisions:
+  - no live order submission,
+  - no cancel,
+  - no runtime restart,
+  - no workflow activation,
+  - no gate loosening,
+  - no secret exposure.

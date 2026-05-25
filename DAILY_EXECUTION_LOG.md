@@ -3204,3 +3204,26 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `CI_WINDOWS_ABSOLUTE_PATH_FILE_NOT_FOUND`.
 - SUCCESS telemetry:
   - `KBIA_UPBIT_CI_PASS_AFTER_PORTABLE_PATH_FIX`.
+
+# 2026-05-25 - Runtime autonomy final status check
+
+- User requested end-to-end runtime finish and repair.
+- Checked remote helper, containers, tmux runner, current open orders, execution lock, state, and events.
+- Result:
+  - `upbit-helper` healthy,
+  - `kbia_parallel_smart_coordinator_20260524.py --loop --sleep 180` running,
+  - parallel-smart state current,
+  - watched markets open order count all `0`,
+  - execution lock `unlocked`,
+  - stale lock `false`,
+  - active market `null`.
+- Cleanup:
+  - DOT and ETC cleanup completed,
+  - FCT2/ALGO/DOGE remain blocked by spread or orderbook freshness gates,
+  - current no-trade state is safe idle, not a crashed loop.
+- Evidence:
+  - `reports/runtime_autonomy_final_status_2026-05-25.md`.
+- FAILURE telemetry:
+  - `NO_SELL_TEST_PASS` for current FCT2/ALGO/DOGE conditions.
+- SUCCESS telemetry:
+  - `RUNNING_SAFE_IDLE_OPEN_ORDER_COUNT_ZERO_LOCK_CLEAR`.
