@@ -91,3 +91,13 @@
 - GitHub Ubuntu runners cannot resolve local paths such as `C:\Users\...` inside validation scripts.
 - Resolution: dependency-free validation scripts must derive the repository root from `Path(__file__).resolve()` or the current checked-out workspace.
 - Rule: Never hardcode a developer-machine absolute path in CI-covered scripts, reports, or fixtures.
+
+### KF-019: Korean static SEO source mojibake
+- A Korean-first static website can become unusable for users, Google, and AI crawlers when HTML, JSON-LD, llms.txt, or reports are written with the wrong encoding.
+- Resolution: Regenerate affected public pages as UTF-8, parse every JSON-LD block, and scan rendered HTML for mojibake markers before deployment.
+- Rule: Do not ship Korean SEO pages unless UTF-8 text, canonical URLs, sitemap URLs, robots.txt, llms.txt, and structured data validation all pass.
+
+### KF-020: GitHub Pages certificate not provisioned
+- A GitHub Pages custom domain can serve content over HTTP while HTTPS fails with a certificate subject mismatch because no custom-domain certificate exists yet.
+- Resolution: Re-save the custom domain/source, and if needed perform a controlled remove/re-add of the custom domain; wait for `https_certificate.state=approved`, then enable HTTPS enforcement.
+- Rule: Do not submit an HTTPS sitemap to Search Console until `curl -I https://domain/sitemap.xml` passes without certificate bypass and HTTP redirects to HTTPS.

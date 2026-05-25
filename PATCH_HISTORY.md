@@ -3019,3 +3019,107 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no workflow activation,
   - no gate loosening,
   - no secret exposure.
+
+# 2026-05-25 - WorldVape HQ SEO domination implementation
+
+- Scope:
+  - rebuilt the `worldvape` static site SEO footprint for 월드베이프 광운대점,
+  - preserved dark luxury aesthetic while replacing broken Korean mojibake content with UTF-8 Korean copy,
+  - added local SEO, AI-search, blog, technical SEO, Search Console, review trust, Telegram funnel, and final planning artifacts.
+- Target repo:
+  - `C:\Users\minho\Documents\02_work\03_AI\02_sns_automation\01_instagram\02_execution\tmp\worldvape`
+- Files changed in target:
+  - `index.html`
+  - `llms.txt`
+- Files added in target:
+  - `.nojekyll`
+  - `_headers`
+  - `robots.txt`
+  - `sitemap.xml`
+  - `assets/favicon.svg`
+  - `assets/styles.css`
+  - `assets/worldvape-local-map.svg`
+  - six local landing page directories,
+  - four AI-search guide directories,
+  - `blog/` with 30 generated article pages,
+  - `content/blog/` with 30 markdown source articles,
+  - `scripts/build_site.py`
+  - `SEO_AUDIT_REPORT.md`
+  - `SEARCH_CONSOLE_SETUP.md`
+  - `FINAL_SEO_SUMMARY.md`
+  - `IMPLEMENTED_FEATURES.md`
+  - `NEXT_30_DAY_SEO_PLAN.md`
+  - `HIGH_PRIORITY_KEYWORDS.md`
+  - timestamped `backups/seo_domination_*`.
+- Files changed in planning repo:
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Files added in planning repo:
+  - `tmp/build_worldvape_seo_site.py`
+  - `tmp/worldvape_render_check.mjs`
+  - `reports/worldvape_seo/*`
+- Validation:
+  - generator validation passed with parseable JSON-LD and sitemap coverage,
+  - render smoke passed for `/`, `/kwangwoon-vape/`, `/입호흡액상추천/`, and `/blog/`,
+  - canonical URLs aligned with sitemap trailing-slash format,
+  - desktop and mobile screenshots were produced under `tmp/worldvape-*.png`,
+  - basic secret scan passed.
+- Failure telemetry:
+  - `WORLDVAPE_SOURCE_MOJIBAKE_BLOCKED_KOREAN_SEO`,
+  - `BROWSER_PLUGIN_LOCALHOST_BLOCKED_BY_CLIENT`.
+- Success telemetry:
+  - `WORLDVAPE_UTF8_STATIC_SEO_REBUILD_PASS`,
+  - `WORLDVAPE_LOCAL_AI_SEARCH_BLOG_ENGINE_GENERATED`,
+  - `WORLDVAPE_JSONLD_SITEMAP_RENDER_SMOKE_PASS`.
+
+# 2026-05-25 - WorldVape HTTPS enforcement and indexing preflight
+
+- Scope:
+  - fixed GitHub Pages custom-domain HTTPS for `worldvape.mykindredai.com`,
+  - updated SEO reports to indexing-ready status.
+- Diagnosis:
+  - DNS CNAME target was correct,
+  - Pages custom domain existed but `https_enforced=false`,
+  - initial HTTPS enforcement failed because the certificate did not exist yet,
+  - CAA check did not show a blocking CAA record.
+- Implementation:
+  - re-saved Pages custom domain and source,
+  - performed a controlled custom-domain reset/re-add,
+  - waited until GitHub Pages certificate state became `approved`,
+  - enabled HTTPS enforcement.
+- Files changed:
+  - target `SEO_AUDIT_REPORT.md`
+  - target `SEARCH_CONSOLE_SETUP.md`
+  - target `FINAL_SEO_SUMMARY.md`
+  - target `NEXT_30_DAY_SEO_PLAN.md`
+  - target `INDEXING_SUBMISSION_READY.md`
+  - target `scripts/build_site.py`
+  - planning `reports/worldvape_seo/*`
+  - planning `DAILY_EXECUTION_LOG.md`
+  - planning `PATCH_HISTORY.md`
+- Validation:
+  - GitHub Pages API: `https_certificate.state=approved`,
+  - GitHub Pages API: `https_enforced=true`,
+  - HTTPS sitemap returns `200 OK`,
+  - HTTP sitemap redirects to HTTPS with `301`,
+  - robots.txt returns `200 OK` and references the HTTPS sitemap.
+- Limitation:
+  - Google Search Console direct submission was not possible from this environment because no Google OAuth/gcloud credential was available.
+
+# 2026-05-25 - WorldVape Search Console browser submission attempt
+
+- Scope:
+  - attempted direct Google Search Console property and sitemap submission through connected Chrome.
+- Result:
+  - Chrome extension connection worked,
+  - Search Console opened,
+  - Google account `ziemaziema@gmail.com` was selected,
+  - Google required account re-authentication before Search Console access.
+- Blocker:
+  - Google password/passkey verification is human-only and cannot be bypassed or automated.
+- Automation update:
+  - `WorldVape Daily SEO HQ Ops` now checks whether Search Console is authenticated and, if available, proceeds with property/sitemap submission.
+- Failure telemetry:
+  - `GSC_GOOGLE_REAUTH_REQUIRED`.

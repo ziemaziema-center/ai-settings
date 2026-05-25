@@ -3227,3 +3227,91 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `NO_SELL_TEST_PASS` for current FCT2/ALGO/DOGE conditions.
 - SUCCESS telemetry:
   - `RUNNING_SAFE_IDLE_OPEN_ORDER_COUNT_ZERO_LOCK_CLEAR`.
+
+# 2026-05-25 - WorldVape HQ SEO domination implementation
+
+- User requested full SEO/GEO/AI-search implementation for `worldvape.mykindredai.com`.
+- Pre-task memory read:
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `PATCH_HISTORY.md`
+  - `SESSION_BOOT.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Audit result:
+  - active planning repo had no website source,
+  - target static site repo found at `C:\Users\minho\Documents\02_work\03_AI\02_sns_automation\01_instagram\02_execution\tmp\worldvape`,
+  - existing Korean HTML/JSON-LD/llms content showed severe mojibake,
+  - target had no robots.txt, sitemap.xml, scalable blog system, or canonical local landing architecture.
+- Implementation:
+  - backed up existing `index.html` and `llms.txt` under timestamped `backups/seo_domination_*`,
+  - regenerated the static site as UTF-8,
+  - added local landing pages for `/kwangwoon-vape`, `/nowon-vape`, `/노원전자담배`, `/광운대전자담배`, `/입호흡액상추천`, `/노원액상추천`,
+  - added `/faq`, `/guide`, `/liquid-guide`, `/beginner-guide`,
+  - added `blog/` and 30 markdown-backed Korean SEO articles,
+  - added `robots.txt`, `sitemap.xml`, `llms.txt`, JSON-LD, internal links, metadata, OG/Twitter cards, and Telegram CTA funnel,
+  - generated SEO reports under target repo and `reports/worldvape_seo/`.
+- Validation:
+  - static generator validation passed,
+  - JSON-LD parse validation passed,
+  - sitemap contained 42 canonical URLs,
+  - render smoke passed for homepage, 광운대 landing page, Korean slug mobile page, and blog mobile page,
+  - console error/warning check passed,
+  - basic secret scan passed.
+- FAILURE telemetry:
+  - `WORLDVAPE_SOURCE_MOJIBAKE_BLOCKED_KOREAN_SEO`,
+  - `BROWSER_PLUGIN_LOCALHOST_BLOCKED_BY_CLIENT`.
+- SUCCESS telemetry:
+  - `WORLDVAPE_UTF8_STATIC_SEO_REBUILD_PASS`,
+  - `WORLDVAPE_LOCAL_AI_SEARCH_BLOG_ENGINE_GENERATED`,
+  - `WORLDVAPE_JSONLD_SITEMAP_RENDER_SMOKE_PASS`.
+
+# 2026-05-25 - WorldVape HTTPS enforcement and indexing preflight
+
+- User requested autonomous completion after SEO deployment.
+- Diagnosis:
+  - DNS `worldvape.mykindredai.com` correctly CNAMEs to `ziemaziema-center.github.io`,
+  - GitHub Pages custom domain existed,
+  - `https_enforced=false`,
+  - first enable attempt failed because GitHub returned `The certificate does not exist yet`,
+  - no CAA record blocking certificate issuance was found.
+- Fix:
+  - re-saved GitHub Pages custom domain,
+  - then performed a controlled custom-domain reset and re-add,
+  - GitHub Pages certificate progressed to `authorized`,
+  - then to `approved`,
+  - enabled `https_enforced=true`.
+- Verification:
+  - GitHub Pages API shows `html_url=https://worldvape.mykindredai.com/`,
+  - `https_certificate.state=approved`,
+  - certificate domains include `worldvape.mykindredai.com`,
+  - certificate expires at `2026-08-23`,
+  - HTTPS sitemap returns `200 OK`,
+  - HTTP sitemap returns `301` to HTTPS,
+  - robots.txt returns `200 OK` and includes the HTTPS sitemap directive.
+- Search Console status:
+  - Google Search Console API submission was not run because no `gcloud`/Google OAuth credential was available in the local environment,
+  - sitemap discovery path is live through `robots.txt`,
+  - `INDEXING_SUBMISSION_READY.md` was generated with priority URL inspection list.
+- FAILURE telemetry:
+  - `GSC_API_CREDENTIAL_UNAVAILABLE`.
+- SUCCESS telemetry:
+  - `WORLDVAPE_GITHUB_PAGES_CERT_APPROVED`,
+  - `WORLDVAPE_HTTPS_ENFORCED`,
+  - `WORLDVAPE_SITEMAP_READY_FOR_SEARCH_CONSOLE`.
+
+# 2026-05-25 - WorldVape Search Console browser submission attempt
+
+- User connected Chrome/Codex and requested direct Search Console property/sitemap submission.
+- Attempt:
+  - connected to Chrome extension browser,
+  - opened Google Search Console welcome flow,
+  - selected `ziemaziema@gmail.com`,
+  - attempted passwordless/passkey path.
+- Blocker:
+  - Google required account re-authentication before Search Console access,
+  - screen remained at `본인 인증` / password or passkey verification,
+  - password/passkey completion cannot be automated or bypassed.
+- Automation:
+  - updated `WorldVape Daily SEO HQ Ops` to retry Search Console setup if the Chrome/Search Console session is authenticated in a future run.
+- FAILURE telemetry:
+  - `GSC_GOOGLE_REAUTH_REQUIRED`.

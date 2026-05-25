@@ -175,3 +175,24 @@
 - CI-covered Python validation scripts should derive the repository root from the script location, not from a local workstation path.
 - Use `Path(__file__).resolve().parents[n]` when the script lives inside the repository and all target files are repo-relative.
 - When a validation script writes evidence files, rerun it locally and in GitHub Actions after path portability changes.
+
+## VP-020: Static local SEO generation and validation
+
+- For Korean local SEO sites, generate pages from structured route/content data instead of editing dozens of pages manually.
+- Preserve the prior static site with a timestamped backup before overwriting public entry files.
+- Generate canonical URLs, robots.txt, sitemap.xml, llms.txt, LocalBusiness/FAQ/Breadcrumb/BlogPosting JSON-LD, and internal links in one build step.
+- Validate all generated HTML for UTF-8 mojibake markers, canonical tags, parseable JSON-LD, sitemap coverage, and at least one rendered smoke test across desktop and mobile routes.
+- Review/trust sections must summarize real review themes without inventing fake review bodies.
+
+## VP-021: GitHub Pages custom-domain HTTPS recovery
+
+- If DNS points correctly to GitHub Pages but HTTPS returns certificate subject mismatch, inspect `GET /repos/{owner}/{repo}/pages`.
+- If `https_enforced=false` and enabling HTTPS fails with `The certificate does not exist yet`, re-save the custom domain and source first.
+- If no certificate appears, perform a controlled custom-domain reset/re-add in Pages settings.
+- Wait for `https_certificate.state=approved`, then enable `https_enforced=true`.
+- Verify with:
+  - Pages API `html_url=https://...`,
+  - `https_enforced=true`,
+  - HTTPS sitemap `200 OK`,
+  - HTTP sitemap `301` to HTTPS,
+  - robots.txt includes the HTTPS sitemap directive.
