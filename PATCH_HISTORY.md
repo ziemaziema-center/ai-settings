@@ -2969,3 +2969,27 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no raw UUID exposure,
   - no secret exposure,
   - no gate bypass.
+
+# 2026-05-25 - CI path portability fix
+
+- Problem:
+  - GitHub Actions run `26380912622` failed in `Regression and lock validation`.
+  - `tmp/v2_execution_lock_offline_validation_20260511.py` used a local Windows absolute repository path, which GitHub Ubuntu runner could not resolve.
+- Files changed:
+  - `.github/workflows/ci.yml`
+  - `tmp/v2_execution_lock_offline_validation_20260511.py`
+  - `KNOWN_FAILURES.md`
+  - `VALIDATED_PATTERNS.md`
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Implementation:
+  - Replaced hardcoded local root with `Path(__file__).resolve().parents[1]`.
+  - Added the current lock recovery, cancel/reprice, and coordinator tests to CI.
+- Validation:
+  - Local dependency-free CI-equivalent Python checks passed.
+  - GitHub Actions run `26385842436` passed on branch `upbit-automation`, including Docker build.
+- Safety decisions:
+  - no live order submission,
+  - no order cancel,
+  - no runtime deployment,
+  - no secret exposure.

@@ -3186,3 +3186,21 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - none for implementation.
 - SUCCESS telemetry:
   - bounded cancel/reprice activated without market order, cancel loop, simultaneous live order, raw UUID exposure, secret exposure, or gate bypass.
+
+# 2026-05-25 - CI path portability fix
+
+- User reported GitHub Actions failure email for `kbia-upbit-ci` on commit `489840b`.
+- Root cause:
+  - `tmp/v2_execution_lock_offline_validation_20260511.py` hardcoded a local Windows absolute path.
+  - GitHub Ubuntu runner failed with `FileNotFoundError` while reading `upbit-helper/app/main.py`.
+- Fix:
+  - changed validation root to repo-relative `Path(__file__).resolve().parents[1]`,
+  - updated CI to run the new lock recovery, stale cancel, and coordinator tests.
+- Validation:
+  - local dependency-free Python CI-equivalent checks passed,
+  - pushed commit `285e5b7`,
+  - GitHub Actions run `26385842436` completed with conclusion `success`.
+- FAILURE telemetry:
+  - `CI_WINDOWS_ABSOLUTE_PATH_FILE_NOT_FOUND`.
+- SUCCESS telemetry:
+  - `KBIA_UPBIT_CI_PASS_AFTER_PORTABLE_PATH_FIX`.

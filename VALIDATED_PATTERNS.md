@@ -169,3 +169,9 @@
 - Helper may use the raw Upbit UUID only internally for `DELETE /v1/order`; responses must expose only `uuid_masked`.
 - After a cancel attempt, the coordinator must re-read finality before any next live order.
 - Reprice is not market order chasing: the next order still goes through sell-test, fresh orderbook, spread, maker-limit, balance, lock, and live-sell gates.
+
+## VP-019: CI-portable validation scripts
+
+- CI-covered Python validation scripts should derive the repository root from the script location, not from a local workstation path.
+- Use `Path(__file__).resolve().parents[n]` when the script lives inside the repository and all target files are repo-relative.
+- When a validation script writes evidence files, rerun it locally and in GitHub Actions after path portability changes.

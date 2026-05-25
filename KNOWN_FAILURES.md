@@ -86,3 +86,8 @@
 - A maker limit order can remain unfilled for hours and block all further capital rotation under the one-order-at-a-time contract.
 - Resolution: Allow a bounded cancel/reprice gate only for a single stale `ask limit` order with zero execution, matching lock, supported market, and sufficient open age.
 - Rule: Cancel must never run as an unrestricted loop. It must be one checked action per coordinator cycle and must stop after the cancel attempt so finality can be re-read before any next live order.
+
+### KF-018: CI runner cannot use local Windows absolute paths
+- GitHub Ubuntu runners cannot resolve local paths such as `C:\Users\...` inside validation scripts.
+- Resolution: dependency-free validation scripts must derive the repository root from `Path(__file__).resolve()` or the current checked-out workspace.
+- Rule: Never hardcode a developer-machine absolute path in CI-covered scripts, reports, or fixtures.
