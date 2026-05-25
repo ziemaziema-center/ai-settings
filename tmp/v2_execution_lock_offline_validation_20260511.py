@@ -113,7 +113,7 @@ def assert_true(condition, name, detail=None):
 
 
 def main():
-    root = Path(r"C:\Users\minho\Documents\02_work\03_AI\03_investment_automation\01_planning")
+    root = Path(__file__).resolve().parents[1]
     fixture_root = root / "tests" / "execution_lock_runtime_fixture"
     report_json = root / "reports" / "V2_execution_lock_offline_validation_2026-05-11.json"
     report_md = root / "reports" / "V2_execution_lock_offline_validation_2026-05-11.md"

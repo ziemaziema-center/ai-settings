@@ -2,6 +2,7 @@
   "overall_status": "PASS",
   "lock_routes": [
     "/execution-lock/acquire",
+    "/execution-lock/recover-stale-finality",
     "/execution-lock/release",
     "/execution-lock/status"
   ],
