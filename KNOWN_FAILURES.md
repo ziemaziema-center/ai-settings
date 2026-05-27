@@ -92,6 +92,11 @@
 - Resolution: dependency-free validation scripts must derive the repository root from `Path(__file__).resolve()` or the current checked-out workspace.
 - Rule: Never hardcode a developer-machine absolute path in CI-covered scripts, reports, or fixtures.
 
+### KF-019: Opportunity cost blindness
+- Idle capital, stuck legacy positions, and repeated no-trade cycles can create real economic loss even when no new order is submitted.
+- Resolution: Treat `time = money` as a permanent portfolio rule. Safe idle is allowed only when the expected cost of forcing execution is worse than the measured opportunity cost of waiting.
+- Rule: Opportunity cost may raise review priority, scan frequency, candidate ranking, and bounded shadow analysis, but it must not bypass spread, orderbook freshness, balance, open-order, lock, finality, or secret-safety gates.
+
 ### KF-019: Korean static SEO source mojibake
 - A Korean-first static website can become unusable for users, Google, and AI crawlers when HTML, JSON-LD, llms.txt, or reports are written with the wrong encoding.
 - Resolution: Regenerate affected public pages as UTF-8, parse every JSON-LD block, and scan rendered HTML for mojibake markers before deployment.

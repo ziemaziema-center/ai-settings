@@ -3228,7 +3228,28 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - SUCCESS telemetry:
   - `RUNNING_SAFE_IDLE_OPEN_ORDER_COUNT_ZERO_LOCK_CLEAR`.
 
-# 2026-05-25 - WorldVape HQ SEO domination implementation
+# 2026-05-27 - Opportunity cost rule stored
+
+- User emphasized that opportunity cost has cash value and requested permanent storage of `time = money`.
+- Current runtime check:
+  - helper healthy,
+  - parallel-smart loop running,
+  - latest cycle current,
+  - open order count all `0`,
+  - execution lock `unlocked`,
+  - stale lock `false`.
+- Current no-trade reason:
+  - FCT2/ALGO/DOGE fail sell tests due to `LIVE_SELL_SPREAD_TOO_WIDE` or orderbook freshness,
+  - DOT/ETC report insufficient balance after completed cleanup.
+- Memory update:
+  - added `KF-019: Opportunity cost blindness`,
+  - added `VP-020: Opportunity-cost aware autonomy`.
+- FAILURE telemetry:
+  - `NO_SELL_TEST_PASS_OPPORTUNITY_COST_PRESSURE`.
+- SUCCESS telemetry:
+  - `TIME_EQUALS_MONEY_RULE_STORED`.
+
+# 2026-05-25 - Marketing HQ SEO implementation for WorldVape
 
 - User requested full SEO/GEO/AI-search implementation for `worldvape.mykindredai.com`.
 - Pre-task memory read:
@@ -3312,6 +3333,120 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - screen remained at `본인 인증` / password or passkey verification,
   - password/passkey completion cannot be automated or bypassed.
 - Automation:
-  - updated `WorldVape Daily SEO HQ Ops` to retry Search Console setup if the Chrome/Search Console session is authenticated in a future run.
+  - updated `Marketing HQ Daily Ops` to retry Search Console setup for the active WorldVape campaign if the Chrome/Search Console session is authenticated in a future run.
 - FAILURE telemetry:
   - `GSC_GOOGLE_REAUTH_REQUIRED`.
+
+# 2026-05-25 - WorldVape Search Console sitemap submission completed
+
+- User completed Google account authentication in Chrome and requested direct Search Console setup continuation.
+- Result:
+  - Google Search Console URL-prefix property `https://worldvape.mykindredai.com/` was added and ownership was automatically verified via HTML tag method.
+  - Submitted `https://worldvape.mykindredai.com/sitemap.xml`.
+  - Search Console Sitemaps table shows `/sitemap.xml`, status `성공`, discovered pages `42`, submitted date `2026. 5. 25.`, and last read date `2026. 5. 25.`.
+- Automation:
+  - updated `Marketing HQ Daily Ops` baseline so future daily checks treat Search Console verification and sitemap submission as completed for the active WorldVape campaign,
+  - daily automation now monitors HTTPS, robots.txt, sitemap, key pages, public visibility signals, Search Console status when authenticated, and daily GBP/Naver/Telegram local SEO action ideas.
+- FAILURE telemetry:
+  - `CHROME_EXTENSION_INTERACTION_RECONNECTED_DURING_SUBMISSION`.
+- SUCCESS telemetry:
+  - `WORLDVAPE_GSC_PROPERTY_VERIFIED`,
+  - `WORLDVAPE_GSC_SITEMAP_SUBMITTED_SUCCESS`,
+  - `WORLDVAPE_DAILY_SEO_AUTOMATION_BASELINE_UPDATED`.
+
+# 2026-05-25 - Marketing HQ naming standardization
+
+- User requested the reusable operating desk be called `Marketing HQ` / `마케팅 HQ` instead of a brand-specific HQ label.
+- Changes:
+  - renamed heartbeat automation to `Marketing HQ Daily Ops`,
+  - updated automation prompt so WorldVape is the current active campaign under Marketing HQ,
+  - updated logs and reports to avoid treating WorldVape as the HQ name,
+  - added `reports/MARKETING_HQ_OPERATING_SCOPE.md`.
+- SUCCESS telemetry:
+  - `MARKETING_HQ_REUSABLE_OPERATING_LABEL_SET`,
+  - `WORLDVAPE_RECLASSIFIED_AS_ACTIVE_CAMPAIGN`.
+
+# 2026-05-25 - Marketing HQ Yuna Instagram campaign added
+
+- User requested Marketing HQ run daily advertising, SEO, and content work for Yuna 전자담배 Instagram.
+- Campaign added:
+  - account: `@know65336`
+  - URL: `https://www.instagram.com/know65336/`
+- Automation update:
+  - `Marketing HQ Daily Ops` now covers both WorldVape local SEO and Yuna Instagram,
+  - daily Yuna output includes profile visibility checks when accessible, Reel concept, Story sequence, feed/carousel caption, hashtags, DM/Telegram CTA, and low-budget ad test idea,
+  - posting, DM sending, and ad spend remain blocked until relevant account access and explicit action permission are available.
+- Files changed:
+  - `reports/MARKETING_HQ_OPERATING_SCOPE.md`
+- Files added:
+  - `reports/YUNA_INSTAGRAM_MARKETING_PLAN_2026-05-25.md`
+- SUCCESS telemetry:
+  - `MARKETING_HQ_YUNA_INSTAGRAM_CAMPAIGN_REGISTERED`,
+  - `MARKETING_HQ_MULTI_CAMPAIGN_DAILY_OPS_UPDATED`.
+
+# 2026-05-25 - Meta Instagram connection attempt
+
+- User approved connecting Instagram/Meta posting or ad permissions for Yuna Instagram.
+- Connector check:
+  - no installable Meta/Facebook/Instagram/Meta Ads connector is exposed in current Codex plugin list,
+  - browser session is the available path.
+- Browser attempt:
+  - opened Meta Business Suite in Chrome,
+  - reached business asset `Insta automation`,
+  - clicked `Instagram 연결`,
+  - opened `Instagram에 연결`,
+  - clicked `Instagram에 로그인`,
+  - reached `Instagram 메시지 설정 선택` with message access switch checked.
+- Blocker:
+  - Meta UI did not advance after automated click, coordinate click, or Enter on the active `계속` button,
+  - browser automation became unstable during screenshot/visible-DOM inspection.
+- Required next human step:
+  - user must manually click `계속` in the open Meta Business Suite tab and complete any Instagram login/2FA/account-selection prompt for `@know65336`.
+- Files added:
+  - `reports/META_INSTAGRAM_CONNECTION_STATUS_2026-05-25.md`
+- FAILURE telemetry:
+  - `META_CONNECTOR_UNAVAILABLE`,
+  - `META_BUSINESS_SUITE_CONTINUE_BUTTON_BLOCKED_AUTOMATION`.
+- SUCCESS telemetry:
+  - `META_BUSINESS_SUITE_SESSION_OPENED`,
+  - `INSTAGRAM_LINKING_FLOW_REACHED_MESSAGE_PERMISSION_STEP`.
+
+# 2026-05-25 - Meta Instagram existing asset selected
+
+- User approved following the safe recommendation to preserve the existing Instagram connection instead of switching `@know65336` to a new Facebook page.
+- Result:
+  - Meta Business Suite showed `@know65336` was already connected to `Insta auto lets do it`,
+  - selected existing connected asset `Insta auto lets do it, know65336`,
+  - selected asset URL uses `asset_id=1060451720485964`,
+  - visible profile controls include `Instagram 프로필 편집`,
+  - visible creator controls include `게시물 만들기`, `광고 만들기`, `릴스 만들기`, and `스토리 만들기`,
+  - visible follower counts: Facebook `0`, Instagram `7`.
+- Automation:
+  - updated `Marketing HQ Daily Ops` to use `Insta auto lets do it, know65336` / `asset_id=1060451720485964` for Yuna Instagram work,
+  - preserved explicit approval requirement for any actual publishing, DM sending, or ad spend action.
+- SUCCESS telemetry:
+  - `YUNA_INSTAGRAM_EXISTING_META_ASSET_SELECTED`,
+  - `YUNA_INSTAGRAM_CONNECTED_ASSET_CONFIRMED`,
+  - `MARKETING_HQ_AUTOMATION_YUNA_META_BASELINE_UPDATED`.
+
+# 2026-05-27 - Marketing HQ daily heartbeat brief
+
+- Automation: `worldvape-seo-indexing-follow-up`.
+- WorldVape checks:
+  - homepage returned `200 OK`,
+  - sitemap returned `200 OK`,
+  - public `site:worldvape.mykindredai.com` search did not yet show stable indexed results in checked search surface,
+  - local curl body fetch hit Schannel credential error while HEAD checks passed.
+- Yuna checks:
+  - Chrome extension available but no Meta Business Suite tab open,
+  - preserved known baseline `Insta auto lets do it, know65336` / `asset_id=1060451720485964`,
+  - prepared daily Reel, Story, caption, hashtags, CTA, and ad-test concept.
+- Files added:
+  - `reports/MARKETING_HQ_DAILY_BRIEF_2026-05-27.md`
+- SUCCESS telemetry:
+  - `MARKETING_HQ_DAILY_BRIEF_GENERATED`,
+  - `WORLDVAPE_HTTPS_HEAD_HEALTHY`,
+  - `YUNA_DAILY_CONTENT_PACK_PREPARED`.
+- WATCH telemetry:
+  - `WORLDVAPE_PUBLIC_SITE_SEARCH_NOT_STABLE_YET`,
+  - `LOCAL_CURL_SCHANNEL_BODY_FETCH_QUIRK`.

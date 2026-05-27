@@ -176,6 +176,22 @@
 - Use `Path(__file__).resolve().parents[n]` when the script lives inside the repository and all target files are repo-relative.
 - When a validation script writes evidence files, rerun it locally and in GitHub Actions after path portability changes.
 
+## VP-020: Opportunity-cost aware autonomy
+
+- `time = money` is a permanent operating rule for the trading system.
+- No-trade is not automatically success; repeated no-candidate cycles must be recorded as opportunity-cost pressure.
+- Opportunity-cost pressure may:
+  - prioritize legacy-capital cleanup candidates,
+  - increase monitoring attention,
+  - trigger bounded strategy review,
+  - require a clear reason for continued idle state.
+- Opportunity-cost pressure must not:
+  - force market orders,
+  - loosen spread/freshness gates without a tested code change,
+  - bypass helper live gates,
+  - allow simultaneous live orders,
+  - treat profit as guaranteed.
+
 ## VP-020: Static local SEO generation and validation
 
 - For Korean local SEO sites, generate pages from structured route/content data instead of editing dozens of pages manually.
