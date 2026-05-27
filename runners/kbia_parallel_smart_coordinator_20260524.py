@@ -35,6 +35,8 @@ MAX_WORKERS = 8
 MIN_KRW = Decimal("5000")
 MAX_KRW = Decimal("30000")
 SLEEP_SECONDS = 180
+MIN_SLEEP_SECONDS = 60
+OPPORTUNITY_COST_ACCELERATION_CYCLES = 1
 
 
 def kst_now() -> str:
@@ -58,6 +60,48 @@ def load_state() -> dict:
         refresh_autonomy_score(state)
         return state
     return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+
+
+def blocked_reason_counts(candidate_results: list[dict]) -> dict:
+    counts: dict[str, int] = {}
+    for row in candidate_results:
+        reason = str(row.get("error_name") or "UNKNOWN")
+        counts[reason] = counts.get(reason, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def reset_opportunity_cost_pressure(state: dict, reason: str) -> None:
+    state["no_candidate_cycle_count"] = 0
+    state["recommended_sleep_seconds"] = SLEEP_SECONDS
+    state["opportunity_cost_pressure"] = {
+        "level": "LOW",
+        "reason": reason,
+        "time_equals_money": True,
+        "accelerated_scan": False,
+        "bypass_gates_allowed": False,
+    }
+
+
+def update_opportunity_cost_pressure(state: dict, candidate_results: list[dict]) -> dict:
+    count = int(state.get("no_candidate_cycle_count") or 0) + 1
+    state["no_candidate_cycle_count"] = count
+    accelerated = count >= OPPORTUNITY_COST_ACCELERATION_CYCLES
+    recommended_sleep = MIN_SLEEP_SECONDS if accelerated else SLEEP_SECONDS
+    blockers = blocked_reason_counts(candidate_results)
+    pressure = {
+        "level": "HIGH" if accelerated else "WATCH",
+        "reason": "NO_SELL_TEST_PASS",
+        "time_equals_money": True,
+        "no_candidate_cycle_count": count,
+        "repeated_blockers": blockers,
+        "accelerated_scan": accelerated,
+        "recommended_sleep_seconds": recommended_sleep,
+        "bypass_gates_allowed": False,
+        "next_safe_action": "accelerate_scan_only" if accelerated else "continue_standard_scan",
+    }
+    state["recommended_sleep_seconds"] = recommended_sleep
+    state["opportunity_cost_pressure"] = pressure
+    return pressure
 
 
 def save_state(state: dict) -> None:
@@ -412,6 +456,7 @@ def cycle(state: dict) -> dict:
     open_orders = open_orders_parallel()
     state["last_open_orders"] = open_orders
     if any_open_order(open_orders):
+        reset_opportunity_cost_pressure(state, "CAPITAL_IN_OPEN_ORDER")
         open_market = first_open_market(open_orders)
         active = state.get("active_market")
         if open_market and ((open_orders.get(active) or {}).get("open_order_exists") is not True):
@@ -444,6 +489,7 @@ def cycle(state: dict) -> dict:
             state["active_market"] = None
             log_event({"event": "active_market_finalized", "market": active, "finality": finality, "lock_released": release.get("lock_released")})
         else:
+            reset_opportunity_cost_pressure(state, "ACTIVE_MARKET_NOT_FINAL")
             log_event({"event": "stop_active_market_not_final", "market": active, "finality": finality})
             return state
 
@@ -455,9 +501,12 @@ def cycle(state: dict) -> dict:
     log_event({"event": "parallel_candidate_scan", "results": state["last_candidate_scan"]})
     passed = [row for row in candidate_results if row.get("sell_test_passed") and row.get("sell_test_fingerprint")]
     if not passed:
-        log_event({"event": "no_candidate_executed", "reason": "NO_SELL_TEST_PASS"})
+        pressure = update_opportunity_cost_pressure(state, candidate_results)
+        log_event({"event": "opportunity_cost_pressure", **pressure})
+        log_event({"event": "no_candidate_executed", "reason": "NO_SELL_TEST_PASS", "recommended_sleep_seconds": pressure["recommended_sleep_seconds"]})
         return state
-    execute_one(passed[0], state)
+    if execute_one(passed[0], state):
+        reset_opportunity_cost_pressure(state, "LIVE_ORDER_ACCEPTED")
     return state
 
 
@@ -475,7 +524,8 @@ def main() -> None:
         save_state(state)
         if not args.loop:
             break
-        time.sleep(max(60, args.sleep))
+        recommended_sleep = int(state.get("recommended_sleep_seconds") or args.sleep)
+        time.sleep(max(MIN_SLEEP_SECONDS, min(args.sleep, recommended_sleep)))
 
 
 if __name__ == "__main__":

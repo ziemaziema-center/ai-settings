@@ -225,10 +225,55 @@ def test_open_order_market_reconciles_active_market_when_state_is_stale():
     assert result["last_cancel_stale_order"]["cancel_accepted"] is True
 
 
+def test_no_candidate_accelerates_scan_without_bypassing_gates():
+    runner = load_runner()
+    calls = []
+
+    def fake_get_json(path):
+        assert path == "/health"
+        return {"ok": True}
+
+    def fake_post_json(path, payload):
+        calls.append((path, payload))
+        if path == "/execution-lock/status":
+            return {"lock_state": "unlocked", "lock_exists": False, "stale_lock": False, "blocked_reason": None}
+        if path == "/upbit/open-orders/telemetry":
+            return {"success": True, "open_order_count": 0, "open_order_exists": False}
+        if path == "/upbit/sell-test/telemetry":
+            return {
+                "success": False,
+                "sell_order_test_passed": False,
+                "sell_test_fingerprint": None,
+                "error_name": "LIVE_SELL_SPREAD_TOO_WIDE",
+            }
+        raise AssertionError(f"unexpected path {path}")
+
+    def fake_orderbook(market):
+        return {
+            "timestamp": 1,
+            "age_ms_at_build": 1,
+            "best_bid": runner.Decimal("100"),
+            "best_ask": runner.Decimal("101"),
+            "spread_bps": runner.Decimal("99"),
+        }
+
+    runner.get_json = fake_get_json
+    runner.post_json = fake_post_json
+    runner.public_orderbook = fake_orderbook
+    state = {"active_market": None, "cycle_count": 0}
+    result = runner.cycle(state)
+    assert result["opportunity_cost_pressure"]["time_equals_money"] is True
+    assert result["opportunity_cost_pressure"]["level"] == "HIGH"
+    assert result["opportunity_cost_pressure"]["bypass_gates_allowed"] is False
+    assert result["recommended_sleep_seconds"] == runner.MIN_SLEEP_SECONDS
+    assert not any(path in {"/execution-lock/acquire", "/upbit/live-sell/telemetry"} for path, _ in calls)
+
+
 if __name__ == "__main__":
     test_open_order_blocks_candidate_scan_and_live_sell()
     test_highest_priority_passed_candidate_is_executed_once()
     test_live_recheck_reject_releases_lock_and_clears_active_lock()
     test_stale_lock_recovery_runs_before_candidate_scan()
     test_open_order_market_reconciles_active_market_when_state_is_stale()
+    test_no_candidate_accelerates_scan_without_bypassing_gates()
     print("KBIA_PARALLEL_SMART_COORDINATOR_TESTS_PASS")

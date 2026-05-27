@@ -191,6 +191,11 @@
   - bypass helper live gates,
   - allow simultaneous live orders,
   - treat profit as guaranteed.
+- When opportunity-cost pressure is high, the validated runtime action is scan acceleration only:
+  - set `opportunity_cost_pressure.level=HIGH`,
+  - set `recommended_sleep_seconds=60`,
+  - keep `bypass_gates_allowed=false`,
+  - keep live execution limited to the existing helper-gated single-order path.
 
 ## VP-020: Static local SEO generation and validation
 

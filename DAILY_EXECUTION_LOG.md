@@ -3249,6 +3249,37 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - SUCCESS telemetry:
   - `TIME_EQUALS_MONEY_RULE_STORED`.
 
+# 2026-05-27 - Opportunity-cost accelerated scan runtime
+
+- User requested faster money-making action.
+- Implemented opportunity-cost pressure in the parallel smart coordinator:
+  - repeated no-candidate cycles now set `opportunity_cost_pressure`,
+  - `time_equals_money=true`,
+  - `recommended_sleep_seconds=60`,
+  - `bypass_gates_allowed=false`,
+  - no market order, no gate bypass, no simultaneous order.
+- Tests:
+  - local py_compile passed,
+  - helper endpoint tests passed,
+  - strategy tests passed,
+  - WF05 offline regression passed,
+  - execution lock offline validation passed,
+  - remote runtime replay guards passed,
+  - remote coordinator test passed,
+  - secret scan passed locally and remotely.
+- Deployment:
+  - backed up remote runner/test files to `/home/ubuntu/kbia_backups/opportunity-cost-20260527_131457`,
+  - copied patched coordinator and test to `/home/ubuntu/workspace/02_upbit_automation_clean`,
+  - restarted `kbia-full-auto` as `python3 runners/kbia_parallel_smart_coordinator_20260524.py --loop --sleep 60`.
+- Runtime result:
+  - helper healthy,
+  - open order count all `0`,
+  - execution lock `unlocked`,
+  - state includes `opportunity_cost_pressure.level=HIGH`,
+  - state includes `recommended_sleep_seconds=60`.
+- SUCCESS telemetry:
+  - `OPPORTUNITY_COST_ACCELERATED_SCAN_ACTIVE`.
+
 # 2026-05-25 - Marketing HQ SEO implementation for WorldVape
 
 - User requested full SEO/GEO/AI-search implementation for `worldvape.mykindredai.com`.

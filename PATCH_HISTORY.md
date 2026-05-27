@@ -3042,6 +3042,38 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no gate bypass,
   - no secret exposure.
 
+# 2026-05-27 - Opportunity-cost accelerated scan runtime
+
+- Scope:
+  - changed idle/no-candidate behavior from passive 180-second wait to opportunity-cost aware 60-second scan pressure.
+- Files changed:
+  - `runners/kbia_parallel_smart_coordinator_20260524.py`
+  - `tests/test_parallel_smart_coordinator.py`
+  - `VALIDATED_PATTERNS.md`
+  - `DAILY_EXECUTION_LOG.md`
+  - `PATCH_HISTORY.md`
+- Implementation:
+  - added `opportunity_cost_pressure`,
+  - added `no_candidate_cycle_count`,
+  - added `recommended_sleep_seconds`,
+  - added event telemetry for opportunity-cost pressure,
+  - added test that acceleration does not acquire locks or call live sell when all candidates fail gates.
+- Deployment:
+  - remote backup `/home/ubuntu/kbia_backups/opportunity-cost-20260527_131457`,
+  - remote py_compile, coordinator test, and secret scan passed,
+  - restarted `kbia-full-auto` with `--sleep 60`.
+- Runtime:
+  - loop running,
+  - open order count `0`,
+  - lock `unlocked`,
+  - `opportunity_cost_pressure.level=HIGH`,
+  - `recommended_sleep_seconds=60`.
+- Safety decisions:
+  - no market order,
+  - no spread/freshness gate bypass,
+  - no simultaneous live orders,
+  - no secret exposure.
+
 # 2026-05-25 - Marketing HQ SEO implementation for WorldVape
 
 - Scope:
