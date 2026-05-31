@@ -3761,3 +3761,40 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `LIVE_AUTHORIZATION_BLOCKED`
 - Next action:
   - `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_DATA_ONLY_N_DAY_SHADOW_EXECUTION_SCOPE`
+
+# 2026-05-31 - Public Upbit quotation endpoint preflight review package
+
+- Scope:
+  - executed approved `PUBLIC_UPBIT_QUOTATION_ENDPOINT_PREFLIGHT_REVIEW` as review-only package,
+  - no Upbit API call, no credentials, no scheduler, no shadow/live execution.
+- Files created:
+  - `reports/offline_artifacts/public_endpoint_preflight/*`
+  - `reports/offline_artifacts/reviews/public_endpoint_preflight_*`
+  - `reports/offline_artifacts/manifests/public_endpoint_preflight_review_manifest_v1.md`
+  - `tests/public_endpoint_preflight/test_*.py`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Tests run:
+  - public_endpoint_preflight PASS (14/14)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `public_endpoint_preflight_score=100/100` (review/scope completeness only)
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- Remaining blockers:
+  - `SHADOW_EXECUTION_AUTHORIZATION_MISSING`
+  - `UPBIT_API_AUTHORIZATION_MISSING`
+  - `CREDENTIAL_AUTHORIZATION_MISSING`
+  - `SCHEDULER_AUTHORIZATION_MISSING`
+  - `WF08_REVIEW_BLOCKED`
+  - `LIVE_AUTHORIZATION_BLOCKED`
+- Next action:
+  - `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_QUOTATION_PREFLIGHT_EXECUTION_SCOPE`
