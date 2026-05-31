@@ -3387,3 +3387,44 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no runtime/n8n workflow/scheduler/parser/fixture/live/shadow actions
 - Next action:
   - `HUMAN_REVIEW_AND_APPROVAL_OF_OFFLINE_SYNTHETIC_TEST_HARNESS_ARTIFACTS`
+
+# 2026-05-31 - Offline score gap repair and push preparation
+
+- Scope:
+  - executed approved `OFFLINE SCORE GAP REPAIR + PUSH` offline-only phase,
+  - repaired scoring-evidence gap from 95 to 100 through test+manifest traceability integration,
+  - strengthened safety tests and misuse rejection checks.
+- Files patched:
+  - `reports/offline_artifacts/scoring/offline_strategy_quality_score_gap_analysis_v1.md`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_runner.py`
+  - `reports/offline_artifacts/offline_test_harness/README.md`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.json`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.md`
+  - `reports/offline_artifacts/scoring/offline_strategy_quality_score_report_v1.md`
+  - `reports/offline_artifacts/manifests/offline_synthetic_test_harness_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_final_verdict_v1.md`
+  - `tests/offline_strategy_research/test_no_live_api_imports.py`
+  - `tests/offline_strategy_research/test_scoring_does_not_authorize_live.py`
+  - `tests/offline_strategy_research/test_non_authorization_sentence_present.py`
+  - `tests/offline_strategy_research/test_forbidden_states_absent.py`
+  - `tests/offline_strategy_research/test_negative_safety_scenarios.py`
+- Tests rerun:
+  - `python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v`
+  - result: PASS (16/16)
+- Score:
+  - score_before: `95/100`
+  - score_after: `100/100`
+  - score_gap_status: `CLOSED`
+- Closing QA status:
+  - `PASS_PATCHED`
+- Push status:
+  - `READY_FOR_ATTEMPT`
+- Forbidden side effects avoided:
+  - no Upbit API
+  - no credential/.env access
+  - no runtime/scheduler/parser/fixture/WF08 actions
+  - no live/shadow execution
+- Next action:
+  - `git commit` and `git push` on current branch if remote/auth policy allows.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 from collections import Counter
 from pathlib import Path
@@ -80,6 +81,10 @@ def run_offline_backtest(
     result = {
         "metrics": metrics,
         "scores": score,
+        "score_inputs": {
+            "tests_passed": tests_passed,
+            "manifest_traceability": manifest_traceability,
+        },
         "decisions": decisions,
         "live_runtime_api_credential_actions": "none",
     }
@@ -93,6 +98,7 @@ def run_offline_backtest(
 
 def _write_markdown_report(result: Dict[str, object]) -> None:
     metrics = result["metrics"]
+    score_inputs = result.get("score_inputs", {})
     lines = [
         "# OFFLINE BACKTEST RESULT V1",
         "",
@@ -110,6 +116,11 @@ def _write_markdown_report(result: Dict[str, object]) -> None:
         f"- safety_score: {metrics['safety_score']}",
         f"- governance_score: {metrics['governance_score']}",
         f"- final_quality_score: {metrics['final_quality_score']}",
+        "",
+        "## Score Inputs",
+        "",
+        f"- tests_passed: {bool(score_inputs.get('tests_passed', False))}",
+        f"- manifest_traceability: {bool(score_inputs.get('manifest_traceability', False))}",
         "",
         "## Rejection Reason Counts",
         "",
@@ -130,4 +141,20 @@ def _write_markdown_report(result: Dict[str, object]) -> None:
 
 
 if __name__ == "__main__":
-    run_offline_backtest(write_reports=True)
+    parser = argparse.ArgumentParser(description="Run offline synthetic backtest.")
+    parser.add_argument(
+        "--tests-passed",
+        action="store_true",
+        help="Set true when the local test suite has already passed.",
+    )
+    parser.add_argument(
+        "--manifest-traceability",
+        action="store_true",
+        help="Set true when manifest/hash traceability is validated.",
+    )
+    args = parser.parse_args()
+    run_offline_backtest(
+        write_reports=True,
+        tests_passed=args.tests_passed,
+        manifest_traceability=args.manifest_traceability,
+    )

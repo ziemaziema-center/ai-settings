@@ -40,6 +40,10 @@
     "score_interpretation": "Offline quality score measures offline artifact/test completeness only; it does not indicate profit expectation, trading performance, runtime readiness, shadow readiness, live readiness, or WF08 readiness.",
     "non_authorization_sentence": "This document does not authorize live trading, shadow mode, Upbit API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims."
   },
+  "score_inputs": {
+    "tests_passed": false,
+    "manifest_traceability": false
+  },
   "decisions": [
     {
       "scenario": "normal_trend",

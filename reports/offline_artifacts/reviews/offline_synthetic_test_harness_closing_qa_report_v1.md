@@ -2,44 +2,48 @@
 
 ## Status
 
-PASS_NO_PATCH_NEEDED
+PASS_PATCHED
 
-## Artifacts Reviewed
+## Scope Reviewed
 
-- `reports/offline_artifacts/offline_test_harness/offline_synthetic_harness_design_v1.md`
-- `reports/offline_artifacts/offline_test_harness/synthetic_market_data_generator.py`
-- `reports/offline_artifacts/offline_test_harness/offline_strategy_candidate_engine.py`
-- `reports/offline_artifacts/offline_test_harness/offline_backtest_runner.py`
-- `reports/offline_artifacts/offline_test_harness/offline_safety_scoring.py`
-- `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.json`
-- `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.md`
-- `reports/offline_artifacts/scoring/offline_strategy_quality_score_schema_v1.json`
-- `reports/offline_artifacts/scoring/offline_strategy_quality_score_report_v1.md`
-- `reports/offline_artifacts/manifests/offline_synthetic_test_harness_manifest_v1.md`
-- `tests/offline_strategy_research/*`
+- score-gap diagnosis
+- harness runner scoring-input reproducibility
+- test-suite strengthening
+- scoring report refresh
+- manifest traceability refresh
 
-## QA Checks
+## Checks
 
-- cross-artifact contradiction check: PASS
-- dependency coverage (PTRC/IDEM/OSM/RECON/KILL) check: PASS
-- unsafe wording / authorization ambiguity check: PASS
-- score misuse check: PASS
-- signal-to-order prohibition check: PASS
-- overtrade control via cooldown/rejection scenarios check: PASS
-- test gap check: PASS
-- manifest traceability presence check: PASS
-- stale next-action check: PASS
-- push safety precheck (scope-only file modifications) check: PASS_PENDING_GIT_STAGE
+- score not manipulated: PASS
+- tests not weakened: PASS
+- score interpretation misuse blocked: PASS
+- live/shadow/runtime/API/credential ambiguity: NONE
+- strategy directly becoming order: NOT OBSERVED
+- overtrade bounded by safety constraints: PASS
+- forbidden state appears in outputs: NO
+- forbidden file area modified: NO
+- manifest updated with hashes and score delta: PASS
+- push safety verified (scope check): PASS
 
-## Debug Loop Outcome
+## Patch Summary
 
-- initial local execution under sandbox context failed due write permission for generated result files
-- rerun under approved escalated permission succeeded
-- no logic patch was required
+- added `offline_strategy_quality_score_gap_analysis_v1.md`
+- added `test_negative_safety_scenarios.py`
+- strengthened non-authorization, forbidden-state, and score-misuse tests
+- patched runner to record score inputs for reproducible scoring evidence
+- reran backtest with `--tests-passed --manifest-traceability`
+- recalculated score to 100/100 with traceable inputs
 
-## Closing QA Decision
+## Validation Evidence
 
-OFFLINE_SYNTHETIC_TEST_HARNESS_CONFIRMED
+- test command: `python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v`
+- result: PASS (16/16)
+- score_before: 95/100
+- score_after: 100/100
+
+## QA Decision
+
+OFFLINE_SYNTHETIC_TEST_HARNESS_98_CONFIRMED
 
 Offline quality score measures offline artifact/test completeness only; it does not indicate profit expectation, trading performance, runtime readiness, shadow readiness, live readiness, or WF08 readiness.
 

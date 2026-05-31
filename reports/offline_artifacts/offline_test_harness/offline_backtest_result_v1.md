@@ -15,6 +15,11 @@
 - governance_score: 100
 - final_quality_score: 90
 
+## Score Inputs
+
+- tests_passed: False
+- manifest_traceability: False
+
 ## Rejection Reason Counts
 
 - clock_skew: 1

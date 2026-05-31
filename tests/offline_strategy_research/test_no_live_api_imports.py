@@ -13,7 +13,11 @@ class TestNoLiveApiImports(unittest.TestCase):
             "from aiohttp",
             "import websocket",
             "from websocket",
+            "import socket",
+            "from socket",
+            "http.client",
             "urllib.request",
+            "urllib3",
         ]
         for path in harness_python_files():
             text = read_text(path)
