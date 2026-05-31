@@ -3724,3 +3724,40 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `LIVE_AUTHORIZATION_BLOCKED`
 - Next action:
   - `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_REAL_DATA_SHADOW_EXECUTION_SCOPE`
+
+# 2026-05-31 - Public-data-only real shadow execution scope project
+
+- Scope:
+  - executed approved `PUBLIC-DATA-ONLY REAL SHADOW EXECUTION SCOPE PROJECT` as review/scope-only package,
+  - defined credential-free public-data-only future shadow scope with endpoint hard blocks,
+  - no Upbit API, no credentials, no scheduler, no runtime/live/shadow execution.
+- Files created:
+  - `reports/offline_artifacts/public_data_shadow_scope/*`
+  - `reports/offline_artifacts/reviews/public_data_shadow_scope_*`
+  - `reports/offline_artifacts/manifests/public_data_shadow_scope_manifest_v1.md`
+  - `tests/public_data_shadow_scope/test_*.py`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Tests run:
+  - `tests/public_data_shadow_scope` PASS (15/15)
+  - `tests/real_shadow_review` PASS (12/12)
+  - `tests/shadow_execution_local` PASS (12/12)
+  - `tests/shadow_governance` PASS (10/10)
+  - `tests/pre_live_package` PASS (5/5)
+  - `tests/stress_harness` PASS (6/6)
+  - `tests/local_dry_run` PASS (7/7)
+  - `tests/offline_strategy_research` PASS (16/16)
+- Score:
+  - `public_data_shadow_scope_score=100/100` (scope/review completeness only)
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- Remaining blockers:
+  - `SHADOW_EXECUTION_AUTHORIZATION_MISSING`
+  - `UPBIT_API_AUTHORIZATION_MISSING`
+  - `CREDENTIAL_AUTHORIZATION_MISSING`
+  - `SCHEDULER_AUTHORIZATION_MISSING`
+  - `WF08_REVIEW_BLOCKED`
+  - `LIVE_AUTHORIZATION_BLOCKED`
+- Next action:
+  - `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_DATA_ONLY_N_DAY_SHADOW_EXECUTION_SCOPE`
