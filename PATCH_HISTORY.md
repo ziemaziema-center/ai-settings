@@ -4095,3 +4095,37 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `PASS_NO_PATCH_NEEDED`
 - Next action:
   - `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`
+
+
+# 2026-06-01 - Overnight public-data final pass v3
+
+- Scope:
+  - executed repeated public-data observation windows (3x56 cycles),
+  - completed rolling stability/evidence ledger/request discipline v3/shape drift v3,
+  - completed artifact completeness review, morning decision packet, blocker matrix v3,
+  - completed final score/manifest/closing QA/final verdict.
+- Run counters:
+  - `windows_requested=3`
+  - `windows_completed=3`
+  - `cycles_per_window=56`
+  - `total_cycles_completed=168`
+  - `total_request_count=504`
+  - `response_statuses=504x200`
+  - `stubbed_not_sent_count=168`
+- Tests run:
+  - public_data_shadow_run PASS (52/52)
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `overnight_final_score=100/100`
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- Next action:
+  - `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`

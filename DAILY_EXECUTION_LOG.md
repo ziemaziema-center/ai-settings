@@ -4070,3 +4070,50 @@ eports/daily_crypto_news_digest_2026-05-21.md.
   - order endpoint blocked
   - withdrawal/transfer blocked
 - next_action: `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`
+
+
+## 2026-06-01 - Overnight public-data final pass v3
+
+- status: `PASS_NO_PATCH_NEEDED`
+- windows_requested: `3`
+- windows_completed: `3`
+- cycles_per_window: `56`
+- total_cycles_completed: `168`
+- total_request_count: `504`
+- response_statuses: `504x200`
+- repeated_observation_result: `SUCCESS`
+- rolling_stability_verdict: `PUBLIC_DATA_ROLLING_STABILITY_ACCEPTED`
+- artifact_completeness_status: `PASS`
+- media_artifacts_status: `N_A`
+- auth_header_sent: `false`
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- stubbed_not_sent_count: `168`
+- tests:
+  - public_data_shadow_run: PASS (52/52)
+  - public_endpoint_preflight: PASS (21/21)
+  - public_data_shadow_scope: PASS (15/15)
+  - real_shadow_review: PASS (12/12)
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- overnight_final_score: `100/100`
+- remaining_blockers:
+  - credential authorization missing
+  - scheduler authorization missing
+  - authenticated shadow execution authorization missing
+  - WF08 review blocked
+  - live authorization blocked
+  - account/private endpoint blocked
+  - order endpoint blocked
+  - withdrawal/transfer blocked
+- next_action: `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`
