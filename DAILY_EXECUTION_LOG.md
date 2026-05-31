@@ -3481,3 +3481,126 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - WATCH telemetry:
   - `WORLDVAPE_PUBLIC_SITE_SEARCH_NOT_STABLE_YET`,
   - `LOCAL_CURL_SCHANNEL_BODY_FETCH_QUIRK`.
+
+# 2026-05-28 - Marketing HQ daily heartbeat brief
+
+- Automation: `worldvape-seo-indexing-follow-up`.
+- WorldVape checks:
+  - homepage returned `200 OK`,
+  - sitemap returned `200 OK`,
+  - `/kwangwoon-vape/` returned `200 OK`,
+  - `/nowon-vape/` returned `200 OK`,
+  - public `site:worldvape.mykindredai.com` search still did not show stable indexed WorldVape results in checked search surface.
+- Yuna checks:
+  - preserved known connected Meta baseline `Insta auto lets do it, know65336` / `asset_id=1060451720485964`,
+  - local node browser runtime exited unexpectedly during Chrome state check,
+  - prepared daily Reel, Story, caption, hashtags, CTA, and ad-test concept.
+- Files added:
+  - `reports/MARKETING_HQ_DAILY_BRIEF_2026-05-28.md`
+- SUCCESS telemetry:
+  - `MARKETING_HQ_DAILY_BRIEF_GENERATED`,
+  - `WORLDVAPE_CORE_ROUTES_HEALTHY`,
+  - `YUNA_DAILY_CONTENT_PACK_PREPARED`.
+- WATCH telemetry:
+  - `WORLDVAPE_PUBLIC_SITE_SEARCH_NOT_STABLE_YET`,
+  - `NODE_REPL_BROWSER_RUNTIME_EXITED_DURING_META_CHECK`.
+
+# 2026-05-29 - Marketing HQ daily heartbeat brief
+
+- Automation: `worldvape-seo-indexing-follow-up`.
+- WorldVape checks:
+  - homepage returned `200 OK`,
+  - sitemap returned `200 OK`,
+  - `/nowon-vape/` returned `200 OK`,
+  - `/blog/` returned `200 OK`,
+  - public `site:worldvape.mykindredai.com` and local keyword checks still did not show stable indexed WorldVape results in checked search surface.
+- Yuna checks:
+  - preserved known connected Meta baseline `Insta auto lets do it, know65336` / `asset_id=1060451720485964`,
+  - local node browser runtime exited unexpectedly during Chrome state check,
+  - prepared daily Reel, Story, caption, hashtags, CTA, and ad-test concept.
+- Files added:
+  - `reports/MARKETING_HQ_DAILY_BRIEF_2026-05-29.md`
+- SUCCESS telemetry:
+  - `MARKETING_HQ_DAILY_BRIEF_GENERATED`,
+  - `WORLDVAPE_CORE_ROUTES_HEALTHY`,
+  - `YUNA_DAILY_CONTENT_PACK_PREPARED`.
+- WATCH telemetry:
+  - `WORLDVAPE_PUBLIC_SITE_SEARCH_NOT_STABLE_YET`,
+  - `NODE_REPL_BROWSER_RUNTIME_EXITED_DURING_META_CHECK`.
+
+# 2026-05-30 - Marketing HQ daily heartbeat brief
+
+- Automation: `worldvape-seo-indexing-follow-up`.
+- WorldVape checks:
+  - homepage returned `200 OK`,
+  - sitemap returned `200 OK`,
+  - `/입호흡액상추천/` returned `200 OK`,
+  - `/guide/` returned `200 OK`,
+  - public `site:worldvape.mykindredai.com` and priority keyword checks still did not show stable indexed WorldVape results in checked search surface.
+- Yuna checks:
+  - preserved known connected Meta baseline `Insta auto lets do it, know65336` / `asset_id=1060451720485964`,
+  - public search did not surface `@know65336` profile in a stable way,
+  - prepared daily Reel, Story, caption, hashtags, CTA, and ad-test concept.
+- Files added:
+  - `reports/MARKETING_HQ_DAILY_BRIEF_2026-05-30.md`
+- SUCCESS telemetry:
+  - `MARKETING_HQ_DAILY_BRIEF_GENERATED`,
+  - `WORLDVAPE_CORE_ROUTES_HEALTHY`,
+  - `YUNA_DAILY_CONTENT_PACK_PREPARED`.
+- WATCH telemetry:
+  - `WORLDVAPE_PUBLIC_SITE_SEARCH_NOT_STABLE_YET`,
+  - `YUNA_PUBLIC_PROFILE_SEARCH_NOT_STABLE_YET`.
+
+# 2026-05-31 - Offline test-plan governance for contract layer executed
+
+- Approval signal received and executed under offline governance-only scope.
+- Working directory for execution:
+  - `C:\Users\minho\Documents\02_work\03_AI\03_investment_automation\01_planning`
+- Artifacts added:
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_static_review.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_next_actions.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_qa_report_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_final_verdict_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_manifest.md`
+- Result:
+  - contract-layer offline test-plan governance status confirmed as SPEC_ONLY,
+  - immediate next action set to human static review,
+  - unauthorized actions unchanged (live/shadow/API/credential/scheduler/parser/fixture/WF08/runtime/implementation blocked).
+- FAILURE telemetry:
+  - `SANDBOX_WRITE_PERMISSION_REQUIRED_FOR_PLANNING_WORKSPACE` (resolved).
+- SUCCESS telemetry:
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER_COMPLETED`.
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_QA_PASS_NO_PATCH_NEEDED`.
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_MANIFEST_REFRESHED`.
+
+# 2026-05-31 - Offline synthetic test harness project executed
+
+- Approved offline-only scope executed for contract-layer synthetic harness and scoring.
+- Working directory:
+  - `C:\Users\minho\Documents\02_work\03_AI\03_investment_automation\01_planning`
+- Core outputs generated:
+  - harness source files (generator/engine/runner/scoring)
+  - backtest result JSON/MD
+  - 15 offline unit/static tests
+  - scoring schema/report
+  - manifest + closing QA + patch manifest + final verdict
+- Tests:
+  - `python -m unittest discover -s tests/offline_strategy_research -p test_*.py -v`
+  - result: PASS (15/15)
+- Score:
+  - `offline_quality_score=95/100`
+  - interpretation: offline artifact/test completeness only
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- FAILURE telemetry:
+  - `SANDBOX_WRITE_PERMISSION_REQUIRED_FOR_BACKTEST_OUTPUT` (resolved)
+- SUCCESS telemetry:
+  - `OFFLINE_SYNTHETIC_TEST_HARNESS_PROJECT_COMPLETED`
+  - `OFFLINE_SYNTHETIC_TEST_SUITE_PASS_15_OF_15`
+  - `OFFLINE_SYNTHETIC_SCORE_CALCULATED_95`
+  - `OFFLINE_SYNTHETIC_CLOSING_QA_PASS_NO_PATCH_NEEDED`
+- live_runtime_api_credential_actions:
+  - none
+- next_action:
+  - `HUMAN_REVIEW_AND_APPROVAL_OF_OFFLINE_SYNTHETIC_TEST_HARNESS_ARTIFACTS`

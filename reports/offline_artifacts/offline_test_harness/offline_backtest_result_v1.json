@@ -1,0 +1,424 @@
+{
+  "metrics": {
+    "scenario_count": 14,
+    "candidate_count": 14,
+    "rejected_signal_count": 10,
+    "ptrc_eligible_count": 4,
+    "no_order_submission_count": 14,
+    "forbidden_state_count": 0,
+    "rejection_reason_counts": {
+      "spread_widening": 1,
+      "stale_data": 1,
+      "duplicate_signal": 1,
+      "cooldown_active": 1,
+      "rejection_cluster": 1,
+      "rate_budget_exhausted": 1,
+      "heartbeat_missed": 1,
+      "clock_skew": 1,
+      "reconciliation_drift": 1,
+      "kill_active": 1
+    },
+    "max_drawdown_simulated": 3.1,
+    "fee_drag_simulated": 0.5967,
+    "overtrade_score": 100,
+    "safety_score": 100,
+    "governance_score": 100,
+    "final_quality_score": 90
+  },
+  "scores": {
+    "dimensions": {
+      "safety_compliance": 30,
+      "non_authorization_integrity": 15,
+      "overtrade_control": 15,
+      "signal_quality_simulated": 10,
+      "failure_handling": 10,
+      "governance_dependency_coverage": 10,
+      "test_coverage": 0,
+      "manifest_traceability": 0
+    },
+    "final_quality_score": 90,
+    "score_interpretation": "Offline quality score measures offline artifact/test completeness only; it does not indicate profit expectation, trading performance, runtime readiness, shadow readiness, live readiness, or WF08 readiness.",
+    "non_authorization_sentence": "This document does not authorize live trading, shadow mode, Upbit API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims."
+  },
+  "decisions": [
+    {
+      "scenario": "normal_trend",
+      "signal_id": "SIG-SNAP-001",
+      "state": "PTRC_PRECHECK_ELIGIBLE",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "PTRC_PRECHECK_ELIGIBLE",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "candidate_passed_local_filters"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "sideways_chop",
+      "signal_id": "SIG-SNAP-002",
+      "state": "PTRC_PRECHECK_ELIGIBLE",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "PTRC_PRECHECK_ELIGIBLE",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "candidate_passed_local_filters"
+      ],
+      "confidence_bucket": "LOW",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "sudden_spike",
+      "signal_id": "SIG-SNAP-003",
+      "state": "PTRC_PRECHECK_ELIGIBLE",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "PTRC_PRECHECK_ELIGIBLE",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "candidate_passed_local_filters"
+      ],
+      "confidence_bucket": "HIGH",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "sudden_crash",
+      "signal_id": "SIG-SNAP-004",
+      "state": "PTRC_PRECHECK_ELIGIBLE",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "PTRC_PRECHECK_ELIGIBLE",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "candidate_passed_local_filters"
+      ],
+      "confidence_bucket": "HIGH",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "spread_widening",
+      "signal_id": "SIG-SNAP-005",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "spread_widening"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "stale_data",
+      "signal_id": "SIG-SNAP-006",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "stale_data"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "duplicate_signal",
+      "signal_id": "SIG-SNAP-007",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "duplicate_signal"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "cooldown_active",
+      "signal_id": "SIG-SNAP-008",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "cooldown_active"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "rejection_cluster",
+      "signal_id": "SIG-SNAP-009",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "rejection_cluster"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "rate_budget_exhausted",
+      "signal_id": "SIG-SNAP-010",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "rate_budget_exhausted"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "heartbeat_missed",
+      "signal_id": "SIG-SNAP-011",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "heartbeat_missed"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "clock_skew",
+      "signal_id": "SIG-SNAP-012",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "clock_skew"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "reconciliation_drift",
+      "signal_id": "SIG-SNAP-013",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "reconciliation_drift"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    },
+    {
+      "scenario": "kill_active",
+      "signal_id": "SIG-SNAP-014",
+      "state": "RISK_FILTER_REJECTED",
+      "state_path": [
+        "NO_SIGNAL",
+        "SIGNAL_CANDIDATE_CREATED",
+        "RISK_FILTER_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "reason_codes": [
+        "kill_active"
+      ],
+      "confidence_bucket": "MEDIUM",
+      "confidence_authorizes_trading": false,
+      "execution_authorized": false,
+      "order_submission_allowed": false,
+      "no_order_without_ptrc": true,
+      "dependencies": {
+        "ptrc_required": true,
+        "idem_required": true,
+        "osm_required": true,
+        "recon_required": true,
+        "kill_required": true
+      },
+      "live_runtime_api_credential_actions": "none"
+    }
+  ],
+  "live_runtime_api_credential_actions": "none"
+}

@@ -1,0 +1,24 @@
+﻿{
+  "schema_name": "offline_strategy_quality_score_schema_v1",
+  "status": "SPEC_ONLY",
+  "dimensions": {
+    "safety_compliance": 30,
+    "non_authorization_integrity": 15,
+    "overtrade_control": 15,
+    "signal_quality_simulated": 10,
+    "failure_handling": 10,
+    "governance_dependency_coverage": 10,
+    "test_coverage": 5,
+    "manifest_traceability": 5
+  },
+  "total": 100,
+  "rules": [
+    "score >= 98 means offline artifact/test quality only",
+    "score does not authorize trading",
+    "score does not indicate profit expectation",
+    "score does not authorize shadow/live/WF08",
+    "if forbidden action occurs, score = 0 and STOP",
+    "do not manipulate score to pass"
+  ],
+  "score_interpretation": "Offline quality score measures offline artifact/test completeness only; it does not indicate profit expectation, trading performance, runtime readiness, shadow readiness, live readiness, or WF08 readiness."
+}

@@ -3296,3 +3296,94 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `YUNA_INSTAGRAM_EXISTING_META_ASSET_SELECTED`.
   - `YUNA_INSTAGRAM_CONNECTED_ASSET_CONFIRMED`.
   - `MARKETING_HQ_AUTOMATION_YUNA_META_BASELINE_UPDATED`.
+
+# 2026-05-31 - Offline test-plan governance for contract layer
+
+- Scope:
+  - executed approved next action `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`,
+  - created spec-only governance package for contract-layer offline test planning,
+  - kept all live/shadow/runtime/API/credential boundaries unchanged.
+- Files added:
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_static_review.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_next_actions.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_qa_report_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_final_verdict_v1.md`
+  - `reports/offline_artifacts/integration_contracts/offline_test_plan_governance_for_contract_layer_v1_manifest.md`
+- Files changed:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Validation:
+  - required verdict/non-authorization/next-action markers verified,
+  - static review status `PASS_SPEC_ONLY`,
+  - QA status `PASS_NO_PATCH_NEEDED`,
+  - sha256 manifest regenerated after final artifacts.
+- Failure telemetry:
+  - `SANDBOX_WRITE_PERMISSION_REQUIRED_FOR_PLANNING_WORKSPACE` (resolved through approved escalated write).
+- Success telemetry:
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER_COMPLETED`.
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_QA_PASS_NO_PATCH_NEEDED`.
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_MANIFEST_REFRESHED`.
+- Safety decisions:
+  - no external network,
+  - no Upbit API,
+  - no credential/.env access,
+  - no runtime wiring,
+  - no scheduler/parser/fixture/WF08/live/shadow actions.
+
+# 2026-05-31 - Offline synthetic test harness project
+
+- Scope:
+  - executed `OFFLINE_SYNTHETIC_TEST_HARNESS_PROJECT` in local-only offline governance scope,
+  - implemented synthetic harness + scoring + unit/static tests + closing QA artifacts,
+  - preserved all live/shadow/runtime/API/credential prohibitions.
+- Files added:
+  - `reports/offline_artifacts/offline_test_harness/offline_synthetic_harness_design_v1.md`
+  - `reports/offline_artifacts/offline_test_harness/synthetic_market_data_generator.py`
+  - `reports/offline_artifacts/offline_test_harness/offline_strategy_candidate_engine.py`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_runner.py`
+  - `reports/offline_artifacts/offline_test_harness/offline_safety_scoring.py`
+  - `reports/offline_artifacts/offline_test_harness/README.md`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.json`
+  - `reports/offline_artifacts/offline_test_harness/offline_backtest_result_v1.md`
+  - `reports/offline_artifacts/scoring/offline_strategy_quality_score_schema_v1.json`
+  - `reports/offline_artifacts/scoring/offline_strategy_quality_score_report_v1.md`
+  - `reports/offline_artifacts/manifests/offline_synthetic_test_harness_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/offline_synthetic_test_harness_final_verdict_v1.md`
+  - `tests/offline_strategy_research/_test_utils.py`
+  - `tests/offline_strategy_research/test_no_live_api_imports.py`
+  - `tests/offline_strategy_research/test_no_credentials_usage.py`
+  - `tests/offline_strategy_research/test_signal_never_becomes_order.py`
+  - `tests/offline_strategy_research/test_confidence_not_authorization.py`
+  - `tests/offline_strategy_research/test_ptrc_dependency_required.py`
+  - `tests/offline_strategy_research/test_idem_boundary_required.py`
+  - `tests/offline_strategy_research/test_osm_boundary_required.py`
+  - `tests/offline_strategy_research/test_recon_kill_dependency_required.py`
+  - `tests/offline_strategy_research/test_stale_signal_rejected.py`
+  - `tests/offline_strategy_research/test_duplicate_signal_rejected.py`
+  - `tests/offline_strategy_research/test_cooldown_blocks_overtrade.py`
+  - `tests/offline_strategy_research/test_scoring_does_not_authorize_live.py`
+  - `tests/offline_strategy_research/test_forbidden_states_absent.py`
+  - `tests/offline_strategy_research/test_non_authorization_sentence_present.py`
+  - `tests/offline_strategy_research/test_backtest_result_schema.py`
+- Validation:
+  - `python -m unittest discover -s tests/offline_strategy_research -p test_*.py -v` -> PASS (15/15)
+  - forbidden_state_count = 0
+  - offline_quality_score = 95/100
+  - closing_qa_status = PASS_NO_PATCH_NEEDED
+- Failure telemetry:
+  - `SANDBOX_WRITE_PERMISSION_REQUIRED_FOR_BACKTEST_OUTPUT` (resolved by approved escalated rerun)
+- Success telemetry:
+  - `OFFLINE_SYNTHETIC_TEST_HARNESS_PROJECT_COMPLETED`
+  - `OFFLINE_SYNTHETIC_TEST_SUITE_PASS_15_OF_15`
+  - `OFFLINE_SYNTHETIC_SCORE_CALCULATED_95`
+  - `OFFLINE_SYNTHETIC_CLOSING_QA_PASS_NO_PATCH_NEEDED`
+- Forbidden side effects avoided:
+  - no external network
+  - no Upbit API
+  - no credential/.env access
+  - no runtime/n8n workflow/scheduler/parser/fixture/live/shadow actions
+- Next action:
+  - `HUMAN_REVIEW_AND_APPROVAL_OF_OFFLINE_SYNTHETIC_TEST_HARNESS_ARTIFACTS`
