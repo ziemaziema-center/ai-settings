@@ -53,7 +53,7 @@
 - reports/offline_artifacts/shadow_execution_local/local_shadow_execution_evidence_matrix_v1.md :: 4C04AA8539A0E0CF590991E5E1F5843E87223C31F4AC6B60D2E443076A89026A
 - reports/offline_artifacts/reviews/local_shadow_execution_closing_qa_report_v1.md :: 439C00C4F5600E7C57F4C66FAB9E85D4DBFCD8A18EB7583E54642D6AF631A99A
 - reports/offline_artifacts/reviews/local_shadow_execution_patch_manifest_v1.md :: 0AFD9AB527A599963000F75B7C3BB43C52FC98C27BD119093F73FB3DE0393F7B
-- reports/offline_artifacts/reviews/local_shadow_execution_final_verdict_v1.md :: D93D75379145F518FFEB3259317B518614BA0BE8CCADBA00712A67F6180BD169
+- reports/offline_artifacts/reviews/local_shadow_execution_final_verdict_v1.md :: 76DB4D7DA5C9B6B88DBC61ACF7E086C53E11D4B48AFF1541BC1ADAB307E912D7
 - tests/shadow_execution_local/test_local_shadow_no_forbidden_imports.py :: 4178C0164920F32BCAB651B977F4EB15124BC8F61D31EC1D52668B5A5BF41CEE
 - tests/shadow_execution_local/test_local_shadow_no_env_or_credentials.py :: F3778546F66A77E752B529D7727594DBCF23DECC864ADDAA5EC8F5954ED1B1CE
 - tests/shadow_execution_local/test_local_shadow_result_schema.py :: F0843C83936C6F8865A8D856D5546FC992D4D8D7E1AF762D0EABA4BF58EDB48A
@@ -139,7 +139,7 @@
 
 ## Next Action
 
-- PUSH_LOCAL_SHADOW_EXECUTION_ARTIFACTS_AFTER_AUTH_APPROVAL
+- HUMAN_DECISION_ON_REAL_SHADOW_MODE_WITH_DATA_ACCESS_REVIEW
 
 Local shadow execution score measures local-only simulation, evidence, governance, and blocker completeness only; it does not authorize real shadow execution, live trading, Upbit API use, credential use, runtime activation, scheduler activation, WF08, or production readiness.
 

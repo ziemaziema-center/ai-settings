@@ -25,7 +25,7 @@ LOCAL_N_DAY_SHADOW_SIMULATION_PATCHED_AND_CONFIRMED
 
 ## Next Action
 
-PUSH_LOCAL_SHADOW_EXECUTION_ARTIFACTS_AFTER_AUTH_APPROVAL
+HUMAN_DECISION_ON_REAL_SHADOW_MODE_WITH_DATA_ACCESS_REVIEW
 
 Local shadow execution score measures local-only simulation, evidence, governance, and blocker completeness only; it does not authorize real shadow execution, live trading, Upbit API use, credential use, runtime activation, scheduler activation, WF08, or production readiness.
 
