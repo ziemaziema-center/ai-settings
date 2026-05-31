@@ -3669,3 +3669,53 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `WF08_REVIEW` BLOCKED
   - `LIVE_AUTHORIZATION` BLOCKED
 - next_action: `HUMAN_REVIEW_FOR_FUTURE_SHADOW_GATE_ONLY`
+
+## 2026-05-31 - Shadow entry approval review (review-only)
+
+- status: `PASS`
+- review_scope: `SHADOW MODE ENTRY IMPLEMENTATION APPROVAL REVIEW`
+- shadow_entry_review_status: `SHADOW_ENTRY_REVIEW_READY_FOR_HUMAN_DECISION`
+- files_created:
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_approval_review_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_blocker_matrix_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_required_evidence_checklist_v1.md`
+  - `reports/offline_artifacts/reviews/shadow_entry_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/manifests/shadow_entry_approval_review_manifest_v1.md`
+- blockers_remaining:
+  - `SHADOW_MODE_N_DAYS_EXECUTED`
+  - `WF08_REVIEW`
+  - `LIVE_AUTHORIZATION`
+  - `Credential operational validation for runtime scope`
+- credential_actions: none
+- upbit_api_actions: none
+- live_runtime_actions: none
+- scheduler_actions: none
+- wf08_status: BLOCKED
+- closing_qa_status: PASS_NO_PATCH_NEEDED
+- next_action: `HUMAN_DECISION_ON_CONTROLLED_N_DAY_SHADOW_ENTRY_SCOPE`
+
+## 2026-05-31 - Controlled N-day shadow scope governance package
+
+- status: `PASS_PATCHED`
+- scope: `CONTROLLED_N_DAY_SHADOW_ENTRY_SCOPE` (definition-only)
+- shadow_execution_authorized: false
+- upbit_api_authorized: false
+- credential_use_authorized: false
+- scheduler_authorized: false
+- score: `100/100` (scope/governance completeness only)
+- tests:
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- artifacts:
+  - controlled scope definition, blocker matrix, recorder contract, pass/fail criteria, authorization packet template
+  - controlled scope score, manifest, closing QA report, patch manifest, final verdict
+- closing_qa_status: `PASS_PATCHED`
+- remaining_blockers:
+  - `SHADOW_MODE_N_DAYS_EXECUTED`
+  - `WF08_REVIEW`
+  - `LIVE_AUTHORIZATION`
+  - `Credential operational validation for runtime scope`
+- next_action: `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_CONTROLLED_N_DAY_SHADOW_EXECUTION_RUN`

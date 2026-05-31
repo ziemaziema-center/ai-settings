@@ -3528,3 +3528,98 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `LIVE_AUTHORIZATION` BLOCKED
 - Next action:
   - `HUMAN_REVIEW_FOR_FUTURE_SHADOW_GATE_ONLY`
+
+# 2026-05-31 - Shadow mode entry implementation approval review
+
+- Scope:
+  - executed approved `SHADOW MODE ENTRY IMPLEMENTATION APPROVAL REVIEW` as review-only governance package,
+  - blocked live activation request by policy and produced human decision support artifacts for shadow entry.
+- Files added:
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_approval_review_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_blocker_matrix_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_entry_required_evidence_checklist_v1.md`
+  - `reports/offline_artifacts/reviews/shadow_entry_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/manifests/shadow_entry_approval_review_manifest_v1.md`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Validation:
+  - required source files existence check: PASS
+  - closing QA non-authorization sentence check: PASS
+  - unsafe terms (`LIVE_READY`, `LIVE_AUTHORIZED`) check: PASS
+- Verdict:
+  - `SHADOW_ENTRY_REVIEW_READY_FOR_HUMAN_DECISION`
+  - live activation remains BLOCKED
+- Failure telemetry:
+  - none
+- Success telemetry:
+  - `SHADOW_ENTRY_APPROVAL_REVIEW_PACKAGE_CREATED`
+  - `SHADOW_ENTRY_CLOSING_QA_PASS_NO_PATCH_NEEDED`
+  - `LIVE_ACTIVATION_REQUEST_BLOCKED_BY_GOVERNANCE`
+- Safety decisions:
+  - no Upbit API
+  - no credential/.env access
+  - no scheduler activation
+  - no n8n/runtime/live/shadow execution changes
+
+# 2026-05-31 - Controlled N-day shadow entry scope governance
+
+- Scope:
+  - executed approved `CONTROLLED_N_DAY_SHADOW_ENTRY_SCOPE` as governance-only package,
+  - defined controlled N-day shadow boundaries, execution blockers, recorder contract, pass/fail criteria, authorization packet template, score, manifest, and closing QA set,
+  - preserved all live/runtime/API/credential/scheduler prohibitions.
+- Files added:
+  - `reports/offline_artifacts/shadow_governance/controlled_n_day_shadow_scope_v1.md`
+  - `reports/offline_artifacts/shadow_governance/controlled_shadow_execution_blocker_matrix_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_recorder_execution_contract_v1.md`
+  - `reports/offline_artifacts/shadow_governance/controlled_n_day_shadow_pass_fail_criteria_v1.md`
+  - `reports/offline_artifacts/shadow_governance/controlled_shadow_authorization_packet_template_v1.md`
+  - `reports/offline_artifacts/shadow_governance/controlled_shadow_scope_score_v1.md`
+  - `reports/offline_artifacts/reviews/controlled_n_day_shadow_scope_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/controlled_n_day_shadow_scope_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/controlled_n_day_shadow_scope_final_verdict_v1.md`
+  - `reports/offline_artifacts/manifests/controlled_n_day_shadow_scope_manifest_v1.md`
+  - `tests/shadow_governance/test_shadow_scope_non_authorization.py`
+  - `tests/shadow_governance/test_shadow_blocker_matrix_contains_required_blockers.py`
+  - `tests/shadow_governance/test_shadow_recorder_forbidden_states_absent.py`
+  - `tests/shadow_governance/test_shadow_recorder_stubbed_not_sent_required.py`
+  - `tests/shadow_governance/test_shadow_pass_fail_blocks_live_authorization.py`
+  - `tests/shadow_governance/test_shadow_authorization_template_requires_human.py`
+  - `tests/shadow_governance/test_shadow_n_days_not_marked_complete.py`
+  - `tests/shadow_governance/test_shadow_scope_blocks_credentials_api_scheduler.py`
+  - `tests/shadow_governance/test_shadow_scope_requires_daily_review.py`
+  - `tests/shadow_governance/test_shadow_scope_requires_kill_recon_alert_evidence.py`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+  - `reports/offline_artifacts/shadow_governance/controlled_n_day_shadow_scope_v1.md` (wording patch)
+  - scope docs patched for legacy+new non-authorization compatibility
+- Tests run:
+  - `python -m unittest discover -s tests/shadow_governance -p "test_*.py" -v` -> PASS (10/10)
+  - `python -m unittest discover -s tests/pre_live_package -p "test_*.py" -v` -> PASS (5/5)
+  - `python -m unittest discover -s tests/stress_harness -p "test_*.py" -v` -> PASS (6/6)
+  - `python -m unittest discover -s tests/local_dry_run -p "test_*.py" -v` -> PASS (7/7)
+  - `python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v` -> PASS (16/16)
+- Score:
+  - `controlled_shadow_scope_score = 100/100`
+- Closing QA:
+  - `PASS_PATCHED`
+- Failure telemetry:
+  - `SHADOW_SCOPE_TEST_WORDING_MISMATCH_PATCHED`
+  - `PRELIVE_NON_AUTH_REGRESSION_COMPAT_PATCHED`
+- Success telemetry:
+  - `CONTROLLED_N_DAY_SHADOW_SCOPE_PACKAGE_CREATED`
+  - `CONTROLLED_N_DAY_SHADOW_SCOPE_TEST_MATRIX_PASS`
+  - `CONTROLLED_N_DAY_SHADOW_SCOPE_SCORE_100`
+  - `CONTROLLED_N_DAY_SHADOW_SCOPE_CLOSING_QA_PASS_PATCHED`
+- Remaining blockers:
+  - `SHADOW_MODE_N_DAYS_EXECUTED`
+  - `WF08_REVIEW`
+  - `LIVE_AUTHORIZATION`
+  - `Credential operational validation for runtime scope`
+- Safety decisions:
+  - no shadow execution
+  - no Upbit API
+  - no credential/.env use
+  - no scheduler activation
+  - no runtime/live/WF08 actions
