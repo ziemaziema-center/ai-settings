@@ -3798,3 +3798,60 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `LIVE_AUTHORIZATION_BLOCKED`
 - Next action:
   - `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_QUOTATION_PREFLIGHT_EXECUTION_SCOPE`
+
+# 2026-05-31 - One-shot public quotation preflight execution
+
+- Scope:
+  - executed approved `ONE_SHOT_PUBLIC_QUOTATION_PREFLIGHT_EXECUTION` with credential-free GET-only public quotation calls,
+  - produced local JSON/MD evidence,
+  - preserved private/order/account/withdraw/transfer hard blocks,
+  - no scheduler, no shadow/live execution, no WF08 transition.
+- Files created:
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight_execution_plan_v1.md`
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight.py`
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight_result_v1.json`
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight_result_v1.md`
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight_evidence_v1.md`
+  - `reports/offline_artifacts/public_endpoint_preflight/one_shot_public_quotation_preflight_score_v1.md`
+  - `reports/offline_artifacts/manifests/one_shot_public_quotation_preflight_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/one_shot_public_quotation_preflight_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/one_shot_public_quotation_preflight_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/one_shot_public_quotation_preflight_final_verdict_v1.md`
+  - `tests/public_endpoint_preflight/test_one_shot_script_no_auth_header.py`
+  - `tests/public_endpoint_preflight/test_one_shot_script_no_credentials_env.py`
+  - `tests/public_endpoint_preflight/test_one_shot_script_blocks_order_private_urls.py`
+  - `tests/public_endpoint_preflight/test_one_shot_result_schema.py`
+  - `tests/public_endpoint_preflight/test_one_shot_result_request_limit.py`
+  - `tests/public_endpoint_preflight/test_one_shot_result_no_forbidden_actions.py`
+  - `tests/public_endpoint_preflight/test_one_shot_result_does_not_authorize_shadow_live.py`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Endpoints attempted:
+  - `https://api.upbit.com/v1/market/all?isDetails=false`
+  - `https://api.upbit.com/v1/ticker?markets=KRW-BTC`
+  - `https://api.upbit.com/v1/orderbook?markets=KRW-BTC`
+- Request count:
+  - `3`
+- Tests run:
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `one_shot_public_quotation_preflight_score=99/100` (public preflight evidence quality only)
+- Closing QA:
+  - `PASS_PATCHED`
+- Remaining blockers:
+  - `SHADOW_EXECUTION_AUTHORIZATION_MISSING`
+  - `CREDENTIAL_AUTHORIZATION_MISSING`
+  - `SCHEDULER_AUTHORIZATION_MISSING`
+  - `WF08_REVIEW_BLOCKED`
+  - `LIVE_AUTHORIZATION_BLOCKED`
+- Next action:
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`

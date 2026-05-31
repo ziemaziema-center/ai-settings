@@ -1,0 +1,95 @@
+{
+  "executed_at_utc": "2026-05-31T14:52:46Z",
+  "request_count": 3,
+  "endpoints_attempted": [
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC"
+  ],
+  "methods_used": [
+    "GET",
+    "GET",
+    "GET"
+  ],
+  "auth_header_sent": false,
+  "credential_read_attempted": false,
+  "env_access_attempted": false,
+  "private_endpoint_called": false,
+  "order_endpoint_called": false,
+  "scheduler_used": false,
+  "response_statuses": [
+    200,
+    200,
+    200
+  ],
+  "response_schema_summary": [
+    {
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    }
+  ],
+  "local_output_only": true,
+  "preflight_result": "SUCCESS",
+  "stop_reason": ""
+}

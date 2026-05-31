@@ -3820,3 +3820,36 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - credential_action_count: `0`
 - scheduler_action_count: `0`
 - next_action: `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_QUOTATION_PREFLIGHT_EXECUTION_SCOPE`
+
+## 2026-05-31 - One-shot public quotation preflight execution
+
+- status: `PASS_PATCHED`
+- scope: `ONE_SHOT_PUBLIC_QUOTATION_PREFLIGHT_EXECUTION`
+- endpoints_attempted:
+  - `https://api.upbit.com/v1/market/all?isDetails=false`
+  - `https://api.upbit.com/v1/ticker?markets=KRW-BTC`
+  - `https://api.upbit.com/v1/orderbook?markets=KRW-BTC`
+- request_count: `3`
+- response_statuses: `[200, 200, 200]`
+- preflight_result: `SUCCESS`
+- tests:
+  - public_endpoint_preflight: PASS (21/21)
+  - public_data_shadow_scope: PASS (15/15)
+  - real_shadow_review: PASS (12/12)
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- score: `99/100` (one-shot public preflight evidence quality only)
+- closing_qa_status: `PASS_PATCHED`
+- api_call_performed: `true` (public quotation endpoints only)
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- auth_header_sent: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- next_action: `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`
