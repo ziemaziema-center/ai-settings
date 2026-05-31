@@ -16,7 +16,7 @@
 
 - LEGACY_CONTRACT_LAYER_NEXT_ACTION_TOKEN
 - replaced with
-- PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN_COMPLETED_PENDING_HUMAN_REVIEW
+- PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_ACCEPTED_PENDING_HUMAN_DECISION
 
 ## Post-Patch Validation
 
@@ -25,4 +25,5 @@
 - safety boundaries: unchanged
 
 ?쏷his document does not authorize live trading, real shadow mode execution beyond approved public-data recorder observation, Upbit private API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??
+
 

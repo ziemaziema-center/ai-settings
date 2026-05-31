@@ -24,12 +24,13 @@ ONE_SHOT_PUBLIC_QUOTATION_PREFLIGHT_PATCHED_AND_CONFIRMED
 
 ## Next Action
 
-PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN_COMPLETED_PENDING_HUMAN_REVIEW
+PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_ACCEPTED_PENDING_HUMAN_DECISION
 
 ?쏷his document does not authorize live trading, real shadow mode execution, Upbit API access beyond the approved public quotation preflight, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??
 
 ?쏰ne-shot public quotation preflight score measures public endpoint evidence, blocker preservation, and safety coverage only; it does not authorize credential use, shadow execution, scheduler activation, live trading, WF08, or production readiness.??
 
 One-shot public quotation preflight score measures public endpoint evidence, blocker preservation, and safety coverage only; it does not authorize credential use, shadow execution, scheduler activation, live trading, WF08, or production readiness.
+
 
 

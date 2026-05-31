@@ -3906,3 +3906,48 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `WF08_REVIEW_BLOCKED`
 - Next action:
   - `HUMAN_DECISION_ON_PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW`
+
+# 2026-06-01 - Overnight public-data shadow evidence review + next safe package
+
+- Scope:
+  - completed approved `PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW` and continued overnight safe-scope package,
+  - produced acceptance matrix, stale-action cleanup, extended observation readiness package, authenticated shadow blocker matrix, and human decision packet,
+  - ran full regression suites and closing QA.
+- Files created:
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_n_day_shadow_recorder_evidence_review_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_n_day_shadow_evidence_acceptance_matrix_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_readiness_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_shadow_evidence_human_decision_packet_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_n_day_shadow_evidence_review_score_v1.md`
+  - `reports/offline_artifacts/shadow_governance/authenticated_shadow_review_blocker_matrix_v1.md`
+  - `reports/offline_artifacts/manifests/public_data_n_day_shadow_evidence_review_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/public_data_n_day_shadow_evidence_review_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/public_data_n_day_shadow_evidence_review_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/public_data_n_day_shadow_evidence_review_final_verdict_v1.md`
+  - `tests/public_data_shadow_run/test_evidence_review_accepts_14_cycles.py`
+  - `tests/public_data_shadow_run/test_evidence_acceptance_matrix_all_pass.py`
+  - `tests/public_data_shadow_run/test_stale_next_actions_removed.py`
+  - `tests/public_data_shadow_run/test_extended_observation_does_not_authorize_execution.py`
+  - `tests/public_data_shadow_run/test_human_decision_packet_recommends_safe_option.py`
+  - `tests/public_data_shadow_run/test_authenticated_shadow_blockers_remain.py`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+  - stale next-action and compatibility patches in allowed reviews/manifests/shadow_governance files
+- Tests run:
+  - public_data_shadow_run PASS (16/16)
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `evidence_review_score=100/100`
+- Closing QA:
+  - `PASS_PATCHED`
+- Next action:
+  - `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`

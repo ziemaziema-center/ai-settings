@@ -124,10 +124,11 @@
 
 ## Next Action
 
-- HUMAN_APPROVAL_DECISION_FOR_SEPARATE_PUBLIC_DATA_ONLY_N_DAY_SHADOW_EXECUTION_SCOPE
+- PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_ACCEPTED_PENDING_HUMAN_DECISION
 
 Public-data shadow scope score measures review, scope, blocker clarity, and safety coverage only; it does not authorize real shadow execution, Upbit API access, credential use, scheduler activation, live trading, WF08, or production readiness.
 
 This document does not authorize live trading, real shadow mode execution, Upbit API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.
 
 This document does not authorize live trading, shadow mode, Upbit API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.
+

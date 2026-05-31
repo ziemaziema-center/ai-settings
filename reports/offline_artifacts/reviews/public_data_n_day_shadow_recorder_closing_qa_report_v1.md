@@ -29,7 +29,7 @@
 ## Patch Actions
 
 - patched stale next-action tokens in allowed artifact areas
-- replacement token: PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN_COMPLETED_PENDING_HUMAN_REVIEW
+- replacement token: PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_ACCEPTED_PENDING_HUMAN_DECISION
 - patched files:
   - reports/offline_artifacts/reviews/one_shot_public_quotation_preflight_final_verdict_v1.md
   - reports/offline_artifacts/manifests/one_shot_public_quotation_preflight_manifest_v1.md
@@ -46,3 +46,4 @@
 HUMAN_DECISION_ON_PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW
 
 ?쏷his document does not authorize live trading, real shadow mode execution beyond approved public-data recorder observation, Upbit private API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??
+
