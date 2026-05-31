@@ -1,0 +1,14 @@
+# REPEATED OBSERVATION DIGEST batch_02 WINDOW 002 CYCLE 021
+- window: 2
+- cycle: 21
+- generated_at_utc: 2026-05-31T17:12:15+00:00
+- digest_id: da42fed5-3b31-4f4e-a1e8-a8e0fdc919db
+- digest_sha256: ee61ea54814ca5890a06b5b43f00837f02934c3b9d8f85f4dbe990fe52f4ffe7
+- endpoints_attempted:
+  - https://api.upbit.com/v1/market/all?isDetails=false
+  - https://api.upbit.com/v1/ticker?markets=KRW-BTC
+  - https://api.upbit.com/v1/orderbook?markets=KRW-BTC
+- response_statuses: [200, 200, 200]
+- hypothetical_submission_state: STUBBED_NOT_SENT
+
+?쏷his document does not authorize live trading, authenticated real shadow mode execution, Upbit private API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??

@@ -4117,3 +4117,29 @@ eports/daily_crypto_news_digest_2026-05-21.md.
   - order endpoint blocked
   - withdrawal/transfer blocked
 - next_action: `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`
+
+
+## 2026-06-01 - Overnight continuation batch_02
+
+- status: `PASS`
+- batch_id: `batch_02`
+- windows_completed_total_this_run: `3`
+- cycles_completed_total_this_run: `168`
+- total_request_count_this_run: `504`
+- response_statuses: `504x200`
+- tests_passed: `true`
+- overnight_final_score: `100/100`
+- auth_header_sent: `false`
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- stubbed_not_sent_count: `168`
+- artifact_completeness_status: `PASS`
+- media_artifacts_status: `N_A`
+- closing_qa_status: `PASS_NO_PATCH_NEEDED`
+- next_action: `MORNING_HQ_REVIEW_OF_PUBLIC_DATA_OBSERVATION_RESULTS`
