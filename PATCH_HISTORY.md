@@ -3464,3 +3464,67 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no live/shadow orders
 - Next action:
   - `HUMAN_REVIEW_AND_APPROVAL_FOR_FUTURE_STRESS_HARNESS_IMPLEMENTATION_SCOPE`
+
+# 2026-05-31 - Pre-live local dry-run package completion
+
+- Scope:
+  - completed approved offline/local pre-live package up to spec+local dry-run boundary,
+  - generated missing stress/local outputs, required tests, score, manifest, and closing QA triplet,
+  - preserved all live/shadow/runtime/API/credential prohibitions.
+- Files added:
+  - `reports/offline_artifacts/pre_live_package/pre_live_completion_score_v1.md`
+  - `reports/offline_artifacts/manifests/pre_live_package_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/pre_live_package_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/pre_live_package_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/pre_live_package_final_verdict_v1.md`
+  - `tests/pre_live_package/test_no_forbidden_imports_pre_live.py`
+  - `tests/pre_live_package/test_no_env_or_credentials_pre_live.py`
+  - `tests/pre_live_package/test_non_authorization_sentence_present.py`
+  - `tests/pre_live_package/test_pre_live_gate_matrix_blocks_shadow_live.py`
+  - `tests/pre_live_package/test_shadow_recorder_not_authorized.py`
+  - `tests/stress_harness/test_stress_harness_result_schema.py`
+  - `tests/stress_harness/test_stress_harness_forbidden_states_absent.py`
+  - `tests/stress_harness/test_all_required_stress_scenarios_present.py`
+  - `tests/stress_harness/test_418_triggers_kill.py`
+  - `tests/stress_harness/test_429_requires_backoff_alert.py`
+  - `tests/stress_harness/test_heartbeat_missed_requires_kill_or_alert.py`
+  - `tests/local_dry_run/test_clock_skew_blocks_candidates.py`
+  - `tests/local_dry_run/test_duplicate_client_order_id_blocked.py`
+  - `tests/local_dry_run/test_recon_drift_blocks_candidates.py`
+  - `tests/local_dry_run/test_kill_active_blocks_all_candidates.py`
+  - `tests/local_dry_run/test_alert_required_for_critical_events.py`
+  - `tests/local_dry_run/test_osm_persisted_before_submitted.py`
+  - `tests/local_dry_run/test_no_submission_state_exists.py`
+- Files patched:
+  - `reports/offline_artifacts/pre_live_package/pre_live_gate_evidence_matrix_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_recorder_stub_design_v1.md`
+  - `reports/offline_artifacts/shadow_governance/shadow_recorder_stub_contract_v1.md`
+  - `tests/stress_harness/test_stress_harness_result_schema.py`
+- Commands run:
+  - `python reports/offline_artifacts/stress_harness/stress_harness_runner.py`
+  - `python reports/offline_artifacts/local_dry_run/dry_run_orchestrator.py`
+  - `python -m unittest discover -s tests/pre_live_package -p "test_*.py" -v` -> PASS (5/5)
+  - `python -m unittest discover -s tests/stress_harness -p "test_*.py" -v` -> PASS (6/6)
+  - `python -m unittest discover -s tests/local_dry_run -p "test_*.py" -v` -> PASS (7/7)
+  - `python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v` -> PASS (16/16)
+- Score:
+  - `pre_live_completion_score = 100/100`
+- Closing QA:
+  - `PASS_PATCHED`
+- Failure telemetry:
+  - `PRELIVE_TEST_DISCOVERY_ZERO_TESTS_INITIAL` (fixed by converting tests to unittest.TestCase)
+  - `PRELIVE_MATRIX_ROW_FORMAT_BREAK` (fixed)
+  - `PRELIVE_SHADOW_NOT_AUTH_WORDING_GAP` (fixed)
+  - `PRELIVE_SCHEMA_UTF8_BOM_PARSE_ERROR` (fixed)
+- Success telemetry:
+  - `PRELIVE_STRESS_HARNESS_EXECUTED_LOCAL`
+  - `PRELIVE_LOCAL_DRY_RUN_EXECUTED`
+  - `PRELIVE_REQUIRED_TEST_MATRIX_PASS_34_OF_34`
+  - `PRELIVE_SCORE_100`
+  - `PRELIVE_CLOSING_QA_PASS_PATCHED`
+- Remaining blockers before live:
+  - `SHADOW_MODE_N_DAYS_EXECUTED` BLOCKED
+  - `WF08_REVIEW` BLOCKED
+  - `LIVE_AUTHORIZATION` BLOCKED
+- Next action:
+  - `HUMAN_REVIEW_FOR_FUTURE_SHADOW_GATE_ONLY`

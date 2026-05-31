@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "scenario_count": 5,
+    "forbidden_state_count": 0,
+    "kill_block_count": 1,
+    "recon_block_count": 1,
+    "idem_block_count": 1,
+    "alert_required_count": 4,
+    "persisted_before_submitted_all": true,
+    "submitted_state_present": false,
+    "live_runtime_api_credential_actions": "none"
+  },
+  "runs": [
+    {
+      "scenario": "normal_candidate",
+      "path": [
+        "SIGNAL_CANDIDATE",
+        "PTRC_ELIGIBLE",
+        "IDEM_PREPARED",
+        "OSM_INTENT_PERSISTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "result_state": "NO_ORDER_SUBMISSION",
+      "reason": "dry_run_persist_only",
+      "alert_required": false,
+      "no_order_submission": true,
+      "persisted_before_submitted": true,
+      "submitted": false
+    },
+    {
+      "scenario": "duplicate_client_order",
+      "path": [
+        "SIGNAL_CANDIDATE",
+        "PTRC_ELIGIBLE",
+        "IDEM_RETRY_BLOCKED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "result_state": "IDEM_RETRY_BLOCKED",
+      "reason": "duplicate_client_order_id",
+      "alert_required": true,
+      "no_order_submission": true,
+      "persisted_before_submitted": true,
+      "submitted": false
+    },
+    {
+      "scenario": "kill_active_case",
+      "path": [
+        "SIGNAL_CANDIDATE",
+        "SIGNAL_BLOCKED",
+        "ALERT_REQUIRED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "result_state": "SIGNAL_BLOCKED",
+      "reason": "kill_active",
+      "alert_required": true,
+      "no_order_submission": true,
+      "persisted_before_submitted": true,
+      "submitted": false
+    },
+    {
+      "scenario": "recon_drift_case",
+      "path": [
+        "SIGNAL_CANDIDATE",
+        "SIGNAL_BLOCKED",
+        "RECON_DRIFT_DETECTED",
+        "ALERT_REQUIRED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "result_state": "SIGNAL_BLOCKED",
+      "reason": "recon_drift",
+      "alert_required": true,
+      "no_order_submission": true,
+      "persisted_before_submitted": true,
+      "submitted": false
+    },
+    {
+      "scenario": "clock_skew_case",
+      "path": [
+        "SIGNAL_CANDIDATE",
+        "PTRC_REJECTED",
+        "NO_ORDER_SUBMISSION"
+      ],
+      "result_state": "PTRC_REJECTED",
+      "reason": "clock_skew",
+      "alert_required": true,
+      "no_order_submission": true,
+      "persisted_before_submitted": true,
+      "submitted": false
+    }
+  ]
+}

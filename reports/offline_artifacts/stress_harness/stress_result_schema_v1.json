@@ -1,0 +1,48 @@
+﻿{
+  "schema_name": "stress_harness_result_v1",
+  "required_top_level_keys": ["summary", "outcomes"],
+  "summary_required_keys": [
+    "scenario_count",
+    "required_scenario_count",
+    "all_required_scenarios_present",
+    "forbidden_state_count",
+    "kill_trigger_count",
+    "alert_required_count",
+    "backoff_required_count",
+    "state_counts",
+    "live_runtime_api_credential_actions"
+  ],
+  "outcome_required_keys": [
+    "scenario_id",
+    "scenario",
+    "state",
+    "reason",
+    "kill_triggered",
+    "alert_required",
+    "backoff_required",
+    "no_order_submission",
+    "forbidden_state_present",
+    "critical_event"
+  ],
+  "allowed_states": [
+    "SCENARIO_CREATED",
+    "SIGNAL_BLOCKED",
+    "PTRC_REJECTED",
+    "IDEM_RETRY_BLOCKED",
+    "RECON_DRIFT_DETECTED",
+    "KILL_TRIGGERED",
+    "ALERT_REQUIRED",
+    "HUMAN_REVIEW_REQUIRED",
+    "NO_ORDER_SUBMISSION"
+  ],
+  "forbidden_states": [
+    "SUBMITTED",
+    "ACK_RECEIVED",
+    "OPEN",
+    "FILLED",
+    "PARTIAL",
+    "LIVE_ORDER",
+    "SHADOW_ORDER",
+    "EXCHANGE_CONNECTED"
+  ]
+}
