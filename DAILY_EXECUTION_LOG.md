@@ -3753,4 +3753,4 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - no scheduler activation
   - no live/shadow runtime order submission
   - WF08 blocked
-- next_action: `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`
+- next_action: `PUSH_LOCAL_SHADOW_EXECUTION_ARTIFACTS_AFTER_AUTH_APPROVAL`
