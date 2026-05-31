@@ -3855,3 +3855,54 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `LIVE_AUTHORIZATION_BLOCKED`
 - Next action:
   - `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`
+
+# 2026-06-01 - Public data N-day shadow recorder run
+
+- Scope:
+  - executed approved `PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN` package end-to-end,
+  - performed public-data-only observation over 14 cycles using credential-free public quotation endpoints,
+  - generated local recorder evidence, daily digests, tests, score, manifest, closing QA, and stale next-action patch.
+- Files created:
+  - `reports/offline_artifacts/public_data_shadow_run/*`
+  - `reports/offline_artifacts/reviews/public_data_n_day_shadow_recorder_*`
+  - `reports/offline_artifacts/manifests/public_data_n_day_shadow_recorder_manifest_v1.md`
+  - `tests/public_data_shadow_run/test_*.py`
+- Files modified:
+  - `reports/offline_artifacts/reviews/one_shot_public_quotation_preflight_final_verdict_v1.md`
+  - `reports/offline_artifacts/manifests/one_shot_public_quotation_preflight_manifest_v1.md`
+  - `reports/offline_artifacts/manifests/full_auto_live_readiness_project_manifest_v1.md`
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Endpoints attempted:
+  - `https://api.upbit.com/v1/market/all?isDetails=false`
+  - `https://api.upbit.com/v1/ticker?markets=KRW-BTC`
+  - `https://api.upbit.com/v1/orderbook?markets=KRW-BTC`
+- Run counters:
+  - `cycles_requested=14`
+  - `cycles_completed=14`
+  - `daily_digest_count=14`
+  - `total_request_count=42`
+  - `stubbed_not_sent_count=14`
+- Tests run:
+  - public_data_shadow_run PASS (10/10)
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `public_data_recorder_score=100/100` (public-data observation evidence quality only)
+- Closing QA:
+  - `PASS_PATCHED`
+- Remaining blockers:
+  - `CREDENTIAL_AUTHORIZATION_MISSING`
+  - `SCHEDULER_AUTHORIZATION_MISSING`
+  - `AUTHENTICATED_SHADOW_EXECUTION_AUTHORIZATION_MISSING`
+  - `LIVE_AUTHORIZATION_BLOCKED`
+  - `WF08_REVIEW_BLOCKED`
+- Next action:
+  - `HUMAN_DECISION_ON_PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW`

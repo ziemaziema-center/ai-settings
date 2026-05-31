@@ -1,0 +1,1108 @@
+{
+  "executed_at_utc": "2026-05-31T15:26:13+00:00",
+  "cycles_requested": 14,
+  "cycles_completed": 14,
+  "total_request_count": 42,
+  "endpoints_attempted": [
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC",
+    "https://api.upbit.com/v1/market/all?isDetails=false",
+    "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+    "https://api.upbit.com/v1/orderbook?markets=KRW-BTC"
+  ],
+  "methods_used": [
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET",
+    "GET"
+  ],
+  "auth_header_sent": false,
+  "credential_read_attempted": false,
+  "env_access_attempted": false,
+  "private_endpoint_called": false,
+  "order_endpoint_called": false,
+  "withdraw_transfer_endpoint_called": false,
+  "scheduler_used": false,
+  "live_order_count": 0,
+  "shadow_order_count": 0,
+  "stubbed_not_sent_count": 14,
+  "response_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "response_schema_summary": [
+    {
+      "cycle": 1,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 1,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 1,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 2,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 2,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 2,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 3,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 3,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 3,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 4,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 4,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 4,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 5,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 5,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 5,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 6,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 6,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 6,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 7,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 7,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 7,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 8,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 8,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 8,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 9,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 9,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 9,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 10,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 10,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 10,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 11,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 11,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 11,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 12,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 12,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 12,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 13,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 13,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 13,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    },
+    {
+      "cycle": 14,
+      "endpoint": "market_all",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 745,
+        "first_item_keys": [
+          "english_name",
+          "korean_name",
+          "market"
+        ]
+      }
+    },
+    {
+      "cycle": 14,
+      "endpoint": "ticker_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "acc_trade_price",
+          "acc_trade_price_24h",
+          "acc_trade_volume",
+          "acc_trade_volume_24h",
+          "change",
+          "change_price",
+          "change_rate",
+          "high_price",
+          "highest_52_week_date",
+          "highest_52_week_price",
+          "low_price",
+          "lowest_52_week_date",
+          "lowest_52_week_price",
+          "market",
+          "opening_price",
+          "prev_closing_price",
+          "signed_change_price",
+          "signed_change_rate",
+          "timestamp",
+          "trade_date",
+          "trade_date_kst",
+          "trade_price",
+          "trade_time",
+          "trade_time_kst",
+          "trade_timestamp",
+          "trade_volume"
+        ]
+      }
+    },
+    {
+      "cycle": 14,
+      "endpoint": "orderbook_krw_btc",
+      "status": 200,
+      "schema": {
+        "root": "list",
+        "length": 1,
+        "first_item_keys": [
+          "level",
+          "market",
+          "orderbook_units",
+          "timestamp",
+          "total_ask_size",
+          "total_bid_size"
+        ]
+      }
+    }
+  ],
+  "daily_digest_count": 14,
+  "forbidden_state_count": 0,
+  "local_output_only": true,
+  "next_action": "HUMAN_DECISION_ON_PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW",
+  "run_result": "SUCCESS",
+  "stop_reason": ""
+}

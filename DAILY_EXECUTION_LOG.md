@@ -3853,3 +3853,42 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - order_endpoint_called: `false`
 - withdraw_transfer_endpoint_called: `false`
 - next_action: `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`
+
+## 2026-06-01 - Public data N-day shadow recorder run
+
+- status: `PASS_PATCHED`
+- scope: `PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN`
+- endpoints_attempted:
+  - `https://api.upbit.com/v1/market/all?isDetails=false`
+  - `https://api.upbit.com/v1/ticker?markets=KRW-BTC`
+  - `https://api.upbit.com/v1/orderbook?markets=KRW-BTC`
+- cycles_requested: `14`
+- cycles_completed: `14`
+- daily_digest_count: `14`
+- total_request_count: `42`
+- response_statuses: `42x200`
+- run_result: `SUCCESS`
+- auth_header_sent: `false`
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- stubbed_not_sent_count: `14`
+- tests:
+  - public_data_shadow_run: PASS (10/10)
+  - public_endpoint_preflight: PASS (21/21)
+  - public_data_shadow_scope: PASS (15/15)
+  - real_shadow_review: PASS (12/12)
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- score: `100/100`
+- closing_qa_status: `PASS_PATCHED`
+- next_action: `HUMAN_DECISION_ON_PUBLIC_DATA_N_DAY_SHADOW_RECORDER_EVIDENCE_REVIEW`

@@ -97,10 +97,11 @@
 
 ## Next Action
 
-OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER
+PUBLIC_DATA_N_DAY_SHADOW_RECORDER_RUN_COMPLETED_PENDING_HUMAN_REVIEW
 
 ?쏷his document does not authorize live trading, real shadow mode execution, Upbit API access beyond the approved public quotation preflight, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??
 
 ?쏰ne-shot public quotation preflight score measures public endpoint evidence, blocker preservation, and safety coverage only; it does not authorize credential use, shadow execution, scheduler activation, live trading, WF08, or production readiness.??
 
 One-shot public quotation preflight score measures public endpoint evidence, blocker preservation, and safety coverage only; it does not authorize credential use, shadow execution, scheduler activation, live trading, WF08, or production readiness.
+
