@@ -3951,3 +3951,74 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - closing_qa_status: `PASS_PATCHED`
 - recommended_human_option: `APPROVE_EXTENDED_PUBLIC_DATA_OBSERVATION_SCOPE`
 - next_action: `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`
+
+## 2026-06-01 - Marketing HQ acceleration package
+
+- status: `PASS_PATCHED`
+- scope: `WORLDVAPE_SEO_AND_YUNA_SOCIAL_VISIBILITY_ACCELERATION`
+- desk_name: `Marketing HQ`
+- public_site_health:
+  - homepage: `200 OK`
+  - robots_txt: `200 OK`
+  - sitemap_xml: `200 OK`
+  - llms_txt: `200 OK`
+  - kwangwoon_vape: `200 OK`
+  - nowon_vape: `200 OK`
+  - blog_hub: `200 OK`
+- sitemap_url_count: `42`
+- content_engine_baseline:
+  - local_sitemap_urls: `42`
+  - local_blog_source_files: `30`
+- search_visibility_status: `PUBLIC_RESULTS_NOT_STABLE_YET`
+- automation_update:
+  - id: `worldvape-seo-indexing-follow-up`
+  - name: `Marketing HQ Daily Ops`
+  - status: `ACTIVE`
+  - added_daily_action_pack: `true`
+  - added_monday_weekly_growth_sprint: `true`
+  - includes_url_inspection_queue: `true`
+  - includes_gbp_naver_post_drafts: `true`
+  - includes_yuna_instagram_pack: `true`
+- chrome_automation_status: `BLOCKED_BY_NODE_REPL_KERNEL_EXIT`
+- files_created:
+  - `reports/MARKETING_HQ_ACCELERATION_PACKAGE_2026-06-01.md`
+- safety:
+  - fake_reviews_created: `false`
+  - instagram_post_published: `false`
+  - dm_sent: `false`
+  - ad_spend_used: `false`
+  - password_or_cookie_accessed: `false`
+- next_action: `SEARCH_CONSOLE_URL_INSPECTION_PRIORITY_QUEUE_AND_WEEKLY_LOCAL_POSTING`
+
+## 2026-06-01 - Overnight safe public-data shadow continuation
+
+- status: `PASS_NO_PATCH_NEEDED`
+- cycles_requested: `56`
+- cycles_completed: `56`
+- total_request_count: `168`
+- response_statuses: `168x200`
+- extended_observation_result: `SUCCESS`
+- auth_header_sent: `false`
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- stubbed_not_sent_count: `56`
+- tests:
+  - public_data_shadow_run: PASS (26/26)
+  - public_endpoint_preflight: PASS (21/21)
+  - public_data_shadow_scope: PASS (15/15)
+  - real_shadow_review: PASS (12/12)
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- overnight_score: `100/100`
+- stale_next_actions_patched: `false` (no stale next-action token remained in next-action contexts)
+- next_action: `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`

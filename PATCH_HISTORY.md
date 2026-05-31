@@ -3951,3 +3951,87 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `PASS_PATCHED`
 - Next action:
   - `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`
+
+# 2026-06-01 - Marketing HQ visibility acceleration package
+
+- Scope:
+  - continued Marketing HQ daily operations for WorldVape local SEO and Yuna Instagram visibility,
+  - validated public HTTPS health for the homepage, robots.txt, sitemap.xml, llms.txt, key local landing pages, and blog hub,
+  - confirmed sitemap baseline remains 42 local URLs with 30 blog source files,
+  - strengthened the existing daily heartbeat automation with a concrete daily action pack for URL Inspection, GBP/Naver posting, local citation targets, internal-link refreshes, Telegram/community CTAs, and Yuna Instagram content.
+- Files created:
+  - `reports/MARKETING_HQ_ACCELERATION_PACKAGE_2026-06-01.md`
+- Files modified:
+  - `DAILY_EXECUTION_LOG.md`
+  - `PATCH_HISTORY.md`
+- Automation updated:
+  - `worldvape-seo-indexing-follow-up`
+  - weekly growth sprint folded into the existing daily heartbeat because this thread already has one active heartbeat automation
+- Validation:
+  - homepage: `200 OK`
+  - robots.txt: `200 OK`
+  - sitemap.xml: `200 OK`
+  - llms.txt: `200 OK`
+  - `/kwangwoon-vape/`: `200 OK`
+  - `/nowon-vape/`: `200 OK`
+  - `/blog/`: `200 OK`
+- Blocker:
+  - Chrome/Search Console direct operation was not completed because the Chrome automation kernel exited unexpectedly.
+- Safety:
+  - no fake reviews,
+  - no Instagram publishing,
+  - no DMs,
+  - no ad spend,
+  - no password/cookie/session inspection.
+- Closing QA:
+  - `PASS_PATCHED`
+- Next action:
+  - `SEARCH_CONSOLE_URL_INSPECTION_PRIORITY_QUEUE_AND_WEEKLY_LOCAL_POSTING`
+
+# 2026-06-01 - Overnight public-data shadow continuation until hard gate
+
+- Scope:
+  - executed approved overnight continuation within safe public-data-only boundary,
+  - completed extended observation (56 cycles) with public quotation endpoints only,
+  - generated stability comparison, next gate blocker matrix, score, manifest, and closing QA.
+- Files created:
+  - `reports/offline_artifacts/overnight/overnight_public_data_shadow_continuation_decision_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_plan_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_recorder.py`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.json`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_001.md` ... `cycle_056.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_observation_stability_comparison_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_shadow_next_gate_blocker_matrix_v1.md`
+  - `reports/offline_artifacts/overnight/overnight_public_data_shadow_score_v1.md`
+  - `reports/offline_artifacts/manifests/overnight_public_data_shadow_continuation_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_shadow_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_shadow_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_shadow_final_verdict_v1.md`
+  - required extended-observation test files under `tests/public_data_shadow_run/`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Run counters:
+  - `cycles_requested=56`
+  - `cycles_completed=56`
+  - `total_request_count=168`
+  - `response_statuses=168x200`
+  - `stubbed_not_sent_count=56`
+- Tests run:
+  - public_data_shadow_run PASS (26/26)
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `overnight_score=100/100`
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- Next action:
+  - `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`

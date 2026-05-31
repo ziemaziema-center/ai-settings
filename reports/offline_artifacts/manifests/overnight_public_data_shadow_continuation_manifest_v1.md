@@ -1,0 +1,166 @@
+﻿# OVERNIGHT PUBLIC DATA SHADOW CONTINUATION MANIFEST V1
+
+## Files Created
+
+- reports/offline_artifacts/overnight/overnight_public_data_shadow_continuation_decision_v1.md
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_plan_v1.md
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_recorder.py
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.json
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.md
+- reports/offline_artifacts/public_data_shadow_run/public_data_observation_stability_comparison_v1.md
+- reports/offline_artifacts/public_data_shadow_run/public_data_shadow_next_gate_blocker_matrix_v1.md
+- reports/offline_artifacts/overnight/overnight_public_data_shadow_score_v1.md
+- reports/offline_artifacts/manifests/overnight_public_data_shadow_continuation_manifest_v1.md
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_closing_qa_report_v1.md
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_patch_manifest_v1.md
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_final_verdict_v1.md
+- tests/public_data_shadow_run/test_extended_observation_result_schema.py
+- tests/public_data_shadow_run/test_extended_observation_request_limit.py
+- tests/public_data_shadow_run/test_extended_observation_no_auth_credentials_env.py
+- tests/public_data_shadow_run/test_extended_observation_no_private_order_endpoints.py
+- tests/public_data_shadow_run/test_extended_observation_no_scheduler.py
+- tests/public_data_shadow_run/test_extended_observation_digests_exist.py
+- tests/public_data_shadow_run/test_extended_observation_stubbed_not_sent.py
+- tests/public_data_shadow_run/test_stability_comparison_accepts_public_data_only.py
+- tests/public_data_shadow_run/test_next_gate_blockers_remain.py
+- tests/public_data_shadow_run/test_overnight_continuation_does_not_authorize_live.py
+
+## Files Modified
+
+- PATCH_HISTORY.md
+- DAILY_EXECUTION_LOG.md
+
+## SHA256
+
+- note: self-hash omitted to avoid circular drift
+- reports/offline_artifacts/overnight/overnight_public_data_shadow_continuation_decision_v1.md :: 245D824C6DC2B1D2756817EA89C77257DB79279DACC9086197E0BF6A562361A3
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_plan_v1.md :: 9BFB7B193600FD03F57F63BB1460C18EAC5AAB5CD4D86F261A7448D25310B6BE
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_recorder.py :: 0933BF1C14BAC195F0470CC312E8FA1819A5F634EEF7F86A1ECFE1944749FB11
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.json :: 507ABF16CB9BA3F4E1A25C3CFF71230BB121E42017B8F69A659A087061F992FA
+- reports/offline_artifacts/public_data_shadow_run/public_data_extended_observation_result_v1.md :: A52E751E3CB0BEDF5C4E723EC3C4FFA809E1C3329CB280CBDB848DC450EE9064
+- reports/offline_artifacts/public_data_shadow_run/public_data_observation_stability_comparison_v1.md :: D271A357750DEDA86A02BFE0155E652092E346427FBA273EE2B76BD25953F51A
+- reports/offline_artifacts/public_data_shadow_run/public_data_shadow_next_gate_blocker_matrix_v1.md :: B371F18D1F54B837545B163FFF475353287A6A4C213723C3861F139A0652AC47
+- reports/offline_artifacts/overnight/overnight_public_data_shadow_score_v1.md :: 76D15CCDA284DE5AD41A2AB1F618E1F8980F4FFF4CA507C5DAD8933629787E87
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_closing_qa_report_v1.md :: F0533003BC5A7FA518D0268973250484B6968167071BE28C0262247382E2FE69
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_patch_manifest_v1.md :: 82FA15C966EC682CFBFD684B53E36640BD75495F9EF0905D23DCE71D7A59F45F
+- reports/offline_artifacts/reviews/overnight_public_data_shadow_final_verdict_v1.md :: 7835C71F97558B309BFD05D4DE87D2CA7A626B96D03A3A8E1D648D4D79007189
+- tests/public_data_shadow_run/test_extended_observation_result_schema.py :: 9EC9BAA91117340D3D964BCC2512D7FD4503AE42851750852F6F06136419E500
+- tests/public_data_shadow_run/test_extended_observation_request_limit.py :: 3086C80FB912A4416A6BD85A18DABCEB38C8423368E36E468C7D20BA1199FF2E
+- tests/public_data_shadow_run/test_extended_observation_no_auth_credentials_env.py :: 12C1CCB50F83CD04ABFB8537A02F9248DB5527FCF44CC18D6343A0F0B5597537
+- tests/public_data_shadow_run/test_extended_observation_no_private_order_endpoints.py :: 09A73629CFF29E00362854C5BC506B1A72EA0B943FA43D7EC10EFADDDA78CA80
+- tests/public_data_shadow_run/test_extended_observation_no_scheduler.py :: 1949E96DD7DC0A45B67AC27C394B83FBD661FEADDA765E4520E66F3476F3513F
+- tests/public_data_shadow_run/test_extended_observation_digests_exist.py :: 384A4732EAE0B0F74CAF199AF21BB1C766D7CBCAF899C507DA35AFB5B32648A1
+- tests/public_data_shadow_run/test_extended_observation_stubbed_not_sent.py :: F9B79050050ADF22D10AA677B2F9BFEDDF39954318724780D2314669C92A03BD
+- tests/public_data_shadow_run/test_stability_comparison_accepts_public_data_only.py :: E74A8BB92214FD6925F789F2A4B1DBAA1AB9E30E22C89A28241C78BE866BA7E1
+- tests/public_data_shadow_run/test_next_gate_blockers_remain.py :: F1EC5FCA526C22244E3670BF5E083785DEC45F04CB578731F8CDA21E616E7E02
+- tests/public_data_shadow_run/test_overnight_continuation_does_not_authorize_live.py :: F88A97D12A2C9AAD805070C892B30AE18A693896805A101CF73E9AAECCA3C368
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_001.md :: 45C354AA67DD3BEEA2423797DBDF1A15029151E86549931254C7F163AD74D96C
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_002.md :: AC1B714EE6244F41836069431EB51C4EEFA923DB7107FFD5D4D7A96818EDE803
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_003.md :: 8ECFDE514C51292BCEA80867AD591840C0E6E5C9A487037C90121FD427B6FA12
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_004.md :: 4942E2203B2C667DF623B4D27405E7EF24327E691ABF4D5D5B132EB3C898CB9B
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_005.md :: 459613275F7A1D944A0EE47BD65AF0C7776838409F2C1C7579975E4F81687EE2
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_006.md :: DC84E391314AD1E0210DBF5CA4F84ABC6B963477E28F3E4316EDB0B7F68927DC
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_007.md :: EBBE89BA38F24BA9DCB6C8E1ACD47C41DE6F30759147A349F88F0A1684E9B5F3
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_008.md :: 7D79854D0097E1ED034658682DC1F46F05DB20EC59B087BBB518F0EFB38CDF81
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_009.md :: 1AAD8A240863708387E374835CA8FF043A400F31EAE2E7F2B1D77D1AFAF2AEC3
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_010.md :: 8406D943E914EAABAD9CA83B1F51919870B1F2692B8F11BB85B8C4A33822A310
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_011.md :: 61761B8466AD35326D9A214BC291552312E98DAF29983258C9033A5951DF7D38
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_012.md :: 02A9A9D0D012730C34EAD7419A1DF5CD5B3BE6A01A34372C3A8027C48BE133E1
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_013.md :: 07DED2AB2405736BA1AC30878B25659171C9CC0906EAB9329D1E37F7E02CAD06
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_014.md :: 90DB0F97210FF44BC793B7B496E6896960D127156B2ED6D6C85CAAC9E0AA393A
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_015.md :: D6B910816593CDE866108BB52BBB3C8EDA704503B2FCEBF894980FC2C52A2970
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_016.md :: E77E12DB4DCDA7CB02A756A982B3ECCCB0C1DFCA22E0B9696B22A57931BC9C8E
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_017.md :: A8997EB9DA9F17C69E598570B61996124C875E262AEAB282C966FFA28F3EFE6B
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_018.md :: EE990A904744A737C6A720D5F1307464CD55B132A647B8E595B6133115767E99
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_019.md :: A7BBD0DEDDA0EE4CE7D4538961A0D92594B9E3E3779D7ADA1C07B8E2DD5AEF47
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_020.md :: 9428C203B98C2CE18B2BBBF51791937DD8D4088E6E74FB2AE4937487D085678B
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_021.md :: 4AD62399D0DB8AEF2BA0817AB7E35EF357702736496D839A5D55A66D8F97ADF5
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_022.md :: 0F9B4B75F88B53991BBEB73C3A67A3429D03318A16C73EDFC9B3CE4DFF49B2DA
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_023.md :: 2BB86B05BF58DB6BBBED484C2DDCA363ADA91D9FE57F4BC9CBF291F19D65FDBC
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_024.md :: 905C8A9236888845A492549FA7867E6712490AC05C715B6F00D85051E8C249C2
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_025.md :: AB0089CFCB0126F1E14590717DE597039938823F852E0550695503BABA6DE168
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_026.md :: DB3631C1180F2CA8846B92B259BDE2F84B90D3D0C542A609E32A5BD2D0C37072
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_027.md :: AEBFD84B2DC0981E16E9DF0DC15FD413183DBDD49507F74E7C1E3059284B3D3A
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_028.md :: F4ED15D7D57DE8CCCE7574C05A60798B562BD566742A53439D598CE5D958601C
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_029.md :: 397D5FA56A7BB4BBEC559E64545F6372F65B09A55341134518569C54652935D8
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_030.md :: 51FE26E3A7C06EDED18F5AD0DB280E501F43C05CC1B15C32ED4D60D7BE7C9EDD
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_031.md :: CE97BDE5059F6E3F4F5B8C3C5AA9967A51F81FE0BDCF2D96B0F768DBE958BC06
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_032.md :: 55CDDBAB61068309C4EAA8CF4E63502D7FBE5962CE555D375A875D3EBBD11B2D
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_033.md :: ECA580AB2F68D899FBB9F2EA2DF92F2A8230EFA83CB3B413C91522ACCB9E8AA3
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_034.md :: 1457C72042FD4860FFA9F50BB74EE46A3589B0EEC659540AE437B477767CDE7A
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_035.md :: F3628462EF3F914DBB2FC2807FD69E19B3C81F3D7C8D3A9AACA28A4B8926F7A4
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_036.md :: D23D373C5E7774D561A0326A2F4679ECD29250A437BE7087BB0D3A47DFFDEA78
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_037.md :: 1A29675D20E1EDFCEFBA98DE7957D77DF1A94098EEDE8E4CB1B823EF14CBF086
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_038.md :: 0F3AE07E23DAD3CEB51FBE2DE2E9CB1A05926D75B379300EB76ECE61B4849348
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_039.md :: 2E2FB5197245CFA4E5ED6BB70CAE4FCF5E3B7033082AD5C36566D4E2E454AA03
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_040.md :: 10E49CA545893793A89682BC93FB24002ADDD66BC053ED384774FB7A99F14D39
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_041.md :: C8B0370BA241BF069542DBB1F52202609787063452B3696607A878CCE1ED642B
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_042.md :: 0D0DB45833725E03DD01CB680D1D713040249176F4359FD2AE1A3DDBC90F4C16
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_043.md :: 8BE701D6E57DB70D69DA79D0CF7AE6166A97A29F9C6BB06B5BF10E5578F9F2D5
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_044.md :: 369CA51DFDC8CE2647B97593BF2915B1802F709851794F4204A17E8500CEA729
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_045.md :: 1D699742D17D93E4285AF00C81EB0A1EE50DCA80FB1757794B9EEF681736969E
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_046.md :: 8437C21661314D58B57420EB6D22BB79E6AF71958DC8F8E00BCD37A5414C828C
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_047.md :: A3ED5B2ECC720692731BE1E100A9FCC9C374CFA535FC0DCA1A8C933942D88B8B
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_048.md :: AD31546CFF3C90EA40A7A5338F3F3B78126D7103FC4B18B4BD7DE07ED7EF8D1E
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_049.md :: 64CB14FB863E75A856889EA23AD6DCDC5C3B84C9DCB625E05F79F2F2A1C1B08C
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_050.md :: 8618B0C9D58CABFB261BA48E324B3676FEEF40A833AC44BFCB1EA049D641C0D4
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_051.md :: 08E657B05DA5C38BA5A86C7A181374E677B9AA80AE4EDD47C218B1E4E67046B7
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_052.md :: 6DF8A7A0E6F9A3C0AD4714150589736595B90D74B68FFF7D478857F2E2B2F334
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_053.md :: B7CB2D3724AF00E722AFEBB44807FF7F33BE96CE5D24962415B35A70DBCEF80E
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_054.md :: E1D9C8C76C40119D7520E7BB4139DC1690911567B8E3D87B8C8649580BF6646F
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_055.md :: 67A746A3703B35C78BFC2F8504E69B59DB926AEA2F5402724386B833D36993A4
+- reports/offline_artifacts/public_data_shadow_run/extended_daily_digests/cycle_056.md :: 50D74C80D444C546968F8956AF8E87D7ED0B5FEBE3E127F7C5FAF8C152A949C4
+- PATCH_HISTORY.md :: 137174BCE4AA3BCA5D6235EAD4367DB178F6E4C6CE7CC426AEE08FC4D2E6E398
+- DAILY_EXECUTION_LOG.md :: 14AD356C1852AB4B02D1848813D3CC6DC7D9785F3FD342E63B3BE0B240D67FA7
+
+## Endpoints Attempted
+
+- https://api.upbit.com/v1/market/all?isDetails=false
+- https://api.upbit.com/v1/ticker?markets=KRW-BTC
+- https://api.upbit.com/v1/orderbook?markets=KRW-BTC
+
+## Counters
+
+- cycles_requested: 56
+- cycles_completed: 56
+- total_request_count: 168
+- stubbed_not_sent_count: 56
+
+## Tests Run
+
+- python -m unittest discover -s tests/public_data_shadow_run -p "test_*.py" -v -> PASS (26/26)
+- python -m unittest discover -s tests/public_endpoint_preflight -p "test_*.py" -v -> PASS (21/21)
+- python -m unittest discover -s tests/public_data_shadow_scope -p "test_*.py" -v -> PASS (15/15)
+- python -m unittest discover -s tests/real_shadow_review -p "test_*.py" -v -> PASS (12/12)
+- python -m unittest discover -s tests/shadow_execution_local -p "test_*.py" -v -> PASS (12/12)
+- python -m unittest discover -s tests/shadow_governance -p "test_*.py" -v -> PASS (10/10)
+- python -m unittest discover -s tests/pre_live_package -p "test_*.py" -v -> PASS (5/5)
+- python -m unittest discover -s tests/stress_harness -p "test_*.py" -v -> PASS (6/6)
+- python -m unittest discover -s tests/local_dry_run -p "test_*.py" -v -> PASS (7/7)
+- python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v -> PASS (16/16)
+
+## Score
+
+- overnight_score: 100/100
+
+## Blockers Preserved
+
+- credential authorization: BLOCKED
+- scheduler authorization: BLOCKED
+- authenticated shadow authorization: BLOCKED
+- WF08 review: BLOCKED
+- live authorization: BLOCKED
+
+## Forbidden Side Effects Avoided
+
+- auth header: not sent
+- credential/env access: none
+- private/order/withdraw endpoints: none
+- scheduler: not used
+- live/shadow order: zero
+
+## Next Action
+
+HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW
+
+?쏷his document does not authorize live trading, authenticated real shadow mode execution, Upbit private API access, credential use, scheduler activation, parser execution, fixture creation, WF08 transition, runtime wiring, implementation, or production-readiness claims.??
