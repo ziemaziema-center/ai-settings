@@ -1984,8 +1984,10 @@ Executed one additional bounded run of `tmp/run_shadow_observation_20260519.py` 
 Executed one additional bounded run of 	mp/run_shadow_observation_20260519.py for automation 24h-upbit-shadow-observation.
 
 ### Files changed
-- eports/shadow_observation_2026-05-19_latest.json
-- eports/shadow_observation_2026-05-19_latest.md
+- 
+eports/shadow_observation_2026-05-19_latest.json
+- 
+eports/shadow_observation_2026-05-19_latest.md
 - logs/shadow_observation_2026-05-19.jsonl
 - PATCH_HISTORY.md
 - DAILY_EXECUTION_LOG.md
@@ -2054,8 +2056,10 @@ Retried live transition after user-confirmed automation deletion.
 Executed live transition after user-confirmed deletion of shadow automation.
 
 ### Files changed
-- eports/live_transition_execution_2026-05-19.md
-- eports/live_transition_execution_2026-05-19.json
+- 
+eports/live_transition_execution_2026-05-19.md
+- 
+eports/live_transition_execution_2026-05-19.json
 - PATCH_HISTORY.md
 - DAILY_EXECUTION_LOG.md
 
@@ -2622,8 +2626,10 @@ Started bounded full automation and pushed the available Git repository.
 Regenerated the daily credible crypto RSS digest for Upbit automation using the existing dependency-free news brain runner.
 
 ### Files changed
-- eports/daily_crypto_news_digest_2026-05-21.json
-- eports/daily_crypto_news_digest_2026-05-21.md
+- 
+eports/daily_crypto_news_digest_2026-05-21.json
+- 
+eports/daily_crypto_news_digest_2026-05-21.md
 - DAILY_EXECUTION_LOG.md
 - PATCH_HISTORY.md
 
@@ -4035,3 +4041,57 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - `PASS_NO_PATCH_NEEDED`
 - Next action:
   - `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`
+
+
+# 2026-06-01 - Overnight public-data continuation v2
+
+- Scope:
+  - executed overnight continuation in approved public-data-only safe scope,
+  - ran long observation recorder (56 cycles, 168 requests),
+  - completed multi-window stability/requeset-discipline/shape reviews,
+  - refreshed human decision packet v2 and blocker matrix v2,
+  - completed regression tests, score, manifest, closing QA.
+- Files created:
+  - `reports/offline_artifacts/overnight/overnight_public_data_continuation_decision_v2.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_long_observation_plan_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_long_observation_recorder.py`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_long_observation_result_v1.json`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_long_observation_result_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/long_observation_digests/cycle_001.md` ... `cycle_056.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_multi_window_stability_review_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_request_discipline_review_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_shape_stability_review_v1.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_shadow_evidence_human_decision_packet_v2.md`
+  - `reports/offline_artifacts/public_data_shadow_run/public_data_shadow_next_gate_blocker_matrix_v2.md`
+  - `reports/offline_artifacts/overnight/overnight_public_data_continuation_score_v2.md`
+  - `reports/offline_artifacts/manifests/overnight_public_data_continuation_manifest_v2.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_continuation_closing_qa_report_v2.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_continuation_patch_manifest_v2.md`
+  - `reports/offline_artifacts/reviews/overnight_public_data_continuation_final_verdict_v2.md`
+  - required long-observation v2 tests under `tests/public_data_shadow_run/`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Run counters:
+  - `cycles_requested=56`
+  - `cycles_completed=56`
+  - `total_request_count=168`
+  - `response_statuses=168x200`
+  - `stubbed_not_sent_count=56`
+- Tests run:
+  - public_data_shadow_run PASS (38/38)
+  - public_endpoint_preflight PASS (21/21)
+  - public_data_shadow_scope PASS (15/15)
+  - real_shadow_review PASS (12/12)
+  - shadow_execution_local PASS (12/12)
+  - shadow_governance PASS (10/10)
+  - pre_live_package PASS (5/5)
+  - stress_harness PASS (6/6)
+  - local_dry_run PASS (7/7)
+  - offline_strategy_research PASS (16/16)
+- Score:
+  - `overnight_score=100/100`
+- Closing QA:
+  - `PASS_NO_PATCH_NEEDED`
+- Next action:
+  - `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`

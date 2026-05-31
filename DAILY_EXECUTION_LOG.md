@@ -2602,7 +2602,9 @@ Wait for next user prompt to implement Upbit JWT helper and private read-only va
 
 ## 2026-05-19 - 24h shadow observation (run at 2026-05-19 16:47:20+09:00)
 - Runner: python tmp/run_shadow_observation_20260519.py (dependency-free)
-- Artifacts updated: eports/shadow_observation_2026-05-19_latest.md, eports/shadow_observation_2026-05-19_latest.json
+- Artifacts updated: 
+eports/shadow_observation_2026-05-19_latest.md, 
+eports/shadow_observation_2026-05-19_latest.json
 - JSONL append: logs/shadow_observation_2026-05-19.jsonl
 - Observation summary: observation_state=SHADOW_STOP_REVIEW, lags=OPEN_ORDER_READ_FAILED|NEWS_DEFENSIVE_BIAS, open_order_count=null, 
 ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw=272922, cleanup_total_shadow_krw=571442
@@ -2830,7 +2832,9 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - Request: generate today's Upbit automation credible-news digest using existing dependency-free runner.
 - Pre-read completed: KNOWN_FAILURES.md, VALIDATED_PATTERNS.md, PATCH_HISTORY.md, and automation memory.
 - Runner executed: python tmp/run_daily_news_digest.py.
-- Outputs updated: eports/daily_crypto_news_digest_2026-05-21.json, eports/daily_crypto_news_digest_2026-05-21.md.
+- Outputs updated: 
+eports/daily_crypto_news_digest_2026-05-21.json, 
+eports/daily_crypto_news_digest_2026-05-21.md.
 - Digest result: daily_brain_bias=DEFENSIVE_REFERENCE, items_scanned=100, source_failures=0.
 - Symbol counts: BTC 10, ETH 4, SOL 1, DOGE 1, ETC  , DOT  , ALGO  , FCT2  .
 - Top affected symbols: BTC, ETH, SOL (next: DOGE).
@@ -4022,3 +4026,47 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
 - overnight_score: `100/100`
 - stale_next_actions_patched: `false` (no stale next-action token remained in next-action contexts)
 - next_action: `HUMAN_DECISION_ON_PUBLIC_DATA_EXTENDED_SHADOW_OBSERVATION_OR_AUTHENTICATED_SHADOW_REVIEW`
+
+
+## 2026-06-01 - Overnight public-data continuation v2
+
+- status: `PASS_NO_PATCH_NEEDED`
+- phases_completed: `A,B,C,D,E,F,G,H,I,J,K,L,M`
+- cycles_requested: `56`
+- cycles_completed: `56`
+- total_request_count: `168`
+- response_statuses: `168x200`
+- long_observation_result: `SUCCESS`
+- multi_window_stability_verdict: `PUBLIC_DATA_MULTI_WINDOW_STABILITY_ACCEPTED`
+- auth_header_sent: `false`
+- credential_use_in_this_run: `false`
+- env_access_in_this_run: `false`
+- scheduler_use_in_this_run: `false`
+- private_account_endpoint_called: `false`
+- order_endpoint_called: `false`
+- withdraw_transfer_endpoint_called: `false`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- stubbed_not_sent_count: `56`
+- tests:
+  - public_data_shadow_run: PASS (38/38)
+  - public_endpoint_preflight: PASS (21/21)
+  - public_data_shadow_scope: PASS (15/15)
+  - real_shadow_review: PASS (12/12)
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- overnight_score: `100/100`
+- remaining_blockers:
+  - credential authorization missing
+  - scheduler authorization missing
+  - authenticated shadow execution authorization missing
+  - WF08 review blocked
+  - live authorization blocked
+  - account/private endpoint blocked
+  - order endpoint blocked
+  - withdrawal/transfer blocked
+- next_action: `HUMAN_DECISION_ON_CONTINUE_PUBLIC_DATA_ONLY_OR_AUTHENTICATED_SHADOW_REVIEW_GATE`
