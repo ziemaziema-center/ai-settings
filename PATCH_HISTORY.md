@@ -3623,3 +3623,43 @@ Completed the broader iPhone-controlled EC2 AI operations target beyond coin exe
   - no credential/.env use
   - no scheduler activation
   - no runtime/live/WF08 actions
+
+# 2026-05-31 - Controlled local N-day shadow execution package closure
+
+- Scope:
+  - executed approved `CONTROLLED_N_DAY_SHADOW_EXECUTION_LOCAL_ONLY` in local/offline mode only,
+  - completed missing Phase G/H closure artifacts and telemetry updates,
+  - preserved all live/runtime/API/credential/scheduler/WF08 prohibitions.
+- Files created:
+  - `reports/offline_artifacts/manifests/local_shadow_execution_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_final_verdict_v1.md`
+- Files modified:
+  - `PATCH_HISTORY.md`
+  - `DAILY_EXECUTION_LOG.md`
+- Tests rerun:
+  - `python -m unittest discover -s tests/shadow_execution_local -p "test_*.py" -v` -> PASS (12/12)
+  - `python -m unittest discover -s tests/shadow_governance -p "test_*.py" -v` -> PASS (10/10)
+  - `python -m unittest discover -s tests/pre_live_package -p "test_*.py" -v` -> PASS (5/5)
+  - `python -m unittest discover -s tests/stress_harness -p "test_*.py" -v` -> PASS (6/6)
+  - `python -m unittest discover -s tests/local_dry_run -p "test_*.py" -v` -> PASS (7/7)
+  - `python -m unittest discover -s tests/offline_strategy_research -p "test_*.py" -v` -> PASS (16/16)
+- Score:
+  - `local_shadow_execution_score=100/100` (local-only simulation quality only)
+- Closing QA:
+  - `PASS_PATCHED`
+- Failure telemetry:
+  - none
+- Success telemetry:
+  - `LOCAL_N_DAY_SHADOW_SIMULATION_COMPLETED_LOCAL_ONLY`
+  - `LOCAL_N_DAY_SHADOW_CLOSING_QA_PASS_PATCHED`
+  - `LOCAL_N_DAY_SHADOW_MANIFEST_REFRESHED`
+- Remaining blockers:
+  - `WF08_REVIEW`
+  - `LIVE_AUTHORIZATION`
+  - `UPBIT_API_AUTHORIZATION`
+  - `CREDENTIAL_AUTHORIZATION`
+  - `SCHEDULER_AUTHORIZATION`
+- Next action:
+  - `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`

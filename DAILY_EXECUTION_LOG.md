@@ -3719,3 +3719,38 @@ ews_bias=DEFENSIVE_REFERENCE, portfolio_plan_valid=true, cleanup_first_slice_krw
   - `LIVE_AUTHORIZATION`
   - `Credential operational validation for runtime scope`
 - next_action: `HUMAN_APPROVAL_DECISION_FOR_SEPARATE_CONTROLLED_N_DAY_SHADOW_EXECUTION_RUN`
+
+## 2026-05-31 - Controlled local N-day shadow execution closure
+
+- status: `PASS_PATCHED`
+- working_directory: `C:\Users\minho\Documents\02_work\03_AI\03_investment_automation\01_planning`
+- scope: `CONTROLLED_N_DAY_SHADOW_EXECUTION_LOCAL_ONLY`
+- synthetic_days_completed: `14`
+- daily_digest_count: `14`
+- forbidden_state_count: `0`
+- api_action_count: `0`
+- credential_action_count: `0`
+- scheduler_action_count: `0`
+- live_order_count: `0`
+- shadow_order_count: `0`
+- tests:
+  - shadow_execution_local: PASS (12/12)
+  - shadow_governance: PASS (10/10)
+  - pre_live_package: PASS (5/5)
+  - stress_harness: PASS (6/6)
+  - local_dry_run: PASS (7/7)
+  - offline_strategy_research: PASS (16/16)
+- score: `100/100` (local-only simulation quality only)
+- closing_qa_status: `PASS_PATCHED`
+- files_created:
+  - `reports/offline_artifacts/manifests/local_shadow_execution_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_closing_qa_report_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_patch_manifest_v1.md`
+  - `reports/offline_artifacts/reviews/local_shadow_execution_final_verdict_v1.md`
+- safety:
+  - no Upbit API
+  - no credential/.env usage
+  - no scheduler activation
+  - no live/shadow runtime order submission
+  - WF08 blocked
+- next_action: `OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER`
