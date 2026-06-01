@@ -4356,3 +4356,31 @@ NO UPBIT API/CREDENTIAL/ORDER/SCHEDULER/WF08 AUTHORIZATION GRANTED.
 REMAINING SAFE AUTONOMOUS WORK COMPLETED OR SAFELY BLOCKED.
 LIVE TRADING STILL BLOCKED.
 NO UPBIT API/CREDENTIAL/ORDER/SCHEDULER/WF08 AUTHORIZATION GRANTED.
+
+# 2026-06-01 - Safe-scope closure continuation (push + GATE_22 review + closure report)
+
+- branch: `upbit-governance-c388749-review`
+- phase_1_push_status: PASS (`git push origin upbit-governance-c388749-review`)
+- pushed_commit_hash_phase1: `7a97c48`
+- phase_2_status: PASS (`PASS_GATE22_WF08_AUTHORIZATION_REVIEW_ONLY`)
+- phase_3_status: PASS (`PASS_CURRENT_SAFE_SCOPE_CLOSURE_REVIEW_ONLY`)
+- new_artifacts:
+  - `reports/upbit_gate22_wf08_authorization_review_2026-06-01.md`
+  - `runtime/upbit_gate22_wf08_authorization_review_20260601.json`
+  - `tests/test_upbit_gate22_wf08_authorization_review_20260601.py`
+  - `reports/upbit_gate22_wf08_authorization_review_closing_qa_2026-06-01.md`
+  - `reports/upbit_gate22_wf08_authorization_review_final_verdict_2026-06-01.md`
+  - `reports/upbit_current_safe_scope_closure_report_2026-06-01.md`
+  - `runtime/upbit_current_safe_scope_closure_report_20260601.json`
+  - `reports/upbit_next_boundary_session_sendoff_2026-06-01.md`
+  - `tests/test_upbit_current_safe_scope_closure_report_20260601.py`
+- tests_run:
+  - `python -m unittest tests.test_upbit_gate22_wf08_authorization_review_20260601 tests.test_upbit_current_safe_scope_closure_report_20260601` PASS (8/8)
+- static_scan_status: `REFINED_STATIC_SCAN_PASS_PHASE2_3`
+- safety_locks:
+  - `upbit_api_access=false`
+  - `credential_authorization=false`
+  - `order_execution_authorization=false`
+  - `scheduler_authorization=false`
+  - `wf08_execution_authorized=false`
+  - `live_trading_authorization=false`
