@@ -1,0 +1,30 @@
+﻿{
+    "run_date":  "2026-06-01",
+    "overall_status":  "PASS_WITH_GAP",
+    "scope_interpretation":  "V2 governance/spec completion only",
+    "live_trading_authorization":  false,
+    "credential_authorization":  false,
+    "wf08_authorization":  false,
+    "scheduler_authorization":  false,
+    "upbit_api_access":  false,
+    "parser_execution":  false,
+    "fixture_creation":  false,
+    "v1_v2_reconciliation_status":  "CONFIRMED_WITH_UNKNOWN_V1_IDS",
+    "gate_dependency_status":  "GATE_7_TO_21_SPEC_ONLY_GATES_22_23_BLOCKED",
+    "immediate_next_action":  "V2_GATE7_PTRC_SPEC_SOURCE_BINDING_STATIC_REVIEW",
+    "open_questions":  "NONE",
+    "risk_reality_status":  "RECORDED",
+    "tests_passed":  true,
+    "closing_qa_status":  "PASS_PATCHED",
+    "final_safety_verdict":  "PASS_GOVERNANCE_COMPLETION_ONLY",
+    "non_authorization":  {
+                              "live_trading":  true,
+                              "upbit_private_api":  true,
+                              "upbit_order_api":  true,
+                              "upbit_account_api":  true,
+                              "upbit_withdraw_transfer_api":  true,
+                              "credential_access":  true,
+                              "wf08":  true,
+                              "scheduler":  true
+                          }
+}

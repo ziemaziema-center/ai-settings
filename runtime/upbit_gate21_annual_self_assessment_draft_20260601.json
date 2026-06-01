@@ -1,0 +1,43 @@
+{
+    "phase_id":  "GATE_21_ANNUAL_SELF_ASSESSMENT_DRAFT_ONLY",
+    "overall_status":  "PASS",
+    "scope":  "offline_review_preparation_or_synthetic_only",
+    "purpose":  "Draft annual self-assessment using governance evidence without approval issuance.",
+    "required_definitions":  [
+                                 "Include system inventory placeholder.",
+                                 "Include risk inventory.",
+                                 "Include incident log review placeholder.",
+                                 "Include stress test results reference from offline synthetic phase.",
+                                 "Include deployment history and credential governance status.",
+                                 "Include reconciliation drift log placeholder.",
+                                 "Include shadow-to-live evidence gap.",
+                                 "Include residual risk statement.",
+                                 "Approvals section must be NOT_APPROVED."
+                             ],
+    "synthetic_constraints":  {
+                                  "offline_only":  true,
+                                  "synthetic_data_only":  true,
+                                  "live_market_data_forbidden":  true,
+                                  "upbit_api_forbidden":  true,
+                                  "credential_forbidden":  true
+                              },
+    "authorizations":  {
+                           "implementation_created":  false,
+                           "upbit_api_access":  false,
+                           "credential_authorization":  false,
+                           "wf08_authorization":  false,
+                           "scheduler_authorization":  false,
+                           "live_trading_authorization":  false,
+                           "parser_execution":  false,
+                           "fixture_creation":  false
+                       },
+    "static_scan":  {
+                        "forbidden_endpoint_execution_detected":  false,
+                        "secret_like_string_detected":  false,
+                        "unsafe_readiness_claim_detected":  false,
+                        "authorization_leakage_detected":  false
+                    },
+    "next_action":  "REMAINING_GATES_BLOCKER_MAP_AND_FINAL_SENDOFF",
+    "final_safety_verdict":  "PASS_GATE21_ANNUAL_SELF_ASSESSMENT_DRAFT_ONLY",
+    "approval_status":  "NOT_APPROVED"
+}

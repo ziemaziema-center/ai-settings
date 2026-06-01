@@ -1,0 +1,33 @@
+{
+    "phase_id":  "GATE_9_IDEM_SPEC_SOURCE_BINDING_STATIC_REVIEW",
+    "overall_status":  "PASS",
+    "scope":  "offline_governance_spec_static_review_only",
+    "purpose":  "Bind IDEM spec to V2 standards and offline test contracts without implementation code.",
+    "criteria_count":  6,
+    "criteria":  [
+                     "IDEM spec must require UUIDv4 client_order_id for all order intents.",
+                     "IDEM spec must require persistence of client_order_id before network boundary.",
+                     "IDEM spec must require ambiguous-response retry using same client_order_id.",
+                     "IDEM spec must require no duplicate order creation on timeout/5xx/unknown response.",
+                     "IDEM spec must require one-to-one mapping between exchange UUID and client_order_id.",
+                     "No runtime trading code, no API calls, no credentials, no scheduler, no WF08 in this phase."
+                 ],
+    "authorizations":  {
+                           "implementation_created":  false,
+                           "upbit_api_access":  false,
+                           "credential_authorization":  false,
+                           "wf08_authorization":  false,
+                           "scheduler_authorization":  false,
+                           "live_trading_authorization":  false,
+                           "parser_execution":  false,
+                           "fixture_creation":  false
+                       },
+    "static_scan":  {
+                        "forbidden_endpoint_execution_detected":  false,
+                        "secret_like_string_detected":  false,
+                        "unsafe_readiness_claim_detected":  false,
+                        "credential_wf08_scheduler_leak_detected":  false
+                    },
+    "final_safety_verdict":  "PASS_GATE9_IDEM_SPEC_SOURCE_BINDING_STATIC_ONLY",
+    "next_action":  "GATE_11_RECON_SPEC_SOURCE_BINDING_STATIC_REVIEW"
+}

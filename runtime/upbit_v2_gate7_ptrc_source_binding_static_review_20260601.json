@@ -1,0 +1,53 @@
+﻿{
+  "gate": "GATE_7",
+  "review_type": "PTRC_SOURCE_BINDING_STATIC_REVIEW",
+  "review_date": "2026-06-01",
+  "scope": "offline_static_only",
+  "ptrc_required_items_count": 25,
+  "ptrc_items_passed": 25,
+  "ptrc_items_blocked": 0,
+  "implementation_status": "SPEC_ONLY",
+  "runtime_status": "NOT_IMPLEMENTED",
+  "live_status": "BLOCKED",
+  "authorizations": {
+    "live_trading_authorization": false,
+    "credential_authorization": false,
+    "wf08_authorization": false,
+    "scheduler_authorization": false,
+    "upbit_api_access": false,
+    "parser_execution": false,
+    "fixture_creation": false
+  },
+  "required_check_ids": [
+    "max_order_notional_krw",
+    "max_position_notional_krw",
+    "max_aggregate_exposure_krw",
+    "pre_held_krw_balance_required",
+    "daily_loss_cap",
+    "intraday_drawdown_cap",
+    "max_price_deviation_pct_vs_last_trade",
+    "max_price_deviation_pct_vs_orderbook_mid",
+    "min_tick_size_compliance",
+    "min_order_size_compliance",
+    "ord_type == limit",
+    "ord_type != market",
+    "no_leverage",
+    "no_margin",
+    "per_second_budget_remaining",
+    "per_market_order_burst_limit",
+    "per_minute_max_orders",
+    "client_order_id_unique_in_window",
+    "no_identical_order_within_N_seconds",
+    "market_in_allowlist",
+    "market_warning_status == NONE",
+    "wallet_state == working",
+    "can_trade flag verified",
+    "not restricted",
+    "not scheduled maintenance"
+  ],
+  "rules": {
+    "rejection_behavior_required": "STOP + LOG + ALERT",
+    "capital_breach_required": "cancel outstanding orders + disable new entry + human re-arm"
+  },
+  "final_safety_verdict": "PASS_GATE7_PTRC_SPEC_SOURCE_BINDING_ONLY"
+}

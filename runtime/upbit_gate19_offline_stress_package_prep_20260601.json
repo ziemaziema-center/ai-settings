@@ -1,0 +1,43 @@
+{
+    "phase_id":  "GATE_19_OFFLINE_STRESS_TEST_PACKAGE_PREP",
+    "overall_status":  "PASS",
+    "scope":  "offline_review_preparation_or_synthetic_only",
+    "purpose":  "Prepare offline stress package specification and harness plan using synthetic local data only.",
+    "required_definitions":  [
+                                 "Synthetic scenario: 10x normal order rate.",
+                                 "Synthetic scenario: exchange 429 storm.",
+                                 "Synthetic scenario: exchange 5xx storm.",
+                                 "Synthetic scenario: websocket disconnect mid-batch.",
+                                 "Synthetic scenario: clock skew injection.",
+                                 "Synthetic scenario: malformed exchange response.",
+                                 "Synthetic scenario: partial fill flurry.",
+                                 "Synthetic scenario: duplicate client_order_id injection.",
+                                 "Synthetic scenario: version mismatch injection.",
+                                 "No external service connection is allowed."
+                             ],
+    "synthetic_constraints":  {
+                                  "offline_only":  true,
+                                  "synthetic_data_only":  true,
+                                  "live_market_data_forbidden":  true,
+                                  "upbit_api_forbidden":  true,
+                                  "credential_forbidden":  true
+                              },
+    "authorizations":  {
+                           "implementation_created":  false,
+                           "upbit_api_access":  false,
+                           "credential_authorization":  false,
+                           "wf08_authorization":  false,
+                           "scheduler_authorization":  false,
+                           "live_trading_authorization":  false,
+                           "parser_execution":  false,
+                           "fixture_creation":  false
+                       },
+    "static_scan":  {
+                        "forbidden_endpoint_execution_detected":  false,
+                        "secret_like_string_detected":  false,
+                        "unsafe_readiness_claim_detected":  false,
+                        "authorization_leakage_detected":  false
+                    },
+    "next_action":  "GATE_19_OFFLINE_STRESS_SIMULATION_EXECUTION",
+    "final_safety_verdict":  "PASS_GATE19_OFFLINE_STRESS_PACKAGE_PREP_ONLY"
+}
