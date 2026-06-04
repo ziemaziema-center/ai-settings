@@ -1,4 +1,4 @@
-# Exclude local secrets/runtime state
+﻿# Exclude local secrets/runtime state
 .credentials.json
 settings.local.json
 .env
@@ -12,3 +12,11 @@ anthropic/shell-snapshots/
 anthropic/paste-cache/
 anthropic/downloads/
 anthropic/telemetry/
+
+# Final repo hygiene generated outputs - 2026-06-04
+__pycache__/
+*.pyc
+tmp/
+logs/
+runtime_exports/
+backups/

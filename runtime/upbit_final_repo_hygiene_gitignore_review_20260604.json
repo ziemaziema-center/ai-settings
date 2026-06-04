@@ -1,0 +1,22 @@
+﻿{
+    "overall_status":  "APPLIED_SAFE_GENERIC_ENTRIES",
+    "entries_reviewed":  [
+                             "__pycache__/",
+                             "*.pyc",
+                             "tmp/",
+                             "logs/",
+                             "runtime_exports/",
+                             "backups/"
+                         ],
+    "entries_added":  [
+                          "__pycache__/",
+                          "*.pyc",
+                          "tmp/",
+                          "logs/",
+                          "runtime_exports/",
+                          "backups/"
+                      ],
+    "gitignore_modified":  true,
+    "value_disclosure":  false,
+    "safety":  "Generic cache/tmp/log/backup/runtime output ignores only; active reports/source paths not ignored."
+}

@@ -1,0 +1,35 @@
+﻿{
+    "overall_status":  "PASS_VALIDATION_NO_SECRET_OR_AUTH_LEAKAGE",
+    "origin_main_head":  "8f8c819e2b04876cee1c3b0854eb833a709dac75",
+    "status_entries_count":  59,
+    "tracked_diff_count":  7,
+    "untracked_count":  151,
+    "staged_files_count":  0,
+    "candidate_commit_files":  [
+                                   ".gitignore",
+                                   "reports/upbit_final_repo_hygiene_baseline_2026-06-04.md",
+                                   "reports/upbit_final_repo_hygiene_classification_2026-06-04.md",
+                                   "reports/upbit_final_repo_hygiene_gitignore_review_2026-06-04.md",
+                                   "reports/upbit_final_repo_hygiene_quarantine_execution_2026-06-04.md",
+                                   "reports/upbit_final_repo_hygiene_secret_scan_2026-06-04.md",
+                                   "runtime/upbit_final_repo_hygiene_baseline_20260604.json",
+                                   "runtime/upbit_final_repo_hygiene_classification_20260604.json",
+                                   "runtime/upbit_final_repo_hygiene_gitignore_review_20260604.json",
+                                   "runtime/upbit_final_repo_hygiene_quarantine_execution_20260604.json",
+                                   "runtime/upbit_final_repo_hygiene_secret_scan_20260604.json"
+                               ],
+    "files_scanned":  157,
+    "files_skipped":  0,
+    "secret_hits_count":  0,
+    "authorization_leakage_hits_count":  0,
+    "secret_hits":  [
+
+                    ],
+    "authorization_hits":  [
+
+                           ],
+    "value_disclosure":  false,
+    "upbit_api_access":  false,
+    "credential_authorization":  false,
+    "gate23_status":  "BLOCKED"
+}
