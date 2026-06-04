@@ -1006,7 +1006,7 @@ Imported the validated `WF05_Reconciliation_ReadOnly` lock integration workflow 
 - Pre-import checks confirmed helper health, `open_order_exists=false`, and Upbit target workflows inactive.
 - First import attempt failed before creating a workflow because the export lacked a top-level workflow ID; after adding fixed ID `WF05LockROV2A11`, offline validation was rerun and import passed.
 - Post-import validation confirmed WF05 imported, inactive, trigger count `0`, execution count `0`, manual trigger only, cron disabled, lock status and helper detail references present, no lock acquire/release, no live-order/cancel/reorder/withdrawal/Telegram path, and WF03/WF04 inactive.
-## 2026-05-12 - v2.42-WF05-task-broker-safe-validation-plan
+## 2026-05-12 - v2.42-WF05-ta[REDACTED_SECRET_DO_NOT_COMMIT]
 
 ### Scope
 Created an additive planning/review document for task-broker-safe WF05 status-only manual runtime validation after the prior `n8n execute` CLI attempt failed on task broker port `5679`.
@@ -1449,7 +1449,7 @@ Added Claude Code + OpenRouter configuration examples for DeepSeek and Qwen usag
 - Message: `feat: add claude code + openrouter deepseek config`
 
 ### Safety decisions
-- `settings.json` uses only the placeholder API key `sk-or-v1-REPLACE_WITH_YOUR_KEY`.
+- `settings.json` uses only the placeholder API key `[REDACTED_SECRET_DO_NOT_COMMIT]`.
 - No real OpenRouter or Anthropic secret was committed.
 - No existing HQ source files were modified.
 
