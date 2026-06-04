@@ -1,0 +1,15 @@
+{
+    "phases_attempted":  6,
+    "phases_passed":  6,
+    "phases_blocked":  0,
+    "highest_safe_gate":  "GATE_21_ANNUAL_SELF_ASSESSMENT_DRAFT_ONLY",
+    "why_loop_stopped":  "NEXT_GATE_22_REQUIRES_WF08_AUTHORIZATION",
+    "remaining_approval_boundaries":  [
+                                          "WF08_BOUNDARY_APPROVAL",
+                                          "SHADOW_BOUNDARY_APPROVAL",
+                                          "LIVE_AUTHORIZATION_BOUNDARY_APPROVAL"
+                                      ],
+    "git_commit_status":  "BLOCKED_DIRTY_REPOSITORY",
+    "git_push_status":  "NOT_RUN",
+    "final_safety_verdict":  "PASS_REMAINING_SAFE_AUTONOMOUS_OFFLINE_SCOPE"
+}

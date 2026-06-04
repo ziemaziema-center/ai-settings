@@ -1,0 +1,41 @@
+{
+  "accepted_prior_gate": "PASS_GATE7_PTRC_SPEC_SOURCE_BINDING_ONLY",
+  "current_task": "OFFLINE_TEST_PLAN_GOVERNANCE_FOR_CONTRACT_LAYER",
+  "review_date": "2026-06-01",
+  "scope": "offline_governance_test_plan_only",
+  "contract_layers_covered": [
+    "PTRC",
+    "IDEM",
+    "RECON",
+    "KILL",
+    "ALERT",
+    "HEART",
+    "BUDGET",
+    "OSM"
+  ],
+  "required_test_contract_count": 8,
+  "authorizations": {
+    "live_trading_authorization": false,
+    "credential_authorization": false,
+    "wf08_authorization": false,
+    "scheduler_authorization": false,
+    "upbit_api_access": false,
+    "parser_execution": false,
+    "fixture_creation": false,
+    "implementation_created": false
+  },
+  "forbidden_claims": {
+    "ready_for_live": false,
+    "implementation_complete": false,
+    "runtime_ready": false,
+    "credential_ready": false,
+    "wf08_ready": false,
+    "scheduler_ready": false
+  },
+  "static_scan": {
+    "forbidden_endpoint_calls_detected": false,
+    "secret_like_strings_detected": false,
+    "unsafe_readiness_claim_detected": false
+  },
+  "final_safety_verdict": "PASS_OFFLINE_TEST_PLAN_GOVERNANCE_ONLY"
+}

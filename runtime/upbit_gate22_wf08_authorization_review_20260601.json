@@ -1,0 +1,29 @@
+{
+  "phase_id": "GATE_22_WF08_AUTHORIZATION_REVIEW_ONLY",
+  "overall_status": "PASS",
+  "scope": "review_only_no_wf08_execution",
+  "required_human_approvals": [
+    "WF08_ENTRY_HUMAN_APPROVAL",
+    "CREDENTIAL_BOUNDARY_HUMAN_APPROVAL",
+    "API_BOUNDARY_HUMAN_APPROVAL",
+    "SHADOW_LIVE_BOUNDARY_HUMAN_APPROVAL"
+  ],
+  "authorizations": {
+    "wf08_execution_authorized": false,
+    "upbit_api_access": false,
+    "credential_authorization": false,
+    "scheduler_authorization": false,
+    "live_trading_authorization": false,
+    "shadow_execution_authorization": false,
+    "order_execution_authorization": false
+  },
+  "remaining_blockers": [
+    "WF08_BLOCKED",
+    "UPBIT_API_BLOCKED",
+    "CREDENTIAL_BLOCKED",
+    "SCHEDULER_BLOCKED",
+    "SHADOW_LIVE_BLOCKED",
+    "GATE23_LIVE_AUTH_BLOCKED"
+  ],
+  "final_safety_verdict": "PASS_GATE22_WF08_AUTHORIZATION_REVIEW_ONLY"
+}

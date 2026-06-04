@@ -1,0 +1,17 @@
+{
+  "report_id": "UPBIT_CURRENT_SAFE_SCOPE_CLOSURE_2026-06-01",
+  "review_branch": "upbit-governance-c388749-review",
+  "review_branch_push_status": "PASS",
+  "pushed_commit_hash": "7a97c48",
+  "highest_completed_safe_gate": "GATE_22_WF08_AUTHORIZATION_REVIEW_ONLY",
+  "gate22_review_status": "PASS_GATE22_WF08_AUTHORIZATION_REVIEW_ONLY",
+  "gate23_live_authorization_status": "BLOCKED",
+  "remaining_human_only_approvals": [
+    "WF08_EXECUTION_BOUNDARY_APPROVAL",
+    "CREDENTIAL_BOUNDARY_APPROVAL",
+    "API_BOUNDARY_APPROVAL",
+    "SHADOW_LIVE_BOUNDARY_APPROVAL",
+    "LIVE_AUTHORIZATION_BOUNDARY_APPROVAL"
+  ],
+  "final_safety_verdict": "PASS_CURRENT_SAFE_SCOPE_CLOSURE_REVIEW_ONLY"
+}
