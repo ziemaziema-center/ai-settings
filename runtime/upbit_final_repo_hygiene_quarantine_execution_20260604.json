@@ -1,0 +1,11 @@
+﻿{
+    "overall_status":  "SAFE_QUARANTINE_COMPLETED",
+    "files_quarantined_count":  414,
+    "files_left_count":  0,
+    "skipped_tracked_count":  0,
+    "quarantine_manifest_path":  "C:\\Users\\minho\\Documents\\02_work\\03_AI\\03_investment_automation_repo_quarantine\\2026-06-04\\final_dirty_cleanup\\quarantine_manifest_20260604.json",
+    "value_disclosure":  false,
+    "permanent_delete":  false,
+    "upbit_api_access":  false,
+    "gate23_status":  "BLOCKED"
+}
